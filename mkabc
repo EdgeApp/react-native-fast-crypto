@@ -1,0 +1,23 @@
+#!/bin/bash
+set -u
+set -e
+
+# Pick up the current directory:
+CURRENT_DIR=$(pwd)
+export BUILD_DIR=$CURRENT_DIR/native-libs/deps/build
+#if [ -z ${BUILD_DIR+x} ]; then
+#  export BUILD_DIR=${BUILD_DIR:-$CURRENT_DIR/native-libs/deps/build};
+#fi
+
+# Do the build:
+touch native-libs/deps/recipes/native-crypto/native-crypto.recipe
+(
+    cd native-libs/deps
+    make native-crypto.package-ios-universal $@
+)
+
+# Copy the results locally:
+mkdir -m 0775 -p ios/Headers
+mkdir -m 0775 -p ios/Libraries
+cp -aL $BUILD_DIR/native-crypto/native-crypto-ios-universal/include/* ios/Headers
+cp -a $BUILD_DIR/native-crypto/native-crypto-ios-universal/lib/* ios/Libraries
