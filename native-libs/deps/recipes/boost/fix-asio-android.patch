@@ -1,0 +1,8 @@
+--- a/boost/config/user.hpp
++++ b/boost/config/user.hpp
+@@ -131,3 +131,5 @@
+ // to ensure the correct libraries are selected at link time.
+ // #define BOOST_LIB_BUILDID amd64
+ 
++#define BOOST_ASIO_DISABLE_SERIAL_PORT 1
++

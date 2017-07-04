@@ -1,0 +1,115 @@
+inherit common
+
+# Performs an iOS-style build.
+# $1 arch name for compiler, work_dir and install_dir.
+# $2 platform (either iPhoneOS or iPhoneSimulator)
+build_ios() {
+    # Put the source in the working directory:
+    top_work_dir=$work_dir
+    work_dir=$work_dir/ios-$1
+    mkdir -p $work_dir
+    unpack
+
+    # Establish expected variables:
+    target=ios-$1
+    install_dir=$build_dir/prefix/ios/$1
+
+    case $1 in
+    arm*)   cross=arm-apple-darwin10 ;;
+    i386)   cross=i386-apple-darwin10 ;;
+    x86_64) cross=x86_64-apple-darwin10 ;;
+    esac
+
+    # Locate Xcode build tools:
+    xcode_dir=$(xcode-select -print-path | sed -e 's@/$@@')
+    platform_dir=$xcode_dir/Platforms/${2}.platform/Developer
+
+    export AR="ar"
+    export CC="clang"
+    export CCLD="clang"
+    export CPP="clang -E"
+    export CXX="clang++"
+
+    platform_sdk="$platform_dir/SDKs/${2}.sdk"
+    sdk_flags="-arch $1 -isysroot $platform_sdk -miphoneos-version-min=8.0 -O2"
+    export CFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability"
+    export CXXFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability"
+    export LDFLAGS="$sdk_flags -L${install_dir}/lib"
+
+    export PATH=$xcode_dir/Toolchains/XcodeDefault.xctoolchain/usr/bin:$xcode_dir/usr/bin:$PATH
+    export PKG_CONFIG_PATH=$install_dir/lib/pkgconfig
+
+    cd $work_dir
+    build
+
+    # File lists:
+    ([ -n "$lib" ] && (cd $install_dir; find $lib -type f) || true) > \
+        $top_work_dir/lib-${target}.txt
+    ([ -n "$include" ] && (cd $install_dir; find $include -type f) || true) > \
+        $top_work_dir/include-${target}.txt
+}
+build_ios_armv7() {
+    build_ios armv7 iPhoneOS
+}
+build_ios_armv7s() {
+    build_ios armv7s iPhoneOS
+}
+build_ios_arm64() {
+    build_ios arm64 iPhoneOS
+}
+build_ios_i386() {
+    build_ios i386 iPhoneSimulator
+}
+build_ios_x86_64() {
+    build_ios x86_64 iPhoneSimulator
+}
+
+arches="armv7 armv7s arm64 i386 x86_64"
+
+for arch in $arches ; do
+    deps="download"
+    for dep in $depends; do
+        deps="$deps $dep.build-ios-$arch"
+    done
+    task build-ios-$arch $deps
+done
+
+# Creates a universal binary from the various platform-specific files
+ios_universal() {
+    # Expand wildcards:
+    libs=$(cd $build_dir/prefix/ios/armv7; echo $lib)
+    for l in $libs; do
+        in_libs=$(echo $build_dir/prefix/ios/*/$l)
+        out_name=$work_dir/ios-universal/$l
+        mkdir -p $(dirname $out_name)
+        echo "lipo -create $in_libs -output $out_name"
+        lipo -create $in_libs -output $out_name
+    done
+}
+task ios-universal $(for arch in $arches; do echo build-ios-$arch; done) \
+    $(for dep in $depends; do echo $dep.ios-universal; done)
+
+package_ios_universal() {
+    package_dir=${recipe}-ios-universal
+    rm -rf $package_dir
+    mkdir $package_dir
+    depends=$(cat depends)
+
+    # Gather universal libraries:
+    cp -rv ios-universal/* $package_dir
+    for dep in $depends; do
+        cp -rv $build_dir/$dep/ios-universal/* $package_dir
+    done
+
+    # Gather headers:
+    for f in $(cat include-ios-armv7.txt); do
+        mkdir -p $(dirname $package_dir/$f)
+        ln -vs $build_dir/prefix/ios/armv7/$f $package_dir/$f
+    done
+
+    # Make the archive:
+    zip -r $recipe-ios-universal-$(date +%Y-%m-%d) $package_dir
+}
+task package-ios-universal write-deps ios-universal
+
+default=package-ios-universal

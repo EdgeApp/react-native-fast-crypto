@@ -1,0 +1,100 @@
+inherit common
+
+# Performs an iOS-style build.
+# $1 arch name for compiler, work_dir and install_dir.
+build_osx() {
+    # Put the source in the working directory:
+    top_work_dir=$work_dir
+    work_dir=$work_dir/osx-$1
+    mkdir -p $work_dir
+    unpack
+
+    # Establish expected variables:
+    target=osx-$1
+    install_dir=$build_dir/prefix/osx/$1
+    cross=""
+
+    # Locate Xcode build tools:
+    xcode_dir=$(xcode-select -print-path | sed -e 's@/$@@')
+    platform_dir=$xcode_dir/Platforms/MacOSX.platform/Developer
+
+    export AR="ar"
+    export CC="clang"
+    export CCLD="clang"
+    export CPP="clang -E"
+    export CXX="clang++"
+
+    platform_sdk="$platform_dir/SDKs/MacOSX.sdk"
+    sdk_flags="-arch $1 -isysroot $platform_sdk -mmacosx-version-min=10.9 -O2"
+    export CFLAGS="$sdk_flags -isystem${install_dir}/include"
+    export CXXFLAGS="$sdk_flags -isystem${install_dir}/include"
+    export LDFLAGS="$sdk_flags -L${install_dir}/lib"
+
+    export PATH=$xcode_dir/Toolchains/XcodeDefault.xctoolchain/usr/bin:$xcode_dir/usr/bin:$PATH
+    export PKG_CONFIG_PATH=$install_dir/lib/pkgconfig
+
+    cd $work_dir
+    build
+
+    # File lists:
+    ([ -n "$lib" ] && (cd $install_dir; find $lib -type f) || true) > \
+        $top_work_dir/lib-${target}.txt
+    ([ -n "$include" ] && (cd $install_dir; find $include -type f) || true) > \
+        $top_work_dir/include-${target}.txt
+}
+build_osx_i386() {
+    build_osx i386
+}
+build_osx_x86_64() {
+    build_osx x86_64
+}
+
+arches="i386 x86_64"
+
+for arch in $arches ; do
+    deps="download"
+    for dep in $depends; do
+        deps="$deps $dep.build-osx-$arch"
+    done
+    task build-osx-$arch $deps
+done
+
+# Creates a universal binary from the various platform-specific files
+osx_universal() {
+    # Expand wildcards:
+    libs=$(cd $build_dir/prefix/osx/i386; echo $lib)
+    for l in $libs; do
+        in_libs=$(echo $build_dir/prefix/osx/*/$l)
+        out_name=$work_dir/osx-universal/$l
+        mkdir -p $(dirname $out_name)
+        echo "lipo -create $in_libs -output $out_name"
+        lipo -create $in_libs -output $out_name
+    done
+}
+task osx-universal $(for arch in $arches; do echo build-osx-$arch; done) \
+    $(for dep in $depends; do echo $dep.osx-universal; done)
+
+package_osx_universal() {
+    package_dir=${recipe}-osx-universal
+    rm -rf $package_dir
+    mkdir $package_dir
+    depends=$(cat depends)
+
+    # Gather universal libraries:
+    cp -rv osx-universal/* $package_dir
+    for dep in $depends; do
+        cp -rv $build_dir/$dep/osx-universal/* $package_dir
+    done
+
+    # Gather headers:
+    for f in $(cat include-osx-i386.txt); do
+        mkdir -p $(dirname $package_dir/$f)
+        ln -vs $build_dir/prefix/osx/i386/$f $package_dir/$f
+    done
+
+    # Make the archive:
+    zip -r $recipe-osx-universal-$(date +%Y-%m-%d) $package_dir
+}
+task package-osx-universal write-deps osx-universal
+
+default=package-osx-universal

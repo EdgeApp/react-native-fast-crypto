@@ -1,0 +1,17 @@
+diff --git a/src/ecmult_impl.h b/src/ecmult_impl.h
+index 1b2856f..0e786d7 100644
+--- a/src/ecmult_impl.h
++++ b/src/ecmult_impl.h
+@@ -18,10 +18,10 @@
+     exponentially larger precomputed tables. */
+ #ifdef USE_ENDOMORPHISM
+ /** Two tables for window size 15: 1.375 MiB. */
+-#define WINDOW_G 15
++#define WINDOW_G 11
+ #else
+ /** One table for window size 16: 1.375 MiB. */
+-#define WINDOW_G 16
++#define WINDOW_G 12
+ #endif
+ 
+ /** Fill a table 'pre' with precomputed odd multiples of a. W determines the size of the table.

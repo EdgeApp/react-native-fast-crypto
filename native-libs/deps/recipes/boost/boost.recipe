@@ -1,0 +1,24 @@
+inherit lib
+
+version="1_62_0"
+source="https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_$version.tar.bz2#5fd97433c3f859d8cbab1eaed4156d3068ae3648"
+
+build() {
+    LIBRARIES=--with-libraries=chrono,date_time,filesystem,locale,program_options,regex,system,thread
+
+    cd boost_$version
+
+    echo Patching boost...
+    patch -p1 < $recipe_dir/fix-asio-android.patch
+    cp $recipe_dir/user-config.jam tools/build/src/user-config.jam
+
+    echo Bootstrapping boost...
+    ./bootstrap.sh --prefix=$install_dir $LIBRARIES
+
+    echo Building boost...
+    export NO_BZIP2=1
+    ./bjam -q -d+2 toolset=gcc-env link=static threading=multi install
+}
+
+include="include/boost/*"
+lib="lib/libboost_*.a"

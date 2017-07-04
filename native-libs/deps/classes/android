@@ -1,0 +1,64 @@
+inherit common
+
+# Builds a library using the Andorid NDK.
+# $1 arch name for toolchain, work_dir and install_dir.
+# $2 cross-compiler prefix.
+build_android() {
+    # Put the source in the working directory:
+    work_dir=$work_dir/android-$1
+    mkdir -p $work_dir
+    unpack
+
+    # Establish expected variables:
+    target=android-$1
+    install_dir=$build_dir/prefix/android/$1
+
+    cross=$2
+    export AR="${cross}-ar"
+    export AS="${cross}-as"
+    export CC="${cross}-clang"
+    export CCLD="${cross}-clang"
+    export CPP="${cross}-clang -E"
+    export CXX="${cross}-clang++"
+    export LD="${cross}-ld"
+    export NM="${cross}-nm"
+    export OBJCOPY="${cross}-objcopy"
+    export OBJDUMP="${cross}-objdump"
+    export RANLIB="${cross}-ranlib"
+    export STRINGS="${cross}-strings"
+    export STRIP="${cross}-strip"
+
+    export CFLAGS="-isystem${install_dir}/include -fPIC -O2"
+    export CXXFLAGS="-isystem${install_dir}/include -fPIC -O2"
+    export LDFLAGS="-L${install_dir}/lib -fPIC"
+
+    if [ $1 = "arm" ]; then
+        export CFLAGS="$CFLAGS -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb"
+        export CXXFLAGS="$CXXFLAGS -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb"
+        export LDFLAGS="$LDFLAGS -march=armv7-a -Wl,--fix-cortex-a8"
+    fi
+
+    export PATH=$build_dir/ndk/$1/bin:$PATH
+    export PKG_CONFIG_PATH=$install_dir/lib/pkgconfig
+
+    cd $work_dir
+    build
+}
+build_android_arm() {
+    build_android arm arm-linux-androideabi
+}
+build_android_x86() {
+    build_android x86 i686-linux-android
+}
+build_android_mips() {
+    build_android mips mipsel-linux-android
+}
+
+for arch in arm x86 mips; do
+    deps="download ndk.setup-$arch"
+    for dep in $depends; do
+        deps="$deps $dep.build-android-$arch"
+    done
+    task build-android-$arch $deps
+done
+default=build-android-arm
