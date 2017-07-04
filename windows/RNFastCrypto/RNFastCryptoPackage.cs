@@ -4,7 +4,7 @@ using ReactNative.UIManager;
 using System;
 using System.Collections.Generic;
 
-namespace Com.Reactlibrary.RNReactNativeFastCrypto
+namespace Com.Reactlibrary.RNFastCrypto
 {
     /// <summary>
     /// Package defining core framework modules (e.g., <see cref="UIManagerModule"/>).
@@ -12,7 +12,7 @@ namespace Com.Reactlibrary.RNReactNativeFastCrypto
     /// other framework parts (e.g., with the list of packages to load view
     /// managers from).
     /// </summary>
-    public class RNReactNativeFastCryptoPackage : IReactPackage
+    public class RNFastCryptoPackage : IReactPackage
     {
         /// <summary>
         /// Creates the list of native modules to register with the react
@@ -24,7 +24,7 @@ namespace Com.Reactlibrary.RNReactNativeFastCrypto
         {
             return new List<INativeModule>
             {
-                new RNReactNativeFastCryptoModule(),
+                new RNFastCryptoModule(),
             };
         }
 

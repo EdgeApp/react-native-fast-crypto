@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
-namespace Com.Reactlibrary.RNReactNativeFastCrypto
+namespace Com.Reactlibrary.RNFastCrypto
 {
     /// <summary>
     /// A module that allows JS to share data.
     /// </summary>
-    class RNReactNativeFastCryptoModule : NativeModuleBase
+    class RNFastCryptoModule : NativeModuleBase
     {
         /// <summary>
-        /// Instantiates the <see cref="RNReactNativeFastCryptoModule"/>.
+        /// Instantiates the <see cref="RNFastCryptoModule"/>.
         /// </summary>
-        internal RNReactNativeFastCryptoModule()
+        internal RNFastCryptoModule()
         {
 
         }
@@ -26,7 +26,7 @@ namespace Com.Reactlibrary.RNReactNativeFastCrypto
         {
             get
             {
-                return "RNReactNativeFastCrypto";
+                return "RNFastCrypto";
             }
         }
     }

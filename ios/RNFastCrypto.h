@@ -5,7 +5,7 @@
 #import <React/RCTBridgeModule.h>
 #endif
 
-@interface RNReactNativeFastCrypto : NSObject <RCTBridgeModule>
+@interface RNFastCrypto : NSObject <RCTBridgeModule>
 
 @end
   

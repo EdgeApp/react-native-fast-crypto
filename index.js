@@ -1,6 +1,6 @@
 
 import { NativeModules } from 'react-native';
 
-const { RNReactNativeFastCrypto } = NativeModules;
+const { RNFastCrypto } = NativeModules;
 
-export default RNReactNativeFastCrypto;
+export default RNFastCrypto;

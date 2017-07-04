@@ -1,7 +1,7 @@
 
-#import "RNReactNativeFastCrypto.h"
+#import "RNFastCrypto.h"
 
-@implementation RNReactNativeFastCrypto
+@implementation RNFastCrypto
 
 - (dispatch_queue_t)methodQueue
 {

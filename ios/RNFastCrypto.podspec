@@ -1,18 +1,18 @@
 
 Pod::Spec.new do |s|
-  s.name         = "RNReactNativeFastCrypto"
+  s.name         = "RNFastCrypto"
   s.version      = "1.0.0"
-  s.summary      = "RNReactNativeFastCrypto"
+  s.summary      = "RNFastCrypto"
   s.description  = <<-DESC
-                  RNReactNativeFastCrypto
+                  RNFastCrypto
                    DESC
   s.homepage     = ""
   s.license      = "MIT"
   # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
   s.author             = { "author" => "author@domain.cn" }
   s.platform     = :ios, "7.0"
-  s.source       = { :git => "https://github.com/author/RNReactNativeFastCrypto.git", :tag => "master" }
-  s.source_files  = "RNReactNativeFastCrypto/**/*.{h,m}"
+  s.source       = { :git => "https://github.com/author/RNFastCrypto.git", :tag => "master" }
+  s.source_files  = "RNFastCrypto/**/*.{h,m}"
   s.requires_arc = true
 
 
