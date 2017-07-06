@@ -38,5 +38,17 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void fast_crypto_scrypt (const uint8_t *passwd, size_t passwdlen, const uint8_t *salt, size_t saltlen, uint64_t N,
+    uint32_t r, uint32_t p, uint8_t *buf, size_t buflen);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // native_crypto_h

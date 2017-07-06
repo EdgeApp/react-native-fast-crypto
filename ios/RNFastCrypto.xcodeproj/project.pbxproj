@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		B3E7B58A1CC2AC0600A0062D /* RNFastCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */; };
+		DAE53E701F0E150F00E466B0 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6B1F0E150F00E466B0 /* libcrypto.a */; };
+		DAE53E711F0E150F00E466B0 /* libnativecrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */; };
+		DAE53E721F0E150F00E466B0 /* libsecp256k1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */; };
+		DAE53E731F0E150F00E466B0 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6E1F0E150F00E466B0 /* libssl.a */; };
+		DAE53E741F0E150F00E466B0 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6F1F0E150F00E466B0 /* libz.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +31,12 @@
 		134814201AA4EA6300B7C361 /* libRNFastCrypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNFastCrypto.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E7B5881CC2AC0600A0062D /* RNFastCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFastCrypto.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFastCrypto.m; sourceTree = "<group>"; };
+		DAE53E6B1F0E150F00E466B0 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Libraries/libcrypto.a; sourceTree = "<group>"; };
+		DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnativecrypto.a; path = Libraries/libnativecrypto.a; sourceTree = "<group>"; };
+		DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsecp256k1.a; path = Libraries/libsecp256k1.a; sourceTree = "<group>"; };
+		DAE53E6E1F0E150F00E466B0 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Libraries/libssl.a; sourceTree = "<group>"; };
+		DAE53E6F1F0E150F00E466B0 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = Libraries/libz.a; sourceTree = "<group>"; };
+		DAE53E761F0E153B00E466B0 /* native-crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "native-crypto.h"; path = "Headers/native-crypto.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +44,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE53E741F0E150F00E466B0 /* libz.a in Frameworks */,
+				DAE53E731F0E150F00E466B0 /* libssl.a in Frameworks */,
+				DAE53E701F0E150F00E466B0 /* libcrypto.a in Frameworks */,
+				DAE53E711F0E150F00E466B0 /* libnativecrypto.a in Frameworks */,
+				DAE53E721F0E150F00E466B0 /* libsecp256k1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,18 +66,32 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				DAE53E191F0B979200E466B0 /* Libraries */,
+				DAE53E751F0E152200E466B0 /* Headers */,
+				DAE53E6A1F0E14FB00E466B0 /* Libraries */,
 				B3E7B5881CC2AC0600A0062D /* RNFastCrypto.h */,
 				B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		DAE53E191F0B979200E466B0 /* Libraries */ = {
+		DAE53E6A1F0E14FB00E466B0 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				DAE53E6B1F0E150F00E466B0 /* libcrypto.a */,
+				DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */,
+				DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */,
+				DAE53E6E1F0E150F00E466B0 /* libssl.a */,
+				DAE53E6F1F0E150F00E466B0 /* libz.a */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		DAE53E751F0E152200E466B0 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				DAE53E761F0E153B00E466B0 /* native-crypto.h */,
+			);
+			name = Headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +190,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = Headers/;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -194,6 +225,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = Headers/;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -210,7 +242,10 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Libraries",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNFastCrypto;
 				SKIP_INSTALL = YES;
@@ -226,7 +261,10 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Libraries",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNFastCrypto;
 				SKIP_INSTALL = YES;

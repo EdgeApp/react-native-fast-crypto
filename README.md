@@ -1,16 +1,21 @@
 
 # react-native-fast-crypto
 
+This library implements fast, fully native crypto routines for React Native under iOS and Android. Fully built binaries are committed for both platforms but can also be built from scratch. 
+
 ## Getting started
 
-`$ npm install react-native-fast-crypto --save`
+`npm install react-native-fast-crypto --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-fast-crypto`
+`react-native link react-native-fast-crypto`
 
 ### Manual installation
 
+#### Build the C/C++ binaries from scratch (optional)
+
+To build from scratch, run `./build-deps` from a Bash prompt
 
 #### iOS
 
@@ -33,15 +38,6 @@
   	```
       compile project(':react-native-fast-crypto')
   	```
-
-#### Windows
-[Read it! :D](https://github.com/ReactWindows/react-native)
-
-1. In Visual Studio add the `RNFastCrypto.sln` in `node_modules/react-native-fast-crypto/windows/RNFastCrypto.sln` folder to their solution, reference from their app.
-2. Open up your `MainPage.cs` app
-  - Add `using Com.Reactlibrary.RNFastCrypto;` to the usings at the top of the file
-  - Add `new RNFastCryptoPackage()` to the `List<IReactPackage>` returned by the `Packages` method
-
 
 ## Usage
 ```javascript
