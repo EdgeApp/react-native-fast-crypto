@@ -41,9 +41,14 @@ To build from scratch, run `./build-deps` from a Bash prompt
 
 ## Usage
 ```javascript
-import RNFastCrypto from 'react-native-fast-crypto';
+import crypto from 'react-native-fast-crypto';
 
-// TODO: What to do with the module?
-RNFastCrypto;
+const p = crypto.scrypt('mypassword', 'mysalt', 16384, 8, 1, 32)
+
+p.then((result) => {
+  console.log(result)
+}, (error) => {
+  console.log(error)
+})
 ```
   
