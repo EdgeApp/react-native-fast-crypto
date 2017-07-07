@@ -1,10 +1,11 @@
 
-package com.reactlibrary;
+package co.airbitz.fastcrypto;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+
 
 public class RNFastCryptoModule extends ReactContextBaseJavaModule {
 
@@ -19,4 +20,15 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
   public String getName() {
     return "RNFastCrypto";
   }
+
+  @ReactMethod
+  public void scrypt(String passwd,
+                     String salt,
+                     Integer N,
+                     Integer r,
+                     Integer p,
+                     Integer size) {
+
+  }
+
 }

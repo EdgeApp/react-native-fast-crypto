@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package co.airbitz.fastcrypto;
 
 import java.util.Arrays;
 import java.util.Collections;
