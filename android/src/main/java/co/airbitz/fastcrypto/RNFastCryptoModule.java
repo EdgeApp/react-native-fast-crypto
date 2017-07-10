@@ -27,8 +27,8 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
                      Integer N,
                      Integer r,
                      Integer p,
-                     Integer size) {
-
+                     Integer size,
+                     Promise promise) {
+    promise.resolve(null)
   }
-
 }
