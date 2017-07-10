@@ -14,6 +14,7 @@ touch native-libs/deps/recipes/native-crypto/native-crypto.recipe
 (
     cd native-libs/deps
     make native-crypto.package-ios-universal $@
+    make native-crypto.build-android-arm native-crypto.build-android-x86 $@
 )
 
 # Copy the results locally:
@@ -21,3 +22,22 @@ mkdir -m 0775 -p ios/Headers
 mkdir -m 0775 -p ios/Libraries
 cp -aL $BUILD_DIR/native-crypto/native-crypto-ios-universal/include/* ios/Headers
 cp -a $BUILD_DIR/native-crypto/native-crypto-ios-universal/lib/* ios/Libraries
+
+BASE="./android"
+JNI_DIR="$BASE/jni"
+JNI_BUILD_DIR="$JNI_DIR/libs"
+ANDROID_PATH="$BASE/src/main"
+
+rm -rf $JNI_BUILD_DIR
+
+mkdir -p $JNI_BUILD_DIR/includes
+mkdir -p $JNI_BUILD_DIR/armeabi-v7a
+mkdir -p $JNI_BUILD_DIR/x86
+
+cp native-libs/src/native-crypto.h $JNI_BUILD_DIR/includes
+
+sed  -e 's/const char *\*/const char *const /' $JNI_BUILD_DIR/includes/native-crypto.h \
+    > $JNI_BUILD_DIR/includes/native-crypto-const.h
+
+cp $BUILD_DIR/native-crypto/android-arm/libnativecrypto.so $JNI_BUILD_DIR/armeabi-v7a/
+cp $BUILD_DIR/native-crypto/android-x86/libnativecrypto.so $JNI_BUILD_DIR/x86/

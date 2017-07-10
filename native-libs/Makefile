@@ -25,8 +25,7 @@ CFLAGS   += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -std=c99
 CXXFLAGS += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -std=c++11
 deps = libsecp256k1 libssl
 LIBS := $(shell pkg-config --libs --static $(deps)) \
-	-lsodium \
-	-lcsv -lm
+	-lm
 
 # Do not use -lpthread on Android:
 ifneq (,$(findstring android,$(CC)))
