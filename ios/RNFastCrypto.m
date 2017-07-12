@@ -25,12 +25,15 @@ RCT_REMAP_METHOD(scrypt, scrypt:(NSString *)passwd
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    const uint8_t *szPasswd = (uint8_t *) [passwd UTF8String];
-    const uint8_t *szSalt = (uint8_t *) [salt UTF8String];
-    size_t passwdlen = [passwd length];
-    size_t saltlen = [salt length];
+    NSData *passwdData = [[NSData alloc] initWithBase64EncodedString:passwd options:0];
+    NSData *saltData = [[NSData alloc] initWithBase64EncodedString:salt options:0];
+    char *rawPasswd = (char *)[passwdData bytes];
+    char *rawSalt = (char *)[saltData bytes];
+    size_t passwdlen = [passwdData length];
+    size_t saltlen = [saltData length];
+
     uint8_t *buffer = malloc(sizeof(char) * size);
-    fast_crypto_scrypt(szPasswd, passwdlen, szSalt, saltlen, N, r, p, buffer, size);
+    fast_crypto_scrypt(rawPasswd, passwdlen, rawSalt, saltlen, N, r, p, buffer, size);
     
     NSData *data = [NSData dataWithBytes:buffer length:size];
     NSString *str = [data base64EncodedStringWithOptions:0];
