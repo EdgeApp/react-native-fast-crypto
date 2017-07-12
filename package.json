@@ -12,6 +12,9 @@
     "build": "echo Ok",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "rfc4648": "^1.0.0"
+  },
   "peerDependencies": {
     "react-native": "^0.41.2"
   }

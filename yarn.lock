@@ -2,3 +2,6 @@
 # yarn lockfile v1
 
 
+rfc4648@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rfc4648/-/rfc4648-1.0.0.tgz#fdcbf9a438feef09bde4b8ee7eaf6b7f47935528"
