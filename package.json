@@ -1,17 +1,17 @@
-
 {
   "name": "react-native-fast-crypto",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "react-native"
   ],
-  "author": "",
   "license": "",
+  "author": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo Ok",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "peerDependencies": {
     "react-native": "^0.41.2"
   }
