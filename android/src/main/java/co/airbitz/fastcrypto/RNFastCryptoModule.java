@@ -1,6 +1,7 @@
 
 package co.airbitz.fastcrypto;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -29,6 +30,6 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
                      Integer p,
                      Integer size,
                      Promise promise) {
-    promise.resolve(null)
+    promise.resolve(null);
   }
 }
