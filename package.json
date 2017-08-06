@@ -1,21 +1,45 @@
 {
-  "name": "react-native-fast-crypto",
-  "version": "1.0.0",
-  "description": "",
+  "_from": "git+ssh://git@github.com/Airbitz/react-native-fast-crypto.git",
+  "_id": "react-native-fast-crypto@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha1-4STDtZaDqtJ1MLJzEl0546NhkVA=",
+  "_location": "/react-native-fast-crypto",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "react-native-fast-crypto@git+ssh://git@github.com/Airbitz/react-native-fast-crypto.git",
+    "name": "react-native-fast-crypto",
+    "escapedName": "react-native-fast-crypto",
+    "rawSpec": "git+ssh://git@github.com/Airbitz/react-native-fast-crypto.git",
+    "saveSpec": "git+ssh://git@github.com/Airbitz/react-native-fast-crypto.git",
+    "fetchSpec": "ssh://git@github.com/Airbitz/react-native-fast-crypto.git",
+    "gitCommittish": "master"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+ssh://git@github.com/Airbitz/react-native-fast-crypto.git#f24af576fb7af7769e8b34039fce923c41718c3a",
+  "_spec": "react-native-fast-crypto@git+ssh://git@github.com/Airbitz/react-native-fast-crypto.git",
+  "_where": "/home/tom/StudioProjects/TestRNCrypto",
+  "author": "",
+  "bundleDependencies": false,
+  "dependencies": {
+  },
+  "deprecated": false,
+  "description": "This library implements fast, fully native crypto routines for React Native under iOS and Android. Fully built binaries are committed for both platforms but can also be built from scratch.",
   "keywords": [
     "react-native"
   ],
   "license": "",
-  "author": "",
   "main": "index.js",
+  "name": "react-native-fast-crypto",
+  "peerDependencies": {
+    "react-native": "^0.42.1",
+    "rfc4648": "^1.0.0"
+  },
   "scripts": {
     "build": "echo Ok",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "rfc4648": "^1.0.0"
-  },
-  "peerDependencies": {
-    "react-native": "^0.41.2"
-  }
+  "version": "1.0.0"
 }
