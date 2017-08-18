@@ -1,12 +1,19 @@
 {
   "name": "react-native-fast-crypto",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Native C/C++ implemented crypto libraries for React Native apps",
   "keywords": [
-    "react-native"
+    "react-native", "scrypt", "fast", "native"
   ],
-  "license": "",
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Airbitz/react-native-fast-crypto.git"
+  },
+  "license": "MIT",
+  "author": "Airbitz, Inc.",
+  "contributors": [
+    "Paul Puey <paul@airbitz.co>"
+  ],
   "main": "index.js",
   "scripts": {
     "build": "echo Ok",
@@ -16,6 +23,6 @@
     "rfc4648": "^1.0.0"
   },
   "peerDependencies": {
-    "react-native": "^0.41.2"
+    "react-native": "^0.47.0"
   }
 }
