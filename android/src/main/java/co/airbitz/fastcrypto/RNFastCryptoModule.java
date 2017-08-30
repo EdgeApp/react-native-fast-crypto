@@ -14,8 +14,9 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
     static {
         System.loadLibrary("stdc++");
         System.loadLibrary("nativecrypto");
+        System.loadLibrary("fast_crypto_jni"); //this loads the library when the class is loaded
     }
-    public native String scryptJNI();
+    public native String fastCryptoJNI();
 
     private final ReactApplicationContext reactContext;
 
@@ -39,8 +40,10 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
             Integer size,
             Promise promise) {
         try {
-//            String reply = scryptJNI(); // test response from JNI
-            promise.resolve("scrypt returned this");
+           String reply = fastCryptoJNI(); // test response from JNI
+// void fast_crypto_scrypt (const uint8_t *passwd, size_t passwdlen, const uint8_t *salt, size_t saltlen, uint64_t N,
+// uint32_t r, uint32_t p, uint8_t *buf, size_t buflen)
+            promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);
         }
