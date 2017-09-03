@@ -1,6 +1,8 @@
 
 package co.airbitz.fastcrypto;
 
+import android.util.Log;
+
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -10,11 +12,10 @@ import com.facebook.react.bridge.Callback;
 
 public class RNFastCryptoModule extends ReactContextBaseJavaModule {
 
-    //this loads the libraries when the class is loaded
+    //this loads the library when the class is loaded
     static {
-        System.loadLibrary("stdc++");
         System.loadLibrary("nativecrypto");
-        System.loadLibrary("crypto_bridge");
+        System.loadLibrary("crypto_bridge"); //this loads the library when the class is loaded
     }
     public native String cryptoBridgeJNI(String passwd, String salt, int N, int r, int p, int size);
 
@@ -41,6 +42,7 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
             Promise promise) {
         try {
             String reply = cryptoBridgeJNI(passwd, salt, N, r, p, size); // test response from JNI
+            Log.d("cryptoBridgeJNI", String.format("reply = %s", reply));
             promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);
