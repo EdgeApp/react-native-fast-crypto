@@ -24,6 +24,7 @@ android {
         externalNativeBuild {
             cmake {
                 arguments '-DANDROID_TOOLCHAIN=clang',
+                        '-DANDROID_STL=c++_shared',
                         "-DANDROID_ABI=armeabi-v7a",
                         "-DANDROID_ABI=x86"
             }
