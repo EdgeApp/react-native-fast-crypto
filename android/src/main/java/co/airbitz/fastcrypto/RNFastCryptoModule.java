@@ -10,13 +10,13 @@ import com.facebook.react.bridge.Callback;
 
 public class RNFastCryptoModule extends ReactContextBaseJavaModule {
 
-    //this loads the library when the class is loaded
+    //this loads the libraries when the class is loaded
     static {
         System.loadLibrary("stdc++");
         System.loadLibrary("nativecrypto");
-        System.loadLibrary("fast_crypto_jni"); //this loads the library when the class is loaded
+        System.loadLibrary("crypto_bridge");
     }
-    public native String fastCryptoJNI();
+    public native String cryptoBridgeJNI(String passwd, String salt, int N, int r, int p, int size);
 
     private final ReactApplicationContext reactContext;
 
@@ -40,9 +40,7 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
             Integer size,
             Promise promise) {
         try {
-           String reply = fastCryptoJNI(); // test response from JNI
-// void fast_crypto_scrypt (const uint8_t *passwd, size_t passwdlen, const uint8_t *salt, size_t saltlen, uint64_t N,
-// uint32_t r, uint32_t p, uint8_t *buf, size_t buflen)
+            String reply = cryptoBridgeJNI(passwd, salt, N, r, p, size); // test response from JNI
             promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);
