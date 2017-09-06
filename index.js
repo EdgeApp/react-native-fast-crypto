@@ -9,10 +9,8 @@ async function scrypt (passwd, salt, N, r, p, size) {
 
   const retval = await RNFastCrypto.scrypt(passwd, salt, N, r, p, size)
 
-//  let uint8array =  base64.parse("index.js returning")
-//  return uint8array
-
-  return retval
+  let uint8array =  base64.parse(retval)
+  return uint8array
 }
 
 const crypto = {
