@@ -221,37 +221,51 @@ int Base64encode(char *encoded, const char *string, int len)
 
 JNIEXPORT jstring JNICALL
 Java_co_airbitz_fastcrypto_RNFastCryptoModule_cryptoBridgeJNI(JNIEnv *env, jobject thiz,
-                                                              jstring passwd, jstring salt, jint N,
+                                                              jstring jsPassword, jstring jsSalt, jint N,
                                                               jint r, jint p, jint size) {
-    LOGD("passwd=%s, salt=%s, n=%d, r=%d, p=%d, size=%d", passwd, salt, N, r, p, size);
+//    LOGD("passwd=%s, salt=%s, n=%d, r=%d, p=%d, size=%d", passwd, salt, N, r, p, size);
 
     // Create password character buffer
-    uint8_t *password = (uint8_t *) 0;
-    password = 0;
-    if (passwd) {
-        password = (uint8_t *) env->GetStringUTFChars(passwd, 0);
-        if (!password) {
+    char *szPassword = (char *) 0;
+    szPassword = 0;
+    if (jsPassword) {
+        szPassword = (char *) env->GetStringUTFChars(jsPassword, 0);
+        if (!szPassword) {
             return env->NewStringUTF("Password error!");
         }
     }
-    size_t passwdLen = (size_t) env->GetStringUTFLength(passwd);
+//    size_t passwdLen = (size_t) env->GetStringUTFLength(passwd);
 
-    uint8_t *salty = (uint8_t *) 0;
-    salty = 0;
-    if (salt) {
-        salty = (uint8_t *) env->GetStringUTFChars(salt, 0);
-        if (!salty) {
-            return env->NewStringUTF("Password error!");
+    char *szSalt = (char *) 0;
+    szSalt = 0;
+    if (jsSalt) {
+        szSalt = (char *) env->GetStringUTFChars(jsSalt, 0);
+        if (!szSalt) {
+            return env->NewStringUTF("Salt error!");
         }
     }
-    size_t saltyLen = (size_t) env->GetStringUTFLength(salt);
+//    size_t saltyLen = (size_t) env->GetStringUTFLength(salt);
+
+    LOGD("passwd=%s, salt=%s, n=%d, r=%d, p=%d, size=%d", szPassword, szSalt, N, r, p, size);
+
+    // Base64 decode string into a buffer
+    size_t passwordBufSize = Base64decode_len(szPassword);
+    size_t saltBufSize = Base64decode_len(szSalt);
+
+    unsigned char *passwordBuf = (unsigned char *) malloc(sizeof(char) * passwordBufSize);
+    unsigned char *saltBuf = (unsigned char *) malloc(sizeof(char) * saltBufSize);
+
+    int passwordBufLen = Base64decode((char *)passwordBuf, szPassword);
+    int saltBufLen = Base64decode((char *)saltBuf, szSalt);
+
+    LOGD("passwordBuf len=%d :%d %d %d %d %d %d", passwordBufLen, passwordBuf[0], passwordBuf[1], passwordBuf[2], passwordBuf[3], passwordBuf[4], passwordBuf[5]);
+    LOGD("saltBuf len=%d :%d %d %d %d %d %d", saltBufLen, saltBuf[0], saltBuf[1], saltBuf[2], saltBuf[3], saltBuf[4], saltBuf[5]);
 
     uint8_t *buffer = (uint8_t *) malloc(sizeof(char) * size);
 
-    LOGD("passwd=%s, passwdLen=%d, salt=%s, saltLen=%d, n=%d, r=%d, p=%d, size=%d", password, passwdLen, salty, saltyLen, N, r, p, size);
+    fast_crypto_scrypt((uint8_t *) passwordBuf, passwordBufLen, (uint8_t *) saltBuf, saltBufLen, N, r, p, buffer, size);
 
-    fast_crypto_scrypt(password, passwdLen, salty, saltyLen, N, r, p, buffer, size);
-
+    LOGD("buffer:%d %d %d %d %d %d", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5]);
     int b64encLen = Base64encode_len(size);
 
     char *szB64Encoded = (char *)malloc(sizeof(char) * b64encLen);
@@ -260,6 +274,10 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_cryptoBridgeJNI(JNIEnv *env, jobje
     jstring jresult = env->NewString((jchar *) szB64Encoded, size);
     LOGD("result=%d", size);
     free(buffer);
+    free(szB64Encoded);
+    free(passwordBuf);
+    free(saltBuf);
+
     return jresult;
 
 //    return env->NewStringUTF("sweet crypto_bridge");
