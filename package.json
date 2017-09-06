@@ -3,7 +3,10 @@
   "version": "1.2.0",
   "description": "Native C/C++ implemented crypto libraries for React Native apps",
   "keywords": [
-    "react-native", "scrypt", "fast", "native"
+    "react-native",
+    "scrypt",
+    "fast",
+    "native"
   ],
   "repository": {
     "type": "git",
@@ -16,7 +19,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "echo Ok",
+    "build": "echo Ok"
   },
   "dependencies": {
     "rfc4648": "^1.0.0"
