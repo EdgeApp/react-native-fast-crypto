@@ -33,8 +33,8 @@
  * AirBitz public API. The wallet only calls functions found in this file.
  */
 
-#ifndef native_crypto_h
-#define native_crypto_h
+#ifndef fast_crypto_h
+#define fast_crypto_h
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -51,4 +51,4 @@ void fast_crypto_scrypt (const uint8_t *passwd, size_t passwdlen, const uint8_t 
 }
 #endif
 
-#endif // native_crypto_h
+#endif // fast_crypto_h
