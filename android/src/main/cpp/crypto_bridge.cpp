@@ -266,21 +266,19 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_cryptoBridgeJNI(JNIEnv *env, jobje
     fast_crypto_scrypt((uint8_t *) passwordBuf, passwordBufLen, (uint8_t *) saltBuf, saltBufLen, N, r, p, buffer, size);
 
     LOGD("buffer:%d %d %d %d %d %d", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5]);
-    int b64encLen = Base64encode_len(size);
+    int b64encSize = Base64encode_len(size);
 
-    char *szB64Encoded = (char *)malloc(sizeof(char) * b64encLen);
-    Base64encode(szB64Encoded, (const char *) buffer, b64encLen);
+    char *szB64Encoded = (char *)malloc(sizeof(char) * b64encSize);
+    int b64encLen = Base64encode(szB64Encoded, (const char *) buffer, b64encSize);
 
-    jstring jresult = env->NewString((jchar *) szB64Encoded, size);
-    LOGD("result=%d", size);
+    LOGD("result szB64Encoded:%s len:%d", szB64Encoded, b64encLen);
+
     free(buffer);
     free(szB64Encoded);
     free(passwordBuf);
     free(saltBuf);
 
-    return jresult;
-
-//    return env->NewStringUTF("sweet crypto_bridge");
+    return env->NewStringUTF(szB64Encoded);
 }
 
 }
