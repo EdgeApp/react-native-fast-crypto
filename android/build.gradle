@@ -26,6 +26,11 @@ android {
                 arguments '-DANDROID_TOOLCHAIN=clang',
                         '-DANDROID_STL=c++_shared',
                         "-DANDROID_ABI=armeabi-v7a",
+                        "-DANDROID_ABI=arm64-v8a",
+                        "-DANDROID_ABI=armeabi",
+                        "-DANDROID_ABI=mips",
+                        "-DANDROID_ABI=mips64",
+                        "-DANDROID_ABI=x86_64",
                         "-DANDROID_ABI=x86"
             }
         }
@@ -33,7 +38,7 @@ android {
         ndk {
             // Specifies the ABI configurations of your native
             // libraries Gradle should build and package with your APK.
-            abiFilters 'x86', 'armeabi-v7a'
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'armeabi', 'mips', 'mips64', 'x86_64', 'x86'
         }
 
     }
