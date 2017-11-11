@@ -7,7 +7,11 @@ async function scrypt (passwd, salt, N, r, p, size) {
   passwd = base64.stringify(passwd)
   salt = base64.stringify(salt)
 
-  const retval = await RNFastCrypto.scrypt(passwd, salt, N, r, p, size)
+  console.log('RNFS:scrypt(' + N.toString() + ', ' + r.toString() + ', ' + p.toString())
+  const t = Date.now()
+  const retval:string = await RNFastCrypto.scrypt(passwdStr, saltStr, N, r, p, size)
+  const elapsed = Date.now() - 1
+  console.log('RNFS:script finished in ' + elapsed + 'ms')
 
   let uint8array =  base64.parse(retval)
   return uint8array.slice(0, size)
