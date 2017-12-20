@@ -63,11 +63,12 @@ RCT_REMAP_METHOD(secp256k1EcPrivkeyTweakAdd, secp256k1EcPrivkeyTweakAdd:(NSStrin
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
     char *szPrivateKeyHex = malloc(sizeof(char) * ([privateKeyHex length] + 1));
-    char *szTweakHex = malloc(sizeof(char) * ([tweakHex length] + 1));
-    fast_crypto_secp256k1_ec_privkey_tweak_add(szPrivateKeyHex, szTweakHex);
+    const char *szPrivateKeyHexConst = [privateKeyHex UTF8String];
+    
+    strcpy(szPrivateKeyHex, szPrivateKeyHexConst);
+    fast_crypto_secp256k1_ec_privkey_tweak_add(szPrivateKeyHex, [tweakHex UTF8String]);
     NSString *privateKeyTweakedHex = [NSString stringWithUTF8String:szPrivateKeyHex];
     free(szPrivateKeyHex);
-    free(szTweakHex);
     resolve(privateKeyTweakedHex);
 }
 
