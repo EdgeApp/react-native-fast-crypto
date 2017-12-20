@@ -13,12 +13,28 @@ async function scrypt (passwd, salt, N, r, p, size) {
   const elapsed = Date.now() - t
   console.log('RNFS:script finished in ' + elapsed + 'ms')
 
-  let uint8array =  base64.parse(retval)
+  let uint8array = base64.parse(retval)
   return uint8array.slice(0, size)
 }
 
+async function publicKeyCreate (privateKeyHex: string, compressed: boolean) {
+  const publicKeyHex: string = RNFastCrypto.secp256k1EcPubkeyCreate(privateKeyHex, compressed)
+  return publicKeyHex
+}
+
+async function privateKeyTweakAdd (privateKeyHex: string, tweakHex: string) {
+  const privateKeyTweakedHex: string = RNFastCrypto.secp256k1EcPrivkeyTweakAdd(privateKeyHex, tweakHex)
+  return privateKeyTweakedHex
+}
+
+const secp256k1 = {
+  publicKeyCreate,
+  privateKeyTweakAdd
+}
+
 const crypto = {
-  scrypt
+  scrypt,
+  secp256k1
 }
 
 // export default crypto
