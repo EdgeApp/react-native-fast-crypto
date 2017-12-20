@@ -44,5 +44,33 @@ RCT_REMAP_METHOD(scrypt, scrypt:(NSString *)passwd
     //    callback(@[[NSNull null], str]);
 }
 
+RCT_REMAP_METHOD(secp256k1EcPubkeyCreate,
+                 secp256k1EcPubkeyCreate:(NSString *)privateKeyHex
+                 compressed:(NSInteger)compressed
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    char *szPublicKeyHex = malloc(sizeof(char) * [privateKeyHex length] * 2);
+    fast_crypto_secp256k1_ec_pubkey_create([privateKeyHex UTF8String], szPublicKeyHex, compressed);
+    NSString *publicKeyHex = [NSString stringWithUTF8String:szPublicKeyHex];
+    free(szPublicKeyHex);
+    resolve(publicKeyHex);
+}
+
+RCT_REMAP_METHOD(secp256k1EcPrivkeyTweakAdd, secp256k1EcPrivkeyTweakAdd:(NSString *)privateKeyHex
+                 tweak:(NSString *)tweakHex
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    char *szPrivateKeyHex = malloc(sizeof(char) * ([privateKeyHex length] + 1));
+    char *szTweakHex = malloc(sizeof(char) * ([tweakHex length] + 1));
+    fast_crypto_secp256k1_ec_privkey_tweak_add(szPrivateKeyHex, szTweakHex);
+    NSString *privateKeyTweakedHex = [NSString stringWithUTF8String:szPrivateKeyHex];
+    free(szPrivateKeyHex);
+    free(szTweakHex);
+    resolve(privateKeyTweakedHex);
+}
+
+
 @end
 
