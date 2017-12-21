@@ -1,4 +1,4 @@
-depends="openssl libsecp256k1"
+depends="libsecp256k1"
 inherit lib
 
 build() {

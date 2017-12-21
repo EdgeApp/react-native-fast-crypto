@@ -17,7 +17,10 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
         System.loadLibrary("nativecrypto");
         System.loadLibrary("crypto_bridge"); //this loads the library when the class is loaded
     }
-    public native String cryptoBridgeJNI(String passwd, String salt, int N, int r, int p, int size);
+    public native String scryptJNI(String passwd, String salt, int N, int r, int p, int size);
+    public native String secp256k1EcPubkeyCreateJNI(String privateKeyHex, int compressed);
+    public native String secp256k1EcPrivkeyTweakAddJNI(String privateKeyHex, String tweakHex);
+    public native String secp256k1EcPubkeyTweakAddJNI(String publicKeyHex, String tweakHex, int compressed);
 
     private final ReactApplicationContext reactContext;
 
@@ -41,8 +44,53 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
             Integer size,
             Promise promise) {
         try {
-            String reply = cryptoBridgeJNI(passwd, salt, N, r, p, size); // test response from JNI
-            Log.d("cryptoBridgeJNI", String.format("reply = %s", reply));
+            String reply = scryptJNI(passwd, salt, N, r, p, size); // test response from JNI
+            Log.d("scryptJNI", String.format("reply = %s", reply));
+            promise.resolve(reply);
+        } catch (Exception e) {
+            promise.reject("Err", e);
+        }
+    }
+
+    @ReactMethod
+    public void secp256k1EcPubkeyCreate(
+            String privateKeyHex,
+            Boolean compressed,
+            Promise promise) {
+        int iCompressed = compressed ? 1 : 0;
+        try {
+            String reply = secp256k1EcPubkeyCreateJNI(privateKeyHex, iCompressed); // test response from JNI
+            Log.d("EcPubkeyCreateJNI", String.format("reply = %s", reply));
+            promise.resolve(reply);
+        } catch (Exception e) {
+            promise.reject("Err", e);
+        }
+    }
+
+    @ReactMethod
+    public void secp256k1EcPrivkeyTweakAdd(
+            String privateKeyHex,
+            String tweakHex,
+            Promise promise) {
+        try {
+            String reply = secp256k1EcPrivkeyTweakAddJNI(privateKeyHex, tweakHex); // test response from JNI
+            Log.d("EcPrivkeyTweakAddJNI", String.format("reply = %s", reply));
+            promise.resolve(reply);
+        } catch (Exception e) {
+            promise.reject("Err", e);
+        }
+    }
+
+    @ReactMethod
+    public void secp256k1EcPubkeyTweakAdd(
+            String publicKeyHex,
+            String tweakHex,
+            Boolean compressed,
+            Promise promise) {
+        int iCompressed = compressed ? 1 : 0;
+        try {
+            String reply = secp256k1EcPubkeyTweakAddJNI(publicKeyHex, tweakHex, iCompressed); // test response from JNI
+            Log.d("EcPubkeyTweakAddJNI", String.format("reply = %s", reply));
             promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);

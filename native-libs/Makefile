@@ -37,7 +37,8 @@ endif
 # Source files:
 abc_sources = \
 	$(wildcard src/*.cpp) \
-	minilibs/scrypt/crypto_scrypt.c
+	minilibs/scrypt/crypto_scrypt.c \
+	minilibs/scrypt/sha256.c
 
 cli_sources = $(wildcard cli/*.cpp cli/*/*.cpp)
 test_sources = $(wildcard test/*.cpp)
