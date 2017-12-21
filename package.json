@@ -22,6 +22,7 @@
     "build": "echo Ok"
   },
   "dependencies": {
+    "buffer": "^5.0.8",
     "rfc4648": "^1.0.0"
   },
   "peerDependencies": {

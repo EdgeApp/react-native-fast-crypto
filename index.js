@@ -2,6 +2,7 @@ import { NativeModules } from 'react-native'
 import { base64 } from 'rfc4648'
 
 const { RNFastCrypto } = NativeModules
+const Buffer = require('buffer/').Buffer
 
 async function scrypt (passwd, salt, N, r, p, size) {
   passwd = base64.stringify(passwd)
@@ -17,19 +18,27 @@ async function scrypt (passwd, salt, N, r, p, size) {
   return uint8array.slice(0, size)
 }
 
-async function publicKeyCreate (privateKeyHex: string, compressed: boolean) {
-  const publicKeyHex: string = RNFastCrypto.secp256k1EcPubkeyCreate(privateKeyHex, compressed)
-  return publicKeyHex
+async function publicKeyCreate (privateKey: string, compressed: boolean) {
+  const privateKeyHex = privateKey.toString('hex')
+  const publicKeyHex: string = await RNFastCrypto.secp256k1EcPubkeyCreate(privateKeyHex, compressed)
+  const outBuf = Buffer.from(publicKeyHex, 'hex')
+  return outBuf
 }
 
-async function privateKeyTweakAdd (privateKeyHex: string, tweakHex: string) {
-  const privateKeyTweakedHex: string = RNFastCrypto.secp256k1EcPrivkeyTweakAdd(privateKeyHex, tweakHex)
-  return privateKeyTweakedHex
+async function privateKeyTweakAdd (privateKey: string, tweak: string) {
+  const privateKeyHex = privateKey.toString('hex')
+  const tweakHex = tweak.toString('hex')
+  const privateKeyTweakedHex: string = await RNFastCrypto.secp256k1EcPrivkeyTweakAdd(privateKeyHex, tweakHex)
+  const outBuf = Buffer.from(privateKeyTweakedHex, 'hex')
+  return outBuf
 }
 
-async function publicKeyTweakAdd (publicKeyHex: string, tweakHex: string, compressed: boolean) {
-  const publickKeyTweakedHex: string = RNFastCrypto.secp256k1EcPubkeyTweakAdd(publicKeyHex, tweakHex, compressed)
-  return publickKeyTweakedHex
+async function publicKeyTweakAdd (publicKey: string, tweak: string, compressed: boolean) {
+  const publicKeyHex = publicKey.toString('hex')
+  const tweakHex = tweak.toString('hex')
+  const publickKeyTweakedHex: string = await RNFastCrypto.secp256k1EcPubkeyTweakAdd(publicKeyHex, tweakHex, compressed)
+  const outBuf = Buffer.from(publickKeyTweakedHex, 'hex')
+  return outBuf
 }
 
 const secp256k1 = {
