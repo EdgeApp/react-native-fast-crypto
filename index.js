@@ -27,9 +27,15 @@ async function privateKeyTweakAdd (privateKeyHex: string, tweakHex: string) {
   return privateKeyTweakedHex
 }
 
+async function publicKeyTweakAdd (publicKeyHex: string, tweakHex: string, compressed: boolean) {
+  const publickKeyTweakedHex: string = RNFastCrypto.secp256k1EcPubkeyTweakAdd(publicKeyHex, tweakHex, compressed)
+  return publickKeyTweakedHex
+}
+
 const secp256k1 = {
   publicKeyCreate,
-  privateKeyTweakAdd
+  privateKeyTweakAdd,
+  publicKeyTweakAdd
 }
 
 const crypto = {

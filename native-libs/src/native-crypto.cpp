@@ -13,6 +13,11 @@
 #include <secp256k1.h>
 #include "../minilibs/scrypt/crypto_scrypt.h"
 
+#define COMPRESSED_PUBKEY_LENGTH 33
+#define DECOMPRESSED_PUBKEY_LENGTH 65
+#define PRIVKEY_LENGTH 64
+
+
 void fast_crypto_scrypt (const uint8_t *passwd, size_t passwdlen, const uint8_t *salt, size_t saltlen, uint64_t N,
     uint32_t r, uint32_t p, uint8_t *buf, size_t buflen)
 {
@@ -66,45 +71,45 @@ bool hexToBytes(const char * string, uint8_t *outBytes) {
     return true;
 }
 
-secp256k1_context_t *ctx = NULL;
+secp256k1_context *secp256k1ctx = NULL;
 
-// Must pass a privateKey of length 64
+// Must pass a privateKey of length 64 bytes
 void fast_crypto_secp256k1_ec_pubkey_create(const char *szPrivateKeyHex, char *szPublicKeyHex, int compressed)
 {
-    if (ctx == NULL) {
-        ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN);
+    if (secp256k1ctx == NULL) {
+        secp256k1ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
     }
 
-    uint8_t *privateKey = NULL;
+    int flags = compressed ? SECP256K1_EC_COMPRESSED : SECP256K1_EC_UNCOMPRESSED;
+    uint8_t privateKey[PRIVKEY_LENGTH];
     szPublicKeyHex[0] = 0; 
 
-    privateKey = (uint8_t *) malloc(sizeof(uint8_t) * strlen(szPrivateKeyHex) / 2);
     bool success = hexToBytes(szPrivateKeyHex, privateKey);
     if (!success) {
         return;
     }
 
-    unsigned char pubKey[65];
-    int pubKeyLen;
-    if (secp256k1_ec_pubkey_create(ctx, pubKey, &pubKeyLen, privateKey, compressed) == 1) {
-        bytesToHex(pubKey, pubKeyLen, szPublicKeyHex);
+    secp256k1_pubkey public_key;
+    if (secp256k1_ec_pubkey_create(secp256k1ctx, &public_key, privateKey) == 0) {
+        return;
     }
-    if (privateKey) {
-        free(privateKey);
-    }
+
+    unsigned char output[DECOMPRESSED_PUBKEY_LENGTH];
+    size_t output_length = DECOMPRESSED_PUBKEY_LENGTH;
+    secp256k1_ec_pubkey_serialize(secp256k1ctx, &output[0], &output_length, &public_key, flags);
+    bytesToHex(output, output_length, szPublicKeyHex);
 }
 
+// secp256k1_pubkey public_key;
+
 void fast_crypto_secp256k1_ec_privkey_tweak_add(char *szPrivateKeyHex, const char *szTweak) {
-    if (ctx == NULL) {
-        ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN);
+    if (secp256k1ctx == NULL) {
+        secp256k1ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
     }
 
     int privateKeyLen = strlen(szPrivateKeyHex) / 2;
-    unsigned char *privateKey = NULL;
-    unsigned char *tweak = NULL;
-
-    privateKey = (unsigned char *) malloc(sizeof(char *) * privateKeyLen);
-    tweak = (unsigned char *) malloc(sizeof(char *) * strlen(szTweak) / 2);
+    unsigned char privateKey[DECOMPRESSED_PUBKEY_LENGTH];
+    unsigned char tweak[DECOMPRESSED_PUBKEY_LENGTH];
 
     bool success = hexToBytes(szPrivateKeyHex, privateKey);
     if (!success) {
@@ -114,13 +119,52 @@ void fast_crypto_secp256k1_ec_privkey_tweak_add(char *szPrivateKeyHex, const cha
     if (!success) {
         return;
     }
-    if (secp256k1_ec_privkey_tweak_add(ctx, privateKey, (unsigned char *) tweak) == 1) {
+    if (secp256k1_ec_privkey_tweak_add(secp256k1ctx, privateKey, (unsigned char *) tweak) == 1) {
         bytesToHex((uint8_t *)privateKey, privateKeyLen, szPrivateKeyHex);
     }
-    if (privateKey) {
-        free(privateKey);
+}
+
+void fast_crypto_secp256k1_ec_pubkey_tweak_add(char *szPublicKeyHex, const char *szTweak, int compressed) {
+    if (compressed != 1) {
+        szPublicKeyHex[0] = 0;
+        return;
     }
-    if (tweak) {
-        free(tweak);
+
+    if (secp256k1ctx == NULL) {
+        secp256k1ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
     }
+
+    int flags = compressed ? SECP256K1_EC_COMPRESSED : SECP256K1_EC_UNCOMPRESSED;
+    int publicKeyLen = compressed ? COMPRESSED_PUBKEY_LENGTH : DECOMPRESSED_PUBKEY_LENGTH;
+
+    unsigned char publicKey[DECOMPRESSED_PUBKEY_LENGTH];
+    unsigned char tweak[DECOMPRESSED_PUBKEY_LENGTH];
+
+    bool success = hexToBytes(szPublicKeyHex, publicKey);
+    if (!success) {
+        szPublicKeyHex[0] = 0;
+        return;
+    }
+
+    success = hexToBytes(szTweak, tweak);
+    if (!success) {
+        szPublicKeyHex[0] = 0;
+        return;
+    }
+
+    secp256k1_pubkey public_key;
+    if (secp256k1_ec_pubkey_parse(secp256k1ctx, &public_key, publicKey, publicKeyLen) == 0) {
+        szPublicKeyHex[0] = 0;
+        return;
+    }
+
+    if (secp256k1_ec_pubkey_tweak_add(secp256k1ctx, &public_key, tweak) == 0) {
+        szPublicKeyHex[0] = 0;
+        return;
+    }
+
+    unsigned char output[DECOMPRESSED_PUBKEY_LENGTH];
+    size_t output_length = DECOMPRESSED_PUBKEY_LENGTH;
+    secp256k1_ec_pubkey_serialize(secp256k1ctx, &output[0], &output_length, &public_key, flags);
+    bytesToHex((uint8_t *)output, output_length, szPublicKeyHex);
 }

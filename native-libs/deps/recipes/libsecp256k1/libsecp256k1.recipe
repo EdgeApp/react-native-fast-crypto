@@ -1,8 +1,10 @@
 inherit lib
 
-source="https://github.com/libbitcoin/secp256k1.git#22f60a62"
+source="https://github.com/bitcoin/bitcoin.git#0a5a6b9"
 
 build() {
+    cd src/secp256k1
+
     # Optimize:
     patch -p1 < $recipe_dir/optimize.patch
 
