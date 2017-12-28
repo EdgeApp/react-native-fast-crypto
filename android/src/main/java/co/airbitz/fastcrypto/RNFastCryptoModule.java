@@ -96,4 +96,20 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
             promise.reject("Err", e);
         }
     }
+
+    @ReactMethod
+    public void pbkdf2Sha512(
+            String passHex,
+            String saltHex,
+            int iterations,
+            int outputBytes,
+            Promise promise) {
+        try {
+            String reply = pbkdf2Sha512JNI(passHex, saltHex, iterations, outputBytes); // test response from JNI
+            Log.d("pbkdf2Sha512JNI", String.format("reply = %s", reply));
+            promise.resolve(reply);
+        } catch (Exception e) {
+            promise.reject("Err", e);
+        }
+    }
 }

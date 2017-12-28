@@ -63,13 +63,13 @@ RCT_REMAP_METHOD(secp256k1EcPrivkeyTweakAdd,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    char *szPrivateKeyHex = malloc(sizeof(char) * ([privateKeyHex length] + 1));
+    int privateKeyHexLen = [privateKeyHex length] + 1;
+    char szPrivateKeyHex[privateKeyHexLen];
     const char *szPrivateKeyHexConst = [privateKeyHex UTF8String];
     
     strcpy(szPrivateKeyHex, szPrivateKeyHexConst);
     fast_crypto_secp256k1_ec_privkey_tweak_add(szPrivateKeyHex, [tweakHex UTF8String]);
     NSString *privateKeyTweakedHex = [NSString stringWithUTF8String:szPrivateKeyHex];
-    free(szPrivateKeyHex);
     resolve(privateKeyTweakedHex);
 }
 
@@ -80,16 +80,32 @@ RCT_REMAP_METHOD(secp256k1EcPubkeyTweakAdd,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    char *szPublicKeyHex = malloc(sizeof(char) * ([publicKeyHex length] + 1));
+    int publicKeyHexLen = [publicKeyHex length] + 1;
+    char szPublicKeyHex[publicKeyHexLen];
     const char *szPublicKeyHexConst = [publicKeyHex UTF8String];
     
     strcpy(szPublicKeyHex, szPublicKeyHexConst);
     fast_crypto_secp256k1_ec_pubkey_tweak_add(szPublicKeyHex, [tweakHex UTF8String], compressed);
     NSString *publicKeyTweakedHex = [NSString stringWithUTF8String:szPublicKeyHex];
-    free(szPublicKeyHex);
     resolve(publicKeyTweakedHex);
 }
 
+RCT_REMAP_METHOD(pbkdf2Sha512,
+                 pbkdf2Sha512:(NSString *)pass
+                 salt:(NSString *)salt
+                 iterations:(NSInteger) iterations
+                 outputBytes:(NSInteger) outputBytes
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    char szResultHex[outputBytes * 2];
+
+    fast_crypto_pbkdf2_sha512([pass UTF8String], [salt UTF8String], (int) iterations, (int) outputBytes, szResultHex);
+
+    NSString *resultHex = [NSString stringWithUTF8String:szResultHex];
+
+    resolve(resultHex);
+}
 
 @end
 

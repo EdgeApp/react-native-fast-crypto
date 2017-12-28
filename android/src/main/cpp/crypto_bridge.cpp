@@ -295,7 +295,8 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPubkeyCreateJNI(JNIEnv 
     }
     int privateKeyLen = strlen(szPrivateKeyHex);
 
-    char *szPublicKeyHex = (char *) malloc(sizeof(char) * privateKeyLen * 2);
+//    char *szPublicKeyHex = (char *) malloc(sizeof(char) * privateKeyLen * 2);
+    char szPublicKeyHex[privateKeyLen * 2];
 
     fast_crypto_secp256k1_ec_pubkey_create(szPrivateKeyHex, szPublicKeyHex, jiCompressed);
     jstring out = env->NewStringUTF(szPublicKeyHex);
@@ -343,7 +344,6 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPubkeyTweakAddJNI(JNIEn
             return env->NewStringUTF("Invalid private key error!");
         }
     }
-    int publicKeyLen = strlen(szPublicKeyHex);
 
     if (jsTweakHex) {
         szTweakHex = (char *) env->GetStringUTFChars(jsTweakHex, 0);
@@ -357,4 +357,32 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPubkeyTweakAddJNI(JNIEn
     return out;
 }
 
+JNIEXPORT jstring JNICALL
+Java_co_airbitz_fastcrypto_RNFastCryptoModule_pbkdf2Sha512JNI(JNIEnv *env, jobject thiz,
+                                                                           jstring jsPassHex,
+                                                                           jstring jsSaltHex,
+                                                                           jint iterations,
+                                                                           jint outputBytes) {
+    char *szPassHex = (char *) 0;
+    char *szSaltHex = (char *) 0;
+
+    if (jsPassHex) {
+        szPassHex = (char *) env->GetStringUTFChars(jsPassHex, 0);
+        if (!szPassHex) {
+            return env->NewStringUTF("Invalid private key error!");
+        }
+    }
+
+    if (jsSaltHex) {
+        szSaltHex = (char *) env->GetStringUTFChars(jsSaltHex, 0);
+        if (!szSaltHex) {
+            return env->NewStringUTF("Invalid tweak error!");
+        }
+    }
+
+    char szResultHex[outputBytes * 2];
+    fast_crypto_pbkdf2_sha512(szPassHex, szSaltHex, iterations, outputBytes, szResultHex);
+    jstring out = env->NewStringUTF(szResultHex);
+    return out;
+}
 }

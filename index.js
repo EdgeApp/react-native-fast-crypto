@@ -1,5 +1,5 @@
 import { NativeModules } from 'react-native'
-import { base64 } from 'rfc4648'
+import { base16, base64 } from 'rfc4648'
 
 const { RNFastCrypto } = NativeModules
 const Buffer = require('buffer/').Buffer
@@ -18,26 +18,37 @@ async function scrypt (passwd, salt, N, r, p, size) {
   return uint8array.slice(0, size)
 }
 
-async function publicKeyCreate (privateKey: string, compressed: boolean) {
-  const privateKeyHex = privateKey.toString('hex')
+async function publicKeyCreate (privateKey: Uint8Array, compressed: boolean) {
+  const privateKeyHex = base16.stringify(privateKey)
   const publicKeyHex: string = await RNFastCrypto.secp256k1EcPubkeyCreate(privateKeyHex, compressed)
-  const outBuf = Buffer.from(publicKeyHex, 'hex')
+  const outBuf = base16.parse(publicKeyHex, { out: Buffer.allocUnsafe })
   return outBuf
 }
 
-async function privateKeyTweakAdd (privateKey: string, tweak: string) {
-  const privateKeyHex = privateKey.toString('hex')
-  const tweakHex = tweak.toString('hex')
+async function privateKeyTweakAdd (privateKey: Uint8Array, tweak: Uint8Array) {
+  const privateKeyHex = base16.stringify(privateKey)
+  const tweakHex = base16.stringify(tweak)
   const privateKeyTweakedHex: string = await RNFastCrypto.secp256k1EcPrivkeyTweakAdd(privateKeyHex, tweakHex)
-  const outBuf = Buffer.from(privateKeyTweakedHex, 'hex')
+  const outBuf = base16.parse(privateKeyTweakedHex, { out: Buffer.allocUnsafe })
   return outBuf
 }
 
-async function publicKeyTweakAdd (publicKey: string, tweak: string, compressed: boolean) {
-  const publicKeyHex = publicKey.toString('hex')
-  const tweakHex = tweak.toString('hex')
+async function publicKeyTweakAdd (publicKey: Uint8Array, tweak: Uint8Array, compressed: boolean) {
+  const publicKeyHex = base16.stringify(publicKey)
+  const tweakHex = base16.stringify(tweak)
   const publickKeyTweakedHex: string = await RNFastCrypto.secp256k1EcPubkeyTweakAdd(publicKeyHex, tweakHex, compressed)
-  const outBuf = Buffer.from(publickKeyTweakedHex, 'hex')
+  const outBuf = base16.parse(publickKeyTweakedHex, { out: Buffer.allocUnsafe })
+  return outBuf
+}
+
+async function pbkdf2DeriveAsync(key: Uint8Array, salt: Uint8Array, iter: number, len: number, alg: string) {
+  if (alg !== 'sha512') {
+    throw new Error('ErrorUnsupportedPbkdf2Algorithm: ' + alg)
+  }
+  const keyHex = base16.stringify(key)
+  const saltHex = base16.stringify(salt)
+  const resultHex = await RNFastCrypto.pbkdf2Sha512(keyHex, saltHex, iter, len)
+  const outBuf = base16.parse(resultHex, { out: Buffer.allocUnsafe })
   return outBuf
 }
 
@@ -47,9 +58,14 @@ const secp256k1 = {
   publicKeyTweakAdd
 }
 
+const pbkdf2 = {
+  deriveAsync: pbkdf2DeriveAsync
+}
+
 const crypto = {
   scrypt,
-  secp256k1
+  secp256k1,
+  pbkdf2
 }
 
 // export default crypto

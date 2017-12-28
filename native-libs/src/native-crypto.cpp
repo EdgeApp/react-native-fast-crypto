@@ -11,6 +11,10 @@
 #include <string.h>
 #include <math.h>
 #include <secp256k1.h>
+#include <openssl/evp.h>
+#include <openssl/sha.h>
+// crypto.h used for the version
+#include <openssl/crypto.h>
 #include "../minilibs/scrypt/crypto_scrypt.h"
 
 #define COMPRESSED_PUBKEY_LENGTH 33
@@ -167,4 +171,19 @@ void fast_crypto_secp256k1_ec_pubkey_tweak_add(char *szPublicKeyHex, const char 
     size_t output_length = DECOMPRESSED_PUBKEY_LENGTH;
     secp256k1_ec_pubkey_serialize(secp256k1ctx, &output[0], &output_length, &public_key, flags);
     bytesToHex((uint8_t *)output, output_length, szPublicKeyHex);
+}
+
+void fast_crypto_pbkdf2_sha512(const char *szPassHex, const char *szSaltHex, int iterations, int outputBytes, char* szResultHex) {
+     unsigned int i;
+     unsigned char digest[outputBytes];
+
+     int passlen = strlen(szPassHex) / 2;
+     int saltlen = strlen(szSaltHex) / 2;
+     uint8_t pass[passlen];
+     uint8_t salt[saltlen];
+     hexToBytes(szPassHex, pass);
+     hexToBytes(szSaltHex, salt);
+
+     PKCS5_PBKDF2_HMAC((const char *) pass, passlen, (const unsigned char *) salt, saltlen, iterations, EVP_sha512(), outputBytes, digest);
+     bytesToHex(digest, sizeof(digest), szResultHex);
 }
