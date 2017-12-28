@@ -21,6 +21,7 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
     public native String secp256k1EcPubkeyCreateJNI(String privateKeyHex, int compressed);
     public native String secp256k1EcPrivkeyTweakAddJNI(String privateKeyHex, String tweakHex);
     public native String secp256k1EcPubkeyTweakAddJNI(String publicKeyHex, String tweakHex, int compressed);
+    public native String pbkdf2Sha512JNI(String passHex, String saltHex, int iterations, int outputBytes);
 
     private final ReactApplicationContext reactContext;
 
