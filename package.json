@@ -17,6 +17,13 @@
   "contributors": [
     "Paul Puey <paul@edgesecure.co>"
   ],
+  "files": [
+    "README.md",
+    "ios/*",
+    "android/*",
+    "index.js",
+    "package.json"
+  ],
   "main": "index.js",
   "scripts": {
     "build": "echo Ok"
