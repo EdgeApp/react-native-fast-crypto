@@ -307,16 +307,19 @@ JNIEXPORT jstring JNICALL
 Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPrivkeyTweakAddJNI(JNIEnv *env, jobject thiz,
                                                                             jstring jsPrivateKeyHex,
                                                                             jstring jsTweakHex) {
-    char *szPrivateKeyHex = (char *) 0;
+    char *szPrivateKeyHexTemp = (char *) 0;
     char *szTweakHex = (char *) 0;
 
     if (jsPrivateKeyHex) {
-        szPrivateKeyHex = (char *) env->GetStringUTFChars(jsPrivateKeyHex, 0);
-        if (!szPrivateKeyHex) {
+        szPrivateKeyHexTemp = (char *) env->GetStringUTFChars(jsPrivateKeyHex, 0);
+        if (!szPrivateKeyHexTemp) {
             return env->NewStringUTF("Invalid private key error!");
         }
     }
-    int privateKeyLen = strlen(szPrivateKeyHex);
+
+    int privateKeyLen = strlen(szPrivateKeyHexTemp);
+    char szPrivateKeyHex[privateKeyLen];
+    strcpy(szPrivateKeyHex, (const char *) szPrivateKeyHexTemp);
 
     if (jsTweakHex) {
         szTweakHex = (char *) env->GetStringUTFChars(jsTweakHex, 0);
@@ -335,15 +338,19 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPubkeyTweakAddJNI(JNIEn
                                                                            jstring jsPublicKeyHex,
                                                                            jstring jsTweakHex,
                                                                            jint jiCompressed) {
-    char *szPublicKeyHex = (char *) 0;
+    char *szPublicKeyHexTemp = (char *) 0;
     char *szTweakHex = (char *) 0;
 
     if (jsPublicKeyHex) {
-        szPublicKeyHex = (char *) env->GetStringUTFChars(jsPublicKeyHex, 0);
-        if (!szPublicKeyHex) {
+        szPublicKeyHexTemp = (char *) env->GetStringUTFChars(jsPublicKeyHex, 0);
+        if (!szPublicKeyHexTemp) {
             return env->NewStringUTF("Invalid private key error!");
         }
     }
+
+    int publicKeyLen = strlen(szPublicKeyHexTemp);
+    char szPublicKeyHex[publicKeyLen];
+    strcpy(szPublicKeyHex, (const char *) szPublicKeyHexTemp);
 
     if (jsTweakHex) {
         szTweakHex = (char *) env->GetStringUTFChars(jsTweakHex, 0);
