@@ -318,7 +318,7 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPrivkeyTweakAddJNI(JNIE
     }
 
     int privateKeyLen = strlen(szPrivateKeyHexTemp);
-    char szPrivateKeyHex[privateKeyLen];
+    char szPrivateKeyHex[privateKeyLen + 1];
     strcpy(szPrivateKeyHex, (const char *) szPrivateKeyHexTemp);
 
     if (jsTweakHex) {
@@ -349,7 +349,7 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPubkeyTweakAddJNI(JNIEn
     }
 
     int publicKeyLen = strlen(szPublicKeyHexTemp);
-    char szPublicKeyHex[publicKeyLen];
+    char szPublicKeyHex[publicKeyLen + 1];
     strcpy(szPublicKeyHex, (const char *) szPublicKeyHexTemp);
 
     if (jsTweakHex) {
@@ -387,7 +387,7 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_pbkdf2Sha512JNI(JNIEnv *env, jobje
         }
     }
 
-    char szResultHex[outputBytes * 2];
+    char szResultHex[(outputBytes * 2) + 1];
     fast_crypto_pbkdf2_sha512(szPassHex, szSaltHex, iterations, outputBytes, szResultHex);
     jstring out = env->NewStringUTF(szResultHex);
     return out;

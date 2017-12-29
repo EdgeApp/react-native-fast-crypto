@@ -98,7 +98,7 @@ RCT_REMAP_METHOD(pbkdf2Sha512,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    char szResultHex[outputBytes * 2];
+    char szResultHex[(outputBytes * 2) + 1];
 
     fast_crypto_pbkdf2_sha512([pass UTF8String], [salt UTF8String], (int) iterations, (int) outputBytes, szResultHex);
 
