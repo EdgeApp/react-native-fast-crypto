@@ -4,7 +4,7 @@ import { base16, base64 } from 'rfc4648'
 const { RNFastCrypto } = NativeModules
 const Buffer = require('buffer/').Buffer
 
-async function scrypt (passwd, salt, N, r, p, size) {
+export async function scrypt (passwd, salt, N, r, p, size) {
   passwd = base64.stringify(passwd)
   salt = base64.stringify(salt)
 
@@ -52,21 +52,19 @@ async function pbkdf2DeriveAsync(key: Uint8Array, salt: Uint8Array, iter: number
   return outBuf
 }
 
-const secp256k1 = {
+export const secp256k1 = {
   publicKeyCreate,
   privateKeyTweakAdd,
   publicKeyTweakAdd
 }
 
-const pbkdf2 = {
+export const pbkdf2 = {
   deriveAsync: pbkdf2DeriveAsync
 }
 
-const crypto = {
+// Deprecated. Use the named exports instead:
+export default {
   scrypt,
   secp256k1,
   pbkdf2
 }
-
-// export default crypto
-export default crypto
