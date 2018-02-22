@@ -1,6 +1,6 @@
 {
   "name": "react-native-fast-crypto",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Native C/C++ implemented crypto libraries for React Native apps",
   "keywords": [
     "react-native",

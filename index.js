@@ -15,7 +15,7 @@ export async function scrypt (passwd, salt, N, r, p, size) {
   console.log('RNFS:script finished in ' + elapsed + 'ms')
 
   let uint8array = base64.parse(retval)
-  return uint8array.slice(0, size)
+  return uint8array.subarray(0, size)
 }
 
 async function publicKeyCreate (privateKey: Uint8Array, compressed: boolean) {

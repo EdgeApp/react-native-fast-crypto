@@ -221,10 +221,8 @@ int Base64encode(char *encoded, const char *string, int len)
 
 JNIEXPORT jstring JNICALL
 Java_co_airbitz_fastcrypto_RNFastCryptoModule_scryptJNI(JNIEnv *env, jobject thiz,
-                                                              jstring jsPassword, jstring jsSalt, jint N,
-                                                              jint r, jint p, jint size) {
-//    LOGD("passwd=%s, salt=%s, n=%d, r=%d, p=%d, size=%d", passwd, salt, N, r, p, size);
-
+                                                        jstring jsPassword, jstring jsSalt, jint N,
+                                                        jint r, jint p, jint size) {
     // Create password character buffer
     char *szPassword = (char *) 0;
     szPassword = 0;
@@ -234,7 +232,6 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_scryptJNI(JNIEnv *env, jobject thi
             return env->NewStringUTF("Password error!");
         }
     }
-//    size_t passwdLen = (size_t) env->GetStringUTFLength(passwd);
 
     char *szSalt = (char *) 0;
     szSalt = 0;
@@ -244,8 +241,6 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_scryptJNI(JNIEnv *env, jobject thi
             return env->NewStringUTF("Salt error!");
         }
     }
-//    size_t saltyLen = (size_t) env->GetStringUTFLength(salt);
-
     LOGD("passwd=%s, salt=%s, n=%d, r=%d, p=%d, size=%d", szPassword, szSalt, N, r, p, size);
 
     // Base64 decode string into a buffer
@@ -269,7 +264,7 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_scryptJNI(JNIEnv *env, jobject thi
     int b64encSize = Base64encode_len(size);
 
     char *szB64Encoded = (char *)malloc(sizeof(char) * b64encSize);
-    int b64encLen = Base64encode(szB64Encoded, (const char *) buffer, b64encSize);
+    int b64encLen = Base64encode(szB64Encoded, (const char *) buffer, size);
 
     LOGD("result szB64Encoded:%s len:%d", szB64Encoded, b64encLen);
 
@@ -278,6 +273,8 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_scryptJNI(JNIEnv *env, jobject thi
     free(szB64Encoded);
     free(passwordBuf);
     free(saltBuf);
+    env->ReleaseStringUTFChars(jsPassword, szPassword);
+    env->ReleaseStringUTFChars(jsSalt, szSalt);
 
     return out;
 }
@@ -295,11 +292,12 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPubkeyCreateJNI(JNIEnv 
     }
     int privateKeyLen = strlen(szPrivateKeyHex);
 
-//    char *szPublicKeyHex = (char *) malloc(sizeof(char) * privateKeyLen * 2);
     char szPublicKeyHex[privateKeyLen * 2];
 
     fast_crypto_secp256k1_ec_pubkey_create(szPrivateKeyHex, szPublicKeyHex, jiCompressed);
     jstring out = env->NewStringUTF(szPublicKeyHex);
+    env->ReleaseStringUTFChars(jsPrivateKeyHex, szPrivateKeyHex);
+
     return out;
 }
 
@@ -324,12 +322,15 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPrivkeyTweakAddJNI(JNIE
     if (jsTweakHex) {
         szTweakHex = (char *) env->GetStringUTFChars(jsTweakHex, 0);
         if (!szTweakHex) {
+            env->ReleaseStringUTFChars(jsPrivateKeyHex, szPrivateKeyHexTemp);
             return env->NewStringUTF("Invalid tweak error!");
         }
     }
 
     fast_crypto_secp256k1_ec_privkey_tweak_add(szPrivateKeyHex, szTweakHex);
     jstring out = env->NewStringUTF(szPrivateKeyHex);
+    env->ReleaseStringUTFChars(jsPrivateKeyHex, szPrivateKeyHexTemp);
+    env->ReleaseStringUTFChars(jsTweakHex, szTweakHex);
     return out;
 }
 
@@ -355,12 +356,15 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPubkeyTweakAddJNI(JNIEn
     if (jsTweakHex) {
         szTweakHex = (char *) env->GetStringUTFChars(jsTweakHex, 0);
         if (!szTweakHex) {
+            env->ReleaseStringUTFChars(jsPublicKeyHex, szPublicKeyHexTemp);
             return env->NewStringUTF("Invalid tweak error!");
         }
     }
 
     fast_crypto_secp256k1_ec_pubkey_tweak_add(szPublicKeyHex, szTweakHex, jiCompressed);
     jstring out = env->NewStringUTF(szPublicKeyHex);
+    env->ReleaseStringUTFChars(jsPublicKeyHex, szPublicKeyHexTemp);
+    env->ReleaseStringUTFChars(jsTweakHex, szTweakHex);
     return out;
 }
 
@@ -383,6 +387,7 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_pbkdf2Sha512JNI(JNIEnv *env, jobje
     if (jsSaltHex) {
         szSaltHex = (char *) env->GetStringUTFChars(jsSaltHex, 0);
         if (!szSaltHex) {
+            env->ReleaseStringUTFChars(jsPassHex, szPassHex);
             return env->NewStringUTF("Invalid tweak error!");
         }
     }
@@ -390,6 +395,8 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_pbkdf2Sha512JNI(JNIEnv *env, jobje
     char szResultHex[(outputBytes * 2) + 1];
     fast_crypto_pbkdf2_sha512(szPassHex, szSaltHex, iterations, outputBytes, szResultHex);
     jstring out = env->NewStringUTF(szResultHex);
+    env->ReleaseStringUTFChars(jsPassHex, szPassHex);
+    env->ReleaseStringUTFChars(jsSaltHex, szSaltHex);
     return out;
 }
 }
