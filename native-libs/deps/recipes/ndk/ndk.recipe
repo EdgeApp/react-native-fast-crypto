@@ -26,7 +26,8 @@ setup() {
 
     echo Unpacking toolchain...
     cd android-ndk-$version
-    python build/tools/make_standalone_toolchain.py --verbose --arch $1 --api 14 --stl libc++ --force --install-dir $work_dir/$1
+    echo Running make_standalone_toolchain.py $1
+    python build/tools/make_standalone_toolchain.py --verbose --arch $1 --api 21 --stl libc++ --force --install-dir $work_dir/$1
 
     echo Patching headers...
     cat $recipe_dir/langinfo.h >> $work_dir/$1/sysroot/usr/local/include/langinfo.h
@@ -34,14 +35,22 @@ setup() {
 setup_arm() {
     setup arm arm-linux-androideabi
 }
+setup_arm64() {
+    setup arm64 aarch64-linux-androideabi
+}
 setup_x86() {
     setup x86 x86
+}
+setup_x86_64() {
+    setup x86_64 x86_64-linux-android
 }
 setup_mips() {
     setup mips mipsel-linux-android
 }
 
 task setup-arm download
+task setup-arm64 download
 task setup-x86 download
+task setup-x86_64 download
 task setup-mips download
 default=setup-arm

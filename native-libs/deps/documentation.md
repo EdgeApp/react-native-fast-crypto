@@ -71,7 +71,9 @@ The clean task simply deletes the work directory and all its contents.
 There are a whole family of `build` tasks for different platform and architecture combinations:
 
 * android-arm
+* android-arm64
 * android-x86
+* android-x86_64
 * android-mips
 * ios-armv7
 * ios-armv7s
