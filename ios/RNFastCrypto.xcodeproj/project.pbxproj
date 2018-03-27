@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		B3E7B58A1CC2AC0600A0062D /* RNFastCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */; };
+		DA9922AD2069DF110094B357 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9922A32069DF100094B357 /* libboost_system.a */; };
+		DA9922AE2069DF110094B357 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9922A42069DF100094B357 /* libboost_thread.a */; };
+		DA9922AF2069DF110094B357 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9922A52069DF100094B357 /* libboost_program_options.a */; };
+		DA9922B02069DF110094B357 /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9922A62069DF100094B357 /* libboost_date_time.a */; };
+		DA9922B12069DF110094B357 /* libbitcoin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9922A72069DF100094B357 /* libbitcoin.a */; };
+		DA9922B22069DF110094B357 /* libboost_chrono.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9922A82069DF100094B357 /* libboost_chrono.a */; };
+		DA9922B32069DF110094B357 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9922A92069DF100094B357 /* libboost_filesystem.a */; };
+		DA9922B42069DF110094B357 /* libboost_regex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9922AA2069DF100094B357 /* libboost_regex.a */; };
+		DA9922B52069DF110094B357 /* libjansson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9922AB2069DF100094B357 /* libjansson.a */; };
+		DA9922B62069DF110094B357 /* libboost_atomic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9922AC2069DF100094B357 /* libboost_atomic.a */; };
 		DAE53E701F0E150F00E466B0 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6B1F0E150F00E466B0 /* libcrypto.a */; };
 		DAE53E711F0E150F00E466B0 /* libnativecrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */; };
 		DAE53E721F0E150F00E466B0 /* libsecp256k1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */; };
@@ -31,6 +41,16 @@
 		134814201AA4EA6300B7C361 /* libRNFastCrypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNFastCrypto.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E7B5881CC2AC0600A0062D /* RNFastCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFastCrypto.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFastCrypto.m; sourceTree = "<group>"; };
+		DA9922A32069DF100094B357 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = Libraries/libboost_system.a; sourceTree = "<group>"; };
+		DA9922A42069DF100094B357 /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_thread.a; path = Libraries/libboost_thread.a; sourceTree = "<group>"; };
+		DA9922A52069DF100094B357 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = Libraries/libboost_program_options.a; sourceTree = "<group>"; };
+		DA9922A62069DF100094B357 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_date_time.a; path = Libraries/libboost_date_time.a; sourceTree = "<group>"; };
+		DA9922A72069DF100094B357 /* libbitcoin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbitcoin.a; path = Libraries/libbitcoin.a; sourceTree = "<group>"; };
+		DA9922A82069DF100094B357 /* libboost_chrono.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_chrono.a; path = Libraries/libboost_chrono.a; sourceTree = "<group>"; };
+		DA9922A92069DF100094B357 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = Libraries/libboost_filesystem.a; sourceTree = "<group>"; };
+		DA9922AA2069DF100094B357 /* libboost_regex.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_regex.a; path = Libraries/libboost_regex.a; sourceTree = "<group>"; };
+		DA9922AB2069DF100094B357 /* libjansson.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjansson.a; path = Libraries/libjansson.a; sourceTree = "<group>"; };
+		DA9922AC2069DF100094B357 /* libboost_atomic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_atomic.a; path = Libraries/libboost_atomic.a; sourceTree = "<group>"; };
 		DAE53E6B1F0E150F00E466B0 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Libraries/libcrypto.a; sourceTree = "<group>"; };
 		DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnativecrypto.a; path = Libraries/libnativecrypto.a; sourceTree = "<group>"; };
 		DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsecp256k1.a; path = Libraries/libsecp256k1.a; sourceTree = "<group>"; };
@@ -44,9 +64,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA9922AD2069DF110094B357 /* libboost_system.a in Frameworks */,
+				DA9922B42069DF110094B357 /* libboost_regex.a in Frameworks */,
+				DA9922AF2069DF110094B357 /* libboost_program_options.a in Frameworks */,
+				DA9922B62069DF110094B357 /* libboost_atomic.a in Frameworks */,
+				DA9922B32069DF110094B357 /* libboost_filesystem.a in Frameworks */,
 				DAE53E741F0E150F00E466B0 /* libz.a in Frameworks */,
+				DA9922B02069DF110094B357 /* libboost_date_time.a in Frameworks */,
 				DAE53E731F0E150F00E466B0 /* libssl.a in Frameworks */,
+				DA9922B22069DF110094B357 /* libboost_chrono.a in Frameworks */,
 				DAE53E701F0E150F00E466B0 /* libcrypto.a in Frameworks */,
+				DA9922B12069DF110094B357 /* libbitcoin.a in Frameworks */,
+				DA9922B52069DF110094B357 /* libjansson.a in Frameworks */,
+				DA9922AE2069DF110094B357 /* libboost_thread.a in Frameworks */,
 				DAE53E711F0E150F00E466B0 /* libnativecrypto.a in Frameworks */,
 				DAE53E721F0E150F00E466B0 /* libsecp256k1.a in Frameworks */,
 			);
@@ -77,6 +107,16 @@
 		DAE53E6A1F0E14FB00E466B0 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				DA9922A72069DF100094B357 /* libbitcoin.a */,
+				DA9922AC2069DF100094B357 /* libboost_atomic.a */,
+				DA9922A82069DF100094B357 /* libboost_chrono.a */,
+				DA9922A62069DF100094B357 /* libboost_date_time.a */,
+				DA9922A92069DF100094B357 /* libboost_filesystem.a */,
+				DA9922A52069DF100094B357 /* libboost_program_options.a */,
+				DA9922AA2069DF100094B357 /* libboost_regex.a */,
+				DA9922A32069DF100094B357 /* libboost_system.a */,
+				DA9922A42069DF100094B357 /* libboost_thread.a */,
+				DA9922AB2069DF100094B357 /* libjansson.a */,
 				DAE53E6B1F0E150F00E466B0 /* libcrypto.a */,
 				DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */,
 				DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */,

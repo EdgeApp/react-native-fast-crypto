@@ -15,6 +15,9 @@
 #include <openssl/sha.h>
 // crypto.h used for the version
 #include <openssl/crypto.h>
+#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/bitcoin/math/secp256k1_initializer.hpp>
+
 #include "../minilibs/scrypt/crypto_scrypt.h"
 
 #define COMPRESSED_PUBKEY_LENGTH 33
@@ -75,41 +78,34 @@ bool hexToBytes(const char * string, uint8_t *outBytes) {
     return true;
 }
 
-secp256k1_context *secp256k1ctx = NULL;
 
 // Must pass a privateKey of length 64 bytes
 void fast_crypto_secp256k1_ec_pubkey_create(const char *szPrivateKeyHex, char *szPublicKeyHex, int compressed)
 {
-    if (secp256k1ctx == NULL) {
-        secp256k1ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
-    }
+    const auto signing_context = libbitcoin::signing.context();
 
-    int flags = compressed ? SECP256K1_EC_COMPRESSED : SECP256K1_EC_UNCOMPRESSED;
+    // int flags = compressed ? SECP256K1_EC_COMPRESSED : SECP256K1_EC_UNCOMPRESSED;
     uint8_t privateKey[PRIVKEY_LENGTH];
-    szPublicKeyHex[0] = 0; 
+    szPublicKeyHex[0] = 0;
+    int publicKeyLen;
 
     bool success = hexToBytes(szPrivateKeyHex, privateKey);
     if (!success) {
         return;
     }
 
-    secp256k1_pubkey public_key;
-    if (secp256k1_ec_pubkey_create(secp256k1ctx, &public_key, privateKey) == 0) {
+    unsigned char public_key[DECOMPRESSED_PUBKEY_LENGTH];
+    if (secp256k1_ec_pubkey_create(signing_context, public_key, &publicKeyLen, privateKey, compressed) == 0) {
         return;
     }
 
-    unsigned char output[DECOMPRESSED_PUBKEY_LENGTH];
-    size_t output_length = DECOMPRESSED_PUBKEY_LENGTH;
-    secp256k1_ec_pubkey_serialize(secp256k1ctx, &output[0], &output_length, &public_key, flags);
-    bytesToHex(output, output_length, szPublicKeyHex);
+    bytesToHex(public_key, publicKeyLen, szPublicKeyHex);
 }
 
 // secp256k1_pubkey public_key;
 
 void fast_crypto_secp256k1_ec_privkey_tweak_add(char *szPrivateKeyHex, const char *szTweak) {
-    if (secp256k1ctx == NULL) {
-        secp256k1ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
-    }
+    const auto verification_context = libbitcoin::verification.context();
 
     int privateKeyLen = strlen(szPrivateKeyHex) / 2;
     unsigned char privateKey[DECOMPRESSED_PUBKEY_LENGTH];
@@ -123,7 +119,7 @@ void fast_crypto_secp256k1_ec_privkey_tweak_add(char *szPrivateKeyHex, const cha
     if (!success) {
         return;
     }
-    if (secp256k1_ec_privkey_tweak_add(secp256k1ctx, privateKey, (unsigned char *) tweak) == 1) {
+    if (secp256k1_ec_privkey_tweak_add(verification_context, privateKey, (unsigned char *) tweak) == 1) {
         bytesToHex((uint8_t *)privateKey, privateKeyLen, szPrivateKeyHex);
     }
 }
@@ -134,11 +130,8 @@ void fast_crypto_secp256k1_ec_pubkey_tweak_add(char *szPublicKeyHex, const char 
         return;
     }
 
-    if (secp256k1ctx == NULL) {
-        secp256k1ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
-    }
+    const auto verification_context = libbitcoin::verification.context();
 
-    int flags = compressed ? SECP256K1_EC_COMPRESSED : SECP256K1_EC_UNCOMPRESSED;
     int publicKeyLen = compressed ? COMPRESSED_PUBKEY_LENGTH : DECOMPRESSED_PUBKEY_LENGTH;
 
     unsigned char publicKey[DECOMPRESSED_PUBKEY_LENGTH];
@@ -156,21 +149,13 @@ void fast_crypto_secp256k1_ec_pubkey_tweak_add(char *szPublicKeyHex, const char 
         return;
     }
 
-    secp256k1_pubkey public_key;
-    if (secp256k1_ec_pubkey_parse(secp256k1ctx, &public_key, publicKey, publicKeyLen) == 0) {
+
+    if (secp256k1_ec_pubkey_tweak_add(verification_context, publicKey, publicKeyLen, tweak) == 0) {
         szPublicKeyHex[0] = 0;
         return;
     }
 
-    if (secp256k1_ec_pubkey_tweak_add(secp256k1ctx, &public_key, tweak) == 0) {
-        szPublicKeyHex[0] = 0;
-        return;
-    }
-
-    unsigned char output[DECOMPRESSED_PUBKEY_LENGTH];
-    size_t output_length = DECOMPRESSED_PUBKEY_LENGTH;
-    secp256k1_ec_pubkey_serialize(secp256k1ctx, &output[0], &output_length, &public_key, flags);
-    bytesToHex((uint8_t *)output, output_length, szPublicKeyHex);
+    bytesToHex((uint8_t *)publicKey, publicKeyLen, szPublicKeyHex);
 }
 
 void fast_crypto_pbkdf2_sha512(const char *szPassHex, const char *szSaltHex, int iterations, int outputBytes, char* szResultHex) {

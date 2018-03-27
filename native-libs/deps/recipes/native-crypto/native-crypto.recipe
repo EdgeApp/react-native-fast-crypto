@@ -1,4 +1,5 @@
 depends="openssl libsecp256k1"
+depends="jansson libbitcoin libsecp256k1 openssl"
 inherit lib
 
 build() {
