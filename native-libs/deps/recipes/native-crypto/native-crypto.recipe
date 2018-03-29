@@ -11,6 +11,8 @@ build() {
     *)          output=libnativecrypto.a ;;
     esac
 
+#    export CFLAGS="$CFLAGS -O0"
+#    export CXXFLAGS="$CXXFLAGS -O0"
     export CFLAGS="$CFLAGS -O2"
     export CXXFLAGS="$CXXFLAGS -O2"
 

@@ -6,7 +6,7 @@
  */
 
 #include "Random.hpp"
-#include "../Context.hpp"
+// #include "../Context.hpp"
 #include "../util/U08Buf.hpp"
 #include <openssl/rand.h>
 #ifndef __ANDROID__
@@ -14,7 +14,7 @@
 #endif
 #include <sys/time.h>
 #include <unistd.h>
-#include "Scrypt.hpp"
+// #include "Scrypt.hpp"
 
 namespace abcd {
 
@@ -38,7 +38,7 @@ randomInitialize(DataSlice seed)
     ABC_BUF_DUP(NewSeed, seed);
 
     // mix in some info on our file system
-#ifndef __ANDROID__
+#if 0
     std::string rootDir = gContext->paths.rootDir();
     ABC_BUF_APPEND_PTR(NewSeed, rootDir.data(), rootDir.size());
     struct statvfs fiData;

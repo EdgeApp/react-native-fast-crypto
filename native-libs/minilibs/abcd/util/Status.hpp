@@ -9,7 +9,7 @@
 #define ABCD_UTIL_STATUS_HPP
 
 // We need tABC_CC and tABC_Error:
-#include "../../src/ABC.h"
+#include "../ABC.h"
 #include <list>
 #include <ostream>
 #include <string>

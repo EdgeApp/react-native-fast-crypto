@@ -13,7 +13,7 @@
 #define ABCD_CRYPTO_CRYPTO_HPP
 
 #include "../util/U08Buf.hpp"
-#include "../../src/ABC.h"
+#include "../ABC.h"
 #include <jansson.h>
 
 namespace abcd {

@@ -18,6 +18,10 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/bitcoin/math/secp256k1_initializer.hpp>
 
+#include "../minilibs/abcd/crypto/Crypto.hpp"
+#include "../minilibs/abcd/crypto/Encoding.hpp"
+#include "../minilibs/abcd/json/JsonBox.hpp"
+
 #include "../minilibs/scrypt/crypto_scrypt.h"
 
 #define COMPRESSED_PUBKEY_LENGTH 33
@@ -159,9 +163,7 @@ void fast_crypto_secp256k1_ec_pubkey_tweak_add(char *szPublicKeyHex, const char 
 }
 
 void fast_crypto_pbkdf2_sha512(const char *szPassHex, const char *szSaltHex, int iterations, int outputBytes, char* szResultHex) {
-     unsigned int i;
      unsigned char digest[outputBytes];
-
      int passlen = strlen(szPassHex) / 2;
      int saltlen = strlen(szSaltHex) / 2;
      uint8_t pass[passlen];
@@ -171,4 +173,27 @@ void fast_crypto_pbkdf2_sha512(const char *szPassHex, const char *szSaltHex, int
 
      PKCS5_PBKDF2_HMAC((const char *) pass, passlen, (const unsigned char *) salt, saltlen, iterations, EVP_sha512(), outputBytes, digest);
      bytesToHex(digest, sizeof(digest), szResultHex);
+}
+
+void fast_crypto_decrypt_jsonbox(const char *szJsonBox, const char *szBase16Key, char **pszResult, int *size) {
+    abcd::DataChunk key;
+    abcd::base16Decode(key, szBase16Key);
+    abcd::JsonBox box;
+    abcd::Status s1 = box.decode(szJsonBox);
+    printf("--%d--", s1.value());
+    if (s1.value() > 0 || s1.value() < 0) {
+        auto m = s1.message();
+        printf("%s", m.c_str());
+    }
+
+    abcd::DataChunk data;
+    abcd::Status s2 = box.decrypt(data, key);
+    if (s2.value() > 0 || s2.value() < 0) {
+        auto m = s2.message();
+        printf("%s", m.c_str());
+    }
+    std::string result = abcd::toString(data);
+    *size = result.size();
+    *pszResult = (char *) malloc(sizeof(char) * result.size());
+    memcpy(*pszResult, result.data(), result.size());
 }

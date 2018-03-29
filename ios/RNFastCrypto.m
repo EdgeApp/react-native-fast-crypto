@@ -107,5 +107,20 @@ RCT_REMAP_METHOD(pbkdf2Sha512,
     resolve(resultHex);
 }
 
+RCT_REMAP_METHOD(decryptJsonBox, decryptJsonBox:(NSString *)jsonBox
+                 base16Key:(NSString *)base16Key
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    char *pszResult = NULL;
+    int size;
+    
+    fast_crypto_decrypt_jsonbox([jsonBox UTF8String], [base16Key UTF8String], &pszResult, &size);
+    NSData *data = [NSData dataWithBytes:pszResult length:size];
+    NSString *str = [data base64EncodedStringWithOptions:0];
+    free(pszResult);
+    resolve(str);
+}
+
 @end
 

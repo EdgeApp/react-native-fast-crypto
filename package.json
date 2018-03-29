@@ -21,16 +21,52 @@
     "README.md",
     "ios/*",
     "android/*",
-    "index.js",
+    "lib/*",
     "package.json"
   ],
-  "main": "index.js",
+  "main": "./lib/indexRNFastCrypto.js",
   "scripts": {
-    "build": "echo Ok"
+    "build": "npm run build:clean && npm run build:flow && flow-remove-types src/ -d lib/",
+    "build:clean": "rimraf lib",
+    "build:flow": "flow-copy-source -v -i '**/test/**' src lib",
+    "precommit": "npm run build && npm test",
+    "flow": "flow status",
+    "format": "prettier-eslint --write '*.js' 'src/**/*.js' 'test/**/*.js'",
+    "lint": "eslint '*.js' 'src/**/*.js' 'test/**/*.js' && npm run flow",
+    "lint:fix": "eslint --fix '*.js' 'src/**/*.js' 'test/**/*.js' && npm run flow",
+    "prepare": "npm run build",
+    "pretest": "npm run lint",
+    "test": "echo OK"
   },
   "dependencies": {
     "buffer": "^5.0.8",
     "rfc4648": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-flow": "^6.23.0",
+    "eslint": "4.5.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "flow-bin": "^0.58.0",
+    "flow-copy-source": "^1.2.1",
+    "flow-remove-types": "^1.2.3",
+    "husky": "^0.14.3",
+    "prettier-eslint-cli": "^4.4.0",
+    "react-native": "^0.47.0",
+    "rimraf": "^2.6.1"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "plugins": [
+      "flowtype"
+    ]
   },
   "peerDependencies": {
     "react-native": "^0.47.0"

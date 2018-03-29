@@ -38,6 +38,7 @@ endif
 abc_sources = \
 	$(wildcard src/*.cpp) \
 	$(wildcard minilibs/abcd/*.cpp) \
+	$(wildcard minilibs/abcd/*/*.cpp) \
 	minilibs/scrypt/crypto_scrypt.c \
 	minilibs/scrypt/sha256.c
 

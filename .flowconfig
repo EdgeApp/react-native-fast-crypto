@@ -1,0 +1,14 @@
+[ignore]
+<PROJECT_ROOT>/lib/.*
+.*/node_modules/react-native/.*
+.*/node_modules/react-native-fs/.*
+.*/node_modules/metro-bundler/.*
+.*/native-libs/.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]

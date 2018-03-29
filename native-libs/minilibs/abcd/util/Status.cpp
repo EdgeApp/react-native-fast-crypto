@@ -65,7 +65,7 @@ Status::log() const
     {
         std::stringstream s;
         s << *this;
-        ABC_DebugLog("%s", s.str().c_str());
+        // ABC_DebugLog("%s", s.str().c_str());
     }
     return *this;
 }

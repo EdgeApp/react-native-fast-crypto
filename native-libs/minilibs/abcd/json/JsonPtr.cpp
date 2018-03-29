@@ -8,8 +8,8 @@
 #include "JsonPtr.hpp"
 #include "JsonBox.hpp"
 #include "../crypto/Crypto.hpp"
-#include "../util/Debug.hpp"
-#include "../util/FileIO.hpp"
+// #include "../util/Debug.hpp"
+// #include "../util/FileIO.hpp"
 #include "../util/Util.hpp"
 #include <new>
 
@@ -109,29 +109,29 @@ JsonPtr::clone() const
     return out;
 }
 
-Status
-JsonPtr::load(const std::string &path)
-{
-    json_error_t error;
-    json_t *root = json_load_file(path.c_str(), loadFlags, &error);
-    if (!root)
-        return ABC_ERROR(ABC_CC_JSONError, error.text);
-    reset(root);
-    return Status();
-}
+// Status
+// JsonPtr::load(const std::string &path)
+// {
+//     json_error_t error;
+//     json_t *root = json_load_file(path.c_str(), loadFlags, &error);
+//     if (!root)
+//         return ABC_ERROR(ABC_CC_JSONError, error.text);
+//     reset(root);
+//     return Status();
+// }
 
-Status
-JsonPtr::load(const std::string &path, DataSlice dataKey)
-{
-    JsonBox box;
-    ABC_CHECK(box.load(path));
+// Status
+// JsonPtr::load(const std::string &path, DataSlice dataKey)
+// {
+//     JsonBox box;
+//     ABC_CHECK(box.load(path));
 
-    DataChunk data;
-    ABC_CHECK(box.decrypt(data, dataKey));
-    ABC_CHECK(decode(toString(data)));
+//     DataChunk data;
+//     ABC_CHECK(box.decrypt(data, dataKey));
+//     ABC_CHECK(decode(toString(data)));
 
-    return Status();
-}
+//     return Status();
+// }
 
 Status
 JsonPtr::decode(const std::string &data)
@@ -144,37 +144,37 @@ JsonPtr::decode(const std::string &data)
     return Status();
 }
 
-Status
-JsonPtr::save(const std::string &path) const
-{
-    ABC_DebugLog("Writing JSON file %s", path.c_str());
+// Status
+// JsonPtr::save(const std::string &path) const
+// {
+//     ABC_DebugLog("Writing JSON file %s", path.c_str());
 
-    const auto pathTmp = path + ".tmp";
-    if (json_dump_file(root_, pathTmp.c_str(), saveFlags))
-        return ABC_ERROR(ABC_CC_FileWriteError, "Cannot write " + pathTmp);
+//     const auto pathTmp = path + ".tmp";
+//     if (json_dump_file(root_, pathTmp.c_str(), saveFlags))
+//         return ABC_ERROR(ABC_CC_FileWriteError, "Cannot write " + pathTmp);
 
-    if (rename(pathTmp.c_str(), path.c_str()))
-        return ABC_ERROR(ABC_CC_FileWriteError,
-                         "Cannot rename " + pathTmp + " to " + path);
+//     if (rename(pathTmp.c_str(), path.c_str()))
+//         return ABC_ERROR(ABC_CC_FileWriteError,
+//                          "Cannot rename " + pathTmp + " to " + path);
 
-    return Status();
-}
+//     return Status();
+// }
 
-Status
-JsonPtr::save(const std::string &path, DataSlice dataKey) const
-{
-    // Some downstream decoders forgot to null-terminate their input.
-    // This is a bug, but we can save old versions of the app from crashing
-    // by including a null byte in the encrypted data.
-    auto data = encode();
-    data.push_back(0);
+// Status
+// JsonPtr::save(const std::string &path, DataSlice dataKey) const
+// {
+//     // Some downstream decoders forgot to null-terminate their input.
+//     // This is a bug, but we can save old versions of the app from crashing
+//     // by including a null byte in the encrypted data.
+//     auto data = encode();
+//     data.push_back(0);
 
-    JsonBox box;
-    ABC_CHECK(box.encrypt(data, dataKey));
-    ABC_CHECK(box.save(path));
+//     JsonBox box;
+//     ABC_CHECK(box.encrypt(data, dataKey));
+//     ABC_CHECK(box.save(path));
 
-    return Status();
-}
+//     return Status();
+// }
 
 std::string
 JsonPtr::encode(bool compact) const

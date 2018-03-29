@@ -7,6 +7,9 @@ build() {
     echo Patching...
     patch -p1 < $recipe_dir/config.patch
 
+#    export CFLAGS="$CFLAGS -g -DDEBUG -O0"
+#    export CXXFLAGS="$CXXFLAGS -g -DDEBUG -O0"
+
     echo Building...
     autoreconf -i
     ./configure --enable-static --disable-shared --host=$cross --prefix=$install_dir \
