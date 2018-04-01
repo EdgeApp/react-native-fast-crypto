@@ -67,11 +67,17 @@ async function pbkdf2DeriveAsync (key: Uint8Array, salt: Uint8Array, iter: numbe
   return outBuf
 }
 
-async function decryptJsonBox (jsonBox: string, key: Uint8Array): Promise<Uint8Array> {
+async function decryptJsonBoxBinary (jsonBox: string, key: Uint8Array): Promise<Uint8Array> {
   const base16Key = base16.stringify(key)
-  const retval:string = await RNFastCrypto.decryptJsonBox(jsonBox, base16Key)
+  const retval:string = await RNFastCrypto.decryptJsonBoxBinary(jsonBox, base16Key)
   const uint8array = base64.parse(retval)
   return uint8array
+}
+
+async function decryptJsonBoxText (jsonBox: string, key: Uint8Array): Promise<Uint8Array> {
+  const base16Key = base16.stringify(key)
+  const retval = await RNFastCrypto.decryptJsonBoxText(jsonBox, base16Key)
+  return retval
 }
 
 export const secp256k1 = {
@@ -85,7 +91,8 @@ export const pbkdf2 = {
 }
 
 export const encryptedJsonBox = {
-  decryptJsonBox
+  decryptJsonBoxText,
+  decryptJsonBoxBinary
 }
 
 // Deprecated. Use the named exports instead:
