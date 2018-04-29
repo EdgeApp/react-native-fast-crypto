@@ -51,6 +51,8 @@ void fast_crypto_secp256k1_ec_pubkey_tweak_add(char *szPublicKeyHex, const char 
 void fast_crypto_secp256k1_ec_pubkey_create(const char *const szPrivateKeyHex, char *szPublicKeyHex, int compressed);
 void fast_crypto_pbkdf2_sha512(const char *const szPass, const char *szSalt, int iterations, int outputBytes, char* szResultHex);
 void fast_crypto_decrypt_jsonbox(const char *const szJsonBox, const char *szBase16Key, char **pszResult, int *size);
+void fast_crypto_repo_get_data(const char *const szPath, const char *szPathFallback, const char *szPathWhiteout, const char *szBase16Key, char **pszResult, int *size);
+void fast_crypto_repo_get_text(const char *const szPath, const char *szPathFallback, const char *szPathWhiteout, const char *szBase16Key, char **pszResult);
 
 #ifdef __cplusplus
 }

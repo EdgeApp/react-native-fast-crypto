@@ -13,6 +13,8 @@ lib/
 # Xcode
 #
 build/
+build-release/
+build-debug/
 *.pbxuser
 !default.pbxuser
 *.mode1v3

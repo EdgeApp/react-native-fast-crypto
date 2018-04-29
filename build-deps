@@ -14,7 +14,7 @@ touch native-libs/deps/recipes/native-crypto/native-crypto.recipe
 (
     cd native-libs/deps
     make native-crypto.package-ios-universal $@
-    make native-crypto.build-android-arm native-crypto.build-android-x86 $@
+#    make native-crypto.build-android-arm native-crypto.build-android-x86 $@
 )
 
 # Copy the results locally:

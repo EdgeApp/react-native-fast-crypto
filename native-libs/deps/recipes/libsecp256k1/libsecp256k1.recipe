@@ -8,6 +8,8 @@ build() {
 
 #    export CFLAGS="$CFLAGS -g -DDEBUG -O0"
 #    export CXXFLAGS="$CXXFLAGS -g -DDEBUG -O0"
+    export CFLAGS="$CFLAGS -O2"
+    export CXXFLAGS="$CXXFLAGS -O2"
 
     # Build:
     autoreconf -i

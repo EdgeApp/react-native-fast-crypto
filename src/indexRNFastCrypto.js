@@ -80,6 +80,29 @@ async function decryptJsonBoxText (jsonBox: string, key: Uint8Array): Promise<Ui
   return retval
 }
 
+async function getData (
+  path: string,
+  pathFallback: string | null,
+  pathWhiteout: string | null,
+  key: Uint8Array
+): Promise<Uint8Array> {
+  const base16Key = base16.stringify(key)
+  const retval: string = await RNFastCrypto.repoFileGetData(path, pathFallback, pathWhiteout, base16Key)
+  const uint8array = base64.parse(retval)
+  return uint8array
+}
+
+async function getText (
+  path: string,
+  pathFallback: string | null,
+  pathWhiteout: string | null,
+  key: Uint8Array
+): Promise<string> {
+  const base16Key = base16.stringify(key)
+  const retval = await RNFastCrypto.repoFileGetText(path, pathFallback, pathWhiteout, base16Key)
+  return retval
+}
+
 export const secp256k1 = {
   publicKeyCreate,
   privateKeyTweakAdd,
@@ -95,10 +118,15 @@ export const encryptedJsonBox = {
   decryptJsonBoxBinary
 }
 
-// Deprecated. Use the named exports instead:
-export default {
-  encryptedJsonBox,
-  scrypt,
-  secp256k1,
-  pbkdf2
+export const encryptedDisklet = {
+  getData,
+  getText
 }
+
+// Deprecated. Use the named exports instead:
+// export default {
+//   encryptedJsonBox,
+//   scrypt,
+//   secp256k1,
+//   pbkdf2
+// }

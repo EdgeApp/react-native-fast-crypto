@@ -197,3 +197,65 @@ void fast_crypto_decrypt_jsonbox(const char *szJsonBox, const char *szBase16Key,
     *pszResult = (char *) malloc(sizeof(char) * result.size());
     memcpy(*pszResult, result.data(), result.size());
 }
+
+void fast_crypto_repo_get_text(const char *szPath, const char *szPathFallback, const char *szPathWhiteout, const char *szBase16Key, char **pszResult) {
+    abcd::DataChunk key;
+    std::string base16Key(szBase16Key);
+    abcd::base16Decode(key, base16Key);
+    abcd::JsonBox box;
+    abcd::DataChunk data;
+
+    std::string path(szPath ? szPath : "");
+    std::string pathWhiteout(szPathWhiteout ? szPathWhiteout : "");
+    std::string pathFallback(szPathFallback ? szPathFallback : "");
+
+    if (!box.load(path).log()) {
+        if (box.load(pathWhiteout)) {
+            // File deleted
+            return;
+        } else {
+            if (!box.load(pathFallback).log()) {
+                // File just missing
+                return;
+            }
+        }
+    }
+    
+    if (!box.decrypt(data, key).log()) {
+        return;
+    }
+    std::string result = abcd::toString(data);
+    *pszResult = (char *) malloc(sizeof(char) * (result.size() + 1));
+    memcpy(*pszResult, result.data(), result.size());
+    (*pszResult)[result.size()] = 0;
+}
+
+void fast_crypto_repo_get_data(const char *szPath, const char *szPathFallback, const char *szPathWhiteout, const char *szBase16Key, char **pszResult, int *size) {
+    abcd::DataChunk key;
+    std::string base16Key(szBase16Key);
+    abcd::base16Decode(key, base16Key);
+    abcd::JsonBox box;
+    abcd::DataChunk data;
+
+    std::string path(szPath ? szPath : "");
+    std::string pathWhiteout(szPathWhiteout ? szPathWhiteout : "");
+    std::string pathFallback(szPathFallback ? szPathFallback : "");
+
+    if (!box.load(path).log()) {
+        if (box.load(pathWhiteout)) {
+            // File deleted
+            return;
+        } else {
+            if (!box.load(pathFallback).log()) {
+                // File just missing
+                return;
+            }
+        }
+    }
+    if (!box.decrypt(data, key).log()) {
+        return;
+    }
+    *size = data.size();
+    *pszResult = (char *) malloc(sizeof(char) * data.size());
+    memcpy(*pszResult, data.data(), data.size());
+}

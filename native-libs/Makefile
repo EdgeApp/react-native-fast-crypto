@@ -21,8 +21,10 @@ $(shell sed -i '/#define DEFAULT_HIDDENBITSKEY ".*"/c\#define DEFAULT_HIDDENBITS
 endif
 
 # Compiler options:
-CFLAGS   += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -std=c99
-CXXFLAGS += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -std=c++11
+# CFLAGS   += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -O0 -std=c99
+# CXXFLAGS += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -O0 -std=c++11
+CFLAGS   += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -O2 -std=c99
+CXXFLAGS += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -O2 -std=c++11
 deps = jansson libbitcoin libsecp256k1 libssl boost
 LIBS := $(shell pkg-config --libs --static $(deps)) \
 	-lm
