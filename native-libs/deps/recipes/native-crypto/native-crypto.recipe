@@ -1,4 +1,4 @@
-depends="openssl libsecp256k1"
+depends="openssl libsecp256k1 mymonero-core-cpp"
 inherit lib
 
 build() {

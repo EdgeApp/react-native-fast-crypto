@@ -1,0 +1,38 @@
+depends="boost"
+inherit lib
+
+version="1.1.1"
+source="https://github.com/mymonero/mymonero-core-cpp.git#${version}"
+
+build() {
+    case $target in
+    ios-*)      cmakeflags="-DCMAKE_TOOLCHAIN_FILE=$recipe_dir/../../classes/ios.toolchain.cmake" ;;
+    android-*)  cmakeflags="-DCMAKE_TOOLCHAIN_FILE=$recipe_dir/../../classes/android.toolchain.cmake -DANDROID=1" ;;
+    *)          cmakeflags="-C$recipe_dir/../../classes/native.cmake" ;;
+    esac
+
+#    echo Patching...
+#    patch -p1 < $recipe_dir/ios-build.patch
+#    patch -p1 < $recipe_dir/timeout.patch
+
+    mkdir -p build
+    cd build
+
+    args="${cmakeflags} \
+        -DCMAKE_INSTALL_PREFIX=${install_dir} \
+        -DBUILD_SHARED_LIBS:BOOL=FALSE \
+        -DBUILD_CLAR:BOOL=FALSE"
+
+    echo $args
+    export BOOST_LIBRARYDIR="${install_dir}/lib"
+    cmake .. $cmakeflags \
+        -DCMAKE_INSTALL_PREFIX=$install_dir \
+        -DBUILD_SHARED_LIBS:BOOL=FALSE \
+        -DBUILD_CLAR:BOOL=FALSE
+
+#    make
+#    make install
+}
+
+include="include/git2.h include/git/*"
+lib="lib/libgit2.a"
