@@ -25,18 +25,16 @@ build() {
 
     args="${cmakeflags} \
         -DCMAKE_INSTALL_PREFIX=${install_dir} \
-        -DBUILD_SHARED_LIBS:BOOL=FALSE \
-        -DBUILD_CLAR:BOOL=FALSE"
+        -DBUILD_SHARED_LIBS:BOOL=FALSE"
 
     echo $args
 
     cmake .. $cmakeflags \
         -DCMAKE_INSTALL_PREFIX=$install_dir \
-        -DBUILD_SHARED_LIBS:BOOL=FALSE \
-        -DBUILD_CLAR:BOOL=FALSE
+        -DBUILD_SHARED_LIBS:BOOL=FALSE
 
-#    make
-#    make install
+    make
+    make install
 }
 
 include="include/git2.h include/git/*"

@@ -2,8 +2,7 @@ cmake_minimum_required(VERSION 3.4.1)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-project(MyMoneroCoreCpp)
-option(MM_EM_ASMJS "Build for asmjs instead of wasm" OFF)
+project(mymonerocorecpp)
 #
 #include_directories("build/boost/include") # must exist already - run bin/build-boost-emscripten.sh
 include_directories("${install_dir}/include/boost/") #
@@ -124,16 +123,5 @@ set_target_properties(
 #message(STATUS "EMCC_LINKER_FLAGS ${EMCC_LINKER_FLAGS}")
 
 # extract the filename without an extension (NAME_WE)
-add_executable(
-	MyMoneroCoreCpp 
-	${SRC_FILES}
-)
-set_target_properties(MyMoneroCoreCpp PROPERTIES LINK_FLAGS)
-
-target_link_libraries(
-    MyMoneroCoreCpp
-    boost_chrono
-    boost_system
-    boost_thread
-    ${log-lib}
-)
+add_library(mymonerocorecpp STATIC ${SRC_FILES})
+#set_target_properties(mymonero-core-cpp PROPERTIES LINK_FLAGS)
