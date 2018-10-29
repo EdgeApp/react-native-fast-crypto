@@ -1,4 +1,4 @@
-depends="boost"
+depends="boost monero-core-custom"
 inherit lib
 
 version="1.1.1"
@@ -15,6 +15,11 @@ build() {
 #    patch -p1 < $recipe_dir/ios-build.patch
 #    patch -p1 < $recipe_dir/timeout.patch
 
+    cp -a $install_dir/repos/monero-core-custom/. contrib/monero-core-custom/
+
+    # Replace CMakeLists.txt
+    cp -f $recipe_dir/CMakeLists.txt .
+
     mkdir -p build
     cd build
 
@@ -24,7 +29,7 @@ build() {
         -DBUILD_CLAR:BOOL=FALSE"
 
     echo $args
-    export BOOST_LIBRARYDIR="${install_dir}/lib"
+
     cmake .. $cmakeflags \
         -DCMAKE_INSTALL_PREFIX=$install_dir \
         -DBUILD_SHARED_LIBS:BOOL=FALSE \
