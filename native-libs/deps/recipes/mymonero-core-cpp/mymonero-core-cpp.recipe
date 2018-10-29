@@ -29,13 +29,13 @@ build() {
 
     echo $args
 
-    cmake .. $cmakeflags \
-        -DCMAKE_INSTALL_PREFIX=$install_dir \
-        -DBUILD_SHARED_LIBS:BOOL=FALSE
+    cmake .. $args
 
     make
-    make install
+    cd ..
+    cp -f src/serial_bridge_index.hpp contrib/monero-core-custom/cryptonote_config.h $install_dir/include/
+    cp -f build/libmymonerocorecpp.a $install_dir/lib/
 }
 
-include="include/git2.h include/git/*"
-lib="lib/libgit2.a"
+include="include/serial_bridge_index.hpp include/cryptonote_config.h"
+lib="lib/libmymonerocorecpp.a"
