@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B3E7B58A1CC2AC0600A0062D /* RNFastCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */; };
+		DA0441A52187FADA00AE217A /* libmymonerocorecpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0441A42187FAD900AE217A /* libmymonerocorecpp.a */; };
 		DAE53E701F0E150F00E466B0 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6B1F0E150F00E466B0 /* libcrypto.a */; };
 		DAE53E711F0E150F00E466B0 /* libnativecrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */; };
 		DAE53E721F0E150F00E466B0 /* libsecp256k1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */; };
@@ -31,6 +32,7 @@
 		134814201AA4EA6300B7C361 /* libRNFastCrypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNFastCrypto.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E7B5881CC2AC0600A0062D /* RNFastCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFastCrypto.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFastCrypto.m; sourceTree = "<group>"; };
+		DA0441A42187FAD900AE217A /* libmymonerocorecpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmymonerocorecpp.a; path = Libraries/libmymonerocorecpp.a; sourceTree = "<group>"; };
 		DAE53E6B1F0E150F00E466B0 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Libraries/libcrypto.a; sourceTree = "<group>"; };
 		DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnativecrypto.a; path = Libraries/libnativecrypto.a; sourceTree = "<group>"; };
 		DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsecp256k1.a; path = Libraries/libsecp256k1.a; sourceTree = "<group>"; };
@@ -44,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA0441A52187FADA00AE217A /* libmymonerocorecpp.a in Frameworks */,
 				DAE53E741F0E150F00E466B0 /* libz.a in Frameworks */,
 				DAE53E731F0E150F00E466B0 /* libssl.a in Frameworks */,
 				DAE53E701F0E150F00E466B0 /* libcrypto.a in Frameworks */,
@@ -78,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				DAE53E6B1F0E150F00E466B0 /* libcrypto.a */,
+				DA0441A42187FAD900AE217A /* libmymonerocorecpp.a */,
 				DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */,
 				DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */,
 				DAE53E6E1F0E150F00E466B0 /* libssl.a */,
