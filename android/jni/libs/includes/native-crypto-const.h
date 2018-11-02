@@ -50,6 +50,7 @@ void fast_crypto_secp256k1_ec_privkey_tweak_add(char *szPrivateKeyHex, const cha
 void fast_crypto_secp256k1_ec_pubkey_tweak_add(char *szPublicKeyHex, const char *const szTweak, int compressed);
 void fast_crypto_secp256k1_ec_pubkey_create(const char *const szPrivateKeyHex, char *szPublicKeyHex, int compressed);
 void fast_crypto_pbkdf2_sha512(const char *const szPass, const char *szSalt, int iterations, int outputBytes, char* szResultHex);
+void fast_crypto_monero_core(const char *const szMethod, const char *szJsonParams, char **pszResult);
 
 #ifdef __cplusplus
 }

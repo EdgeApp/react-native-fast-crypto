@@ -113,13 +113,13 @@ RCT_REMAP_METHOD(moneroCore,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    char **pszResult = NULL;
-    fast_crypto_monero_core([methodEnum UTF8String], [jsonParams UTF8String], pszResult);
-    if (*pszResult == NULL) {
+    char *pszResult = NULL;
+    fast_crypto_monero_core([methodEnum UTF8String], [jsonParams UTF8String], &pszResult);
+    if (pszResult == NULL) {
         resolve(NULL);
     }
-    NSString *jsonResult = [NSString stringWithUTF8String:*pszResult];
-    free(*pszResult);
+    NSString *jsonResult = [NSString stringWithUTF8String:pszResult];
+    free(pszResult);
     resolve(jsonResult);
 }
 @end

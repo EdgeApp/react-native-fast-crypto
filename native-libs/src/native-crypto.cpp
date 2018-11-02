@@ -194,8 +194,10 @@ void fast_crypto_monero_core(const char *szMethod, const char *szJsonParams, cha
     std::string method = szMethod;
     std::string result;
 
-    if (method.compare("create_transaction") == 0) {
-        result = serial_bridge::create_transaction(strParams);
+    if (method.compare("send_step1__prepare_params_for_get_decoys") == 0) {
+        result = serial_bridge::send_step1__prepare_params_for_get_decoys(strParams);
+    } else if (method.compare("send_step2__try_create_transaction") == 0) {
+        result = serial_bridge::send_step2__try_create_transaction(strParams);
     } else if (method.compare("decode_address") == 0) {
         result = serial_bridge::decode_address(strParams);
     } else if (method.compare("is_subaddress") == 0) {
@@ -218,10 +220,6 @@ void fast_crypto_monero_core(const char *szMethod, const char *szJsonParams, cha
         result = serial_bridge::seed_and_keys_from_mnemonic(strParams);
     } else if (method.compare("validate_components_for_login") == 0) {
         result = serial_bridge::validate_components_for_login(strParams);
-    } else if (method.compare("estimate_rct_tx_size") == 0) {
-        result = serial_bridge::estimate_rct_tx_size(strParams);
-    } else if (method.compare("calculate_fee") == 0) {
-        result = serial_bridge::calculate_fee(strParams);
     } else if (method.compare("estimated_tx_network_fee") == 0) {
         result = serial_bridge::estimated_tx_network_fee(strParams);
     } else if (method.compare("generate_key_image") == 0) {
@@ -238,7 +236,8 @@ void fast_crypto_monero_core(const char *szMethod, const char *szJsonParams, cha
         *pszResult = NULL;
         return;
     }
-    *pszResult = (char *) malloc(sizeof(char) * result.length() + 1);
+    int size = result.length() + 1;
+    *pszResult = (char *) malloc(sizeof(char) * size);
     memcpy(*pszResult, result.c_str(), result.length() + 1);
 }
 
