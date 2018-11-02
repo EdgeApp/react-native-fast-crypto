@@ -31,7 +31,7 @@ build_ios() {
     export CXX="clang++"
 
     platform_sdk="$platform_dir/SDKs/${2}.sdk"
-    sdk_flags="-arch $1 -isysroot $platform_sdk -miphoneos-version-min=8.0 -O2"
+    sdk_flags="-arch $1 -isysroot $platform_sdk -miphoneos-version-min=10.0 -O2 -maes"
     export CFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability"
     export CXXFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability"
     export LDFLAGS="$sdk_flags -L${install_dir}/lib"
@@ -98,7 +98,11 @@ package_ios_universal() {
     # Gather universal libraries:
     cp -rv ios-universal/* $package_dir
     for dep in $depends; do
-        cp -rv $build_dir/$dep/ios-universal/* $package_dir
+        echo "package:" $package_dir
+        if [ -d $build_dir/$dep/ios-universal ]
+        then
+            cp -rv $build_dir/$dep/ios-universal/* $package_dir
+        fi
     done
 
     # Gather headers:

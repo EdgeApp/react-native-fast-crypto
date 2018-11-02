@@ -1,0 +1,9 @@
+inherit lib
+
+version="0ad95ab88d711e85678e3def10b6635c4fe22ec9"
+source="https://github.com/mymonero/monero-core-custom.git#${version}"
+
+build() {
+    mkdir -p $install_dir/repos/monero-core-custom
+    cp -a . $install_dir/repos/monero-core-custom/
+}

@@ -1,0 +1,41 @@
+depends="boost monero-core-custom"
+inherit lib
+
+version="1.1.2"
+source="https://github.com/mymonero/mymonero-core-cpp.git#${version}"
+
+build() {
+    case $target in
+    ios-*)      cmakeflags="-DCMAKE_TOOLCHAIN_FILE=$recipe_dir/../../classes/ios.toolchain.cmake" ;;
+    android-*)  cmakeflags="-DCMAKE_TOOLCHAIN_FILE=$recipe_dir/../../classes/android.toolchain.cmake -DANDROID=1" ;;
+    *)          cmakeflags="-C$recipe_dir/../../classes/native.cmake" ;;
+    esac
+
+#    echo Patching...
+#    patch -p1 < $recipe_dir/ios-build.patch
+#    patch -p1 < $recipe_dir/timeout.patch
+
+    cp -a $install_dir/repos/monero-core-custom/. contrib/monero-core-custom/
+
+    # Replace CMakeLists.txt
+    cp -f $recipe_dir/CMakeLists.txt .
+
+    mkdir -p build
+    cd build
+
+    args="${cmakeflags} \
+        -DCMAKE_INSTALL_PREFIX=${install_dir} \
+        -DBUILD_SHARED_LIBS:BOOL=FALSE"
+
+    echo $args
+
+    cmake .. $args
+
+    make
+    cd ..
+    cp -f src/serial_bridge_index.hpp contrib/monero-core-custom/cryptonote_config.h $install_dir/include/
+    cp -f build/libmymonerocorecpp.a $install_dir/lib/
+}
+
+include="include/serial_bridge_index.hpp include/cryptonote_config.h"
+lib="lib/libmymonerocorecpp.a"
