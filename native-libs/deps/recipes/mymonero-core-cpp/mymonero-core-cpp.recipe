@@ -25,6 +25,8 @@ build() {
 
     args="${cmakeflags} \
         -DCMAKE_INSTALL_PREFIX=${install_dir} \
+        -DINSTALL_DIR:STRING=${install_dir} \
+        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
         -DBUILD_SHARED_LIBS:BOOL=FALSE"
 
     echo $args

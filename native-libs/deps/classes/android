@@ -36,6 +36,9 @@ build_android() {
         export CFLAGS="$CFLAGS -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb"
         export CXXFLAGS="$CXXFLAGS -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb"
         export LDFLAGS="$LDFLAGS -march=armv7-a -Wl,--fix-cortex-a8"
+    else
+        export CFLAGS="$CFLAGS -maes"
+        export CXXFLAGS="$CXXFLAGS -maes"
     fi
 
     export PATH=$build_dir/ndk/$1/bin:$PATH

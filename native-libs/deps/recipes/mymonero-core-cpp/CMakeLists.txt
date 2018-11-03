@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.4.1)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+SET(INSTALL_DIR "" CACHE STRING "build/prefix install dir")
 
 project(mymonerocorecpp C CXX)
 #
-#include_directories("build/boost/include") # must exist already - run bin/build-boost-emscripten.sh
-include_directories("${install_dir}/include/boost/") #
+include_directories("${INSTALL_DIR}/include/") #
 #
 #include_directories("src")
 #
@@ -118,12 +118,4 @@ set_target_properties(
     boost_thread PROPERTIES IMPORTED_LOCATION
     ${boost_DIR}/lib/libboost_thread.a
 )
-#set (
-#    EMCC_LINKED_FLAGS___MM_BASE
-#    #unsure if the -I...boost..include is necessary here due to include above
-
-#message(STATUS "EMCC_LINKER_FLAGS ${EMCC_LINKER_FLAGS}")
-
-# extract the filename without an extension (NAME_WE)
 add_library(mymonerocorecpp STATIC ${SRC_FILES})
-#set_target_properties(mymonero-core-cpp PROPERTIES LINK_FLAGS)
