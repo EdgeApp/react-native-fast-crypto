@@ -1,4 +1,4 @@
-depends="boost monero-core-custom"
+depends="boost monerocorecustom"
 inherit lib
 
 version="1.1.2"
@@ -19,6 +19,9 @@ build() {
 
     # Replace CMakeLists.txt
     cp -f $recipe_dir/CMakeLists.txt .
+
+    export CFLAGS="$CFLAGS -O2"
+    export CXXFLAGS="$CXXFLAGS -O2"
 
     mkdir -p build
     cd build

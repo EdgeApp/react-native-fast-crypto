@@ -400,9 +400,9 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_pbkdf2Sha512JNI(JNIEnv *env, jobje
     return out;
 }
 JNIEXPORT jstring JNICALL
-Java_co_airbitz_fastcrypto_RNFastCryptoModule_fast_crypto_monero_coreJNI(JNIEnv *env, jobject thiz,
-                                                                        jstring jsMethod,
-                                                                        jstring jsJsonParams) {
+Java_co_airbitz_fastcrypto_RNFastCryptoModule_moneroCoreJNI(JNIEnv *env, jobject thiz,
+                                                                         jstring jsMethod,
+                                                                         jstring jsJsonParams) {
     char *szJsonParams = (char *) 0;
     char *szMethod = (char *) 0;
 
@@ -424,7 +424,7 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_fast_crypto_monero_coreJNI(JNIEnv 
     char *szResultHex = NULL;
     fast_crypto_monero_core(szMethod, szJsonParams, &szResultHex);
     jstring out = env->NewStringUTF(szResultHex);
-    free(szResultHex)
+    free(szResultHex);
     env->ReleaseStringUTFChars(jsJsonParams, szJsonParams);
     env->ReleaseStringUTFChars(jsMethod, szMethod);
     return out;

@@ -12,7 +12,7 @@ build() {
     if [[ $target == android* ]]
     then
         patch libs/filesystem/src/operations.cpp $recipe_dir/operations.cpp.patch
-        # patch -p1 < $recipe_dir/fix-asio-android.patch
+        patch -p1 < $recipe_dir/fix-asio-android.patch
     fi
     cp $recipe_dir/user-config.jam tools/build/src/user-config.jam
 

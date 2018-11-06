@@ -37,6 +37,7 @@ set(
     #
     #src/index.cpp
     #
+    ${MYMONERO_CORE_CPP_SRC}/main.cpp
     ${MYMONERO_CORE_CPP_SRC}/monero_address_utils.hpp
     ${MYMONERO_CORE_CPP_SRC}/monero_address_utils.cpp
     ${MYMONERO_CORE_CPP_SRC}/monero_paymentID_utils.hpp
@@ -99,6 +100,10 @@ set(
     ${MONERO_SRC}/mnemonics/electrum-words.cpp
     ${MONERO_SRC}/vtlogger/logger.cpp
     ${MONERO_SRC}/contrib/libsodium/src/crypto_verify/verify.c
+)
+
+FILE(WRITE ${MYMONERO_CORE_CPP_SRC}/main.cpp
+    "int main(void){return 0;}\n"
 )
 
 set(boost_DIR ${install_dir})

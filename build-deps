@@ -2,6 +2,8 @@
 set -u
 set -e
 
+echo Build Started
+date
 # Pick up the current directory:
 CURRENT_DIR=$(pwd)
 export BUILD_DIR=$CURRENT_DIR/native-libs/deps/build
@@ -10,18 +12,18 @@ export BUILD_DIR=$CURRENT_DIR/native-libs/deps/build
 #fi
 
 # Do the build:
-touch native-libs/deps/recipes/native-crypto/native-crypto.recipe
+touch native-libs/deps/recipes/nativecrypto/nativecrypto.recipe
 (
     cd native-libs/deps
-    make native-crypto.package-ios-universal $@
-    make native-crypto.build-android-arm native-crypto.build-android-x86 $@
+    make nativecrypto.package-ios-universal $@
+    make nativecrypto.build-android-arm nativecrypto.build-android-x86 $@
 )
 
 # Copy the results locally:
 mkdir -m 0775 -p ios/Headers
 mkdir -m 0775 -p ios/Libraries
-cp -aL $BUILD_DIR/native-crypto/native-crypto-ios-universal/include/* ios/Headers
-cp -a $BUILD_DIR/native-crypto/native-crypto-ios-universal/lib/* ios/Libraries
+cp -aL $BUILD_DIR/nativecrypto/nativecrypto-ios-universal/include/* ios/Headers
+cp -a $BUILD_DIR/nativecrypto/nativecrypto-ios-universal/lib/* ios/Libraries
 
 BASE="./android"
 JNI_DIR="$BASE/jni"
@@ -39,5 +41,10 @@ cp native-libs/src/native-crypto.h $JNI_BUILD_DIR/includes
 sed  -e 's/const char *\*/const char *const /' $JNI_BUILD_DIR/includes/native-crypto.h \
     > $JNI_BUILD_DIR/includes/native-crypto-const.h
 
-cp $BUILD_DIR/native-crypto/android-arm/libnativecrypto.so $JNI_BUILD_DIR/armeabi-v7a/
-cp $BUILD_DIR/native-crypto/android-x86/libnativecrypto.so $JNI_BUILD_DIR/x86/
+echo cp $BUILD_DIR/nativecrypto/android-arm/libnativecrypto.so $JNI_BUILD_DIR/armeabi-v7a/
+cp $BUILD_DIR/nativecrypto/android-arm/libnativecrypto.so $JNI_BUILD_DIR/armeabi-v7a/
+echo cp $BUILD_DIR/nativecrypto/android-x86/libnativecrypto.so $JNI_BUILD_DIR/x86/
+cp $BUILD_DIR/nativecrypto/android-x86/libnativecrypto.so $JNI_BUILD_DIR/x86/
+
+echo Build Finished
+date

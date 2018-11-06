@@ -22,6 +22,7 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
     public native String secp256k1EcPrivkeyTweakAddJNI(String privateKeyHex, String tweakHex);
     public native String secp256k1EcPubkeyTweakAddJNI(String publicKeyHex, String tweakHex, int compressed);
     public native String pbkdf2Sha512JNI(String passHex, String saltHex, int iterations, int outputBytes);
+    public native String moneroCoreJNI(String method, String jsonParams);
 
     private final ReactApplicationContext reactContext;
 
@@ -108,6 +109,20 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
         try {
             String reply = pbkdf2Sha512JNI(passHex, saltHex, iterations, outputBytes); // test response from JNI
             Log.d("pbkdf2Sha512JNI", String.format("reply = %s", reply));
+            promise.resolve(reply);
+        } catch (Exception e) {
+            promise.reject("Err", e);
+        }
+    }
+
+    @ReactMethod
+    public void moneroCore(
+            String method,
+            String jsonParams,
+            Promise promise) {
+        try {
+            String reply = moneroCoreJNI(method, jsonParams); // test response from JNI
+            Log.d("moneroCoreJNI", String.format("reply = %s", reply));
             promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);
