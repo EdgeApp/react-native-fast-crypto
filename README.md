@@ -13,18 +13,14 @@ This library implements fast, fully native crypto routines for React Native unde
 
 ### Manual installation
 
-#### Build the C/C++ binaries from scratch (optional)
-
-To build from scratch, run `./build-deps` from a Bash prompt
-
-#### iOS
+#### Install in iOS app
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 2. Go to `node_modules` ➜ `react-native-fast-crypto` and add `RNFastCrypto.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNFastCrypto.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4. Run your project (`Cmd+R`)<
 
-#### Android
+#### Install in Android app
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
   - Add `import com.reactlibrary.RNFastCryptoPackage;` to the imports at the top of the file
@@ -51,4 +47,33 @@ p.then((result) => {
   console.log(error)
 })
 ```
-  
+
+## Build the C/C++ binaries from scratch (optional)
+
+The build process requires several pieces of software to be installed on the
+host system:
+
+* autoconf
+* automake
+* cmake
+* git
+* libtool
+* pkgconfig
+* protobuf
+* astyle
+
+To install these on the Mac, please use [Homebrew](http://brew.sh/):
+
+    brew install autoconf automake cmake git libtool pkgconfig protobuf astyle
+
+The 'wget' and 'cmake' that come from MacPorts are known to be broken.
+If you are building for iOS or Mac native, you also need a working installation
+of the XCode command-line tools.
+
+### Xcode 10
+
+Xcode 10 removes the /usr/include files so they must be re-installed by using the package at
+
+`/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg`
+
+To build `npm run build`. This can take quite a long time as it builds binaries for multiple different architectures.

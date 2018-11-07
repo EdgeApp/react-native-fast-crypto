@@ -399,4 +399,35 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_pbkdf2Sha512JNI(JNIEnv *env, jobje
     env->ReleaseStringUTFChars(jsSaltHex, szSaltHex);
     return out;
 }
+JNIEXPORT jstring JNICALL
+Java_co_airbitz_fastcrypto_RNFastCryptoModule_moneroCoreJNI(JNIEnv *env, jobject thiz,
+                                                                         jstring jsMethod,
+                                                                         jstring jsJsonParams) {
+    char *szJsonParams = (char *) 0;
+    char *szMethod = (char *) 0;
+
+    if (jsMethod) {
+        szMethod = (char *) env->GetStringUTFChars(jsMethod, 0);
+        if (!szMethod) {
+            return env->NewStringUTF("Invalid monero method!");
+        }
+    }
+
+    if (jsJsonParams) {
+        szJsonParams = (char *) env->GetStringUTFChars(jsJsonParams, 0);
+        if (!szJsonParams) {
+            env->ReleaseStringUTFChars(jsMethod, szMethod);
+            return env->NewStringUTF("Invalid monero jsonParams!");
+        }
+    }
+
+    char *szResultHex = NULL;
+    fast_crypto_monero_core(szMethod, szJsonParams, &szResultHex);
+    jstring out = env->NewStringUTF(szResultHex);
+    free(szResultHex);
+    env->ReleaseStringUTFChars(jsJsonParams, szJsonParams);
+    env->ReleaseStringUTFChars(jsMethod, szMethod);
+    return out;
+}
+
 }

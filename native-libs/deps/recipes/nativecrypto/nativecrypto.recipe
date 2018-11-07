@@ -1,0 +1,44 @@
+depends="openssl libsecp256k1 mymonerocorecpp"
+inherit lib
+
+build() {
+    cd $base_dir/..
+    export WORK_DIR=$work_dir
+
+    case $target in
+    android-*)  output=libnativecrypto.so ;;
+    *)          output=libnativecrypto.a ;;
+    esac
+
+    export CFLAGS="$CFLAGS -O2"
+    export CXXFLAGS="$CXXFLAGS -O2"
+
+    # Build:
+    make $output V=1
+
+    # Native builds include unit tests and utilities:
+    if [ $target = native ]; then
+        make all V=1
+    fi
+
+    # Install:
+    mkdir -p $install_dir/lib
+    cp $work_dir/$output $install_dir/lib
+    cp src/native-crypto.h $install_dir/include
+}
+
+clean() {
+    cd $base_dir/..
+    export WORK_DIR=$work_dir
+    make clean
+}
+
+tar() {
+    cd $base_dir/..
+    export WORK_DIR=$work_dir/native
+    make tar V=1
+}
+task tar build-native
+
+lib="lib/libnativecrypto.a"
+include="include/native-crypto.h"

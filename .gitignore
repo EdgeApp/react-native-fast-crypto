@@ -13,6 +13,7 @@ yarn-error.log
 # Xcode
 #
 build/
+build*/
 *.pbxuser
 !default.pbxuser
 *.mode1v3

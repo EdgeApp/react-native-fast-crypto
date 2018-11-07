@@ -1,7 +1,7 @@
 # This recipe contains the setup tasks for unpacking and installing the NDK
 inherit common
 
-version="r13b"
+version="r15c"
 
 # Select the correct NDK version for the host system:
 case $(uname -sm) in
@@ -10,7 +10,7 @@ case $(uname -sm) in
     source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#0600157c4ddf50ec15b8a037cfc474143f718fd0" ;;
 "Darwin x86_64")
     system=darwin-x86_64
-    source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#71fe653a7bf5db08c3af154735b6ccbc12f0add5" ;;
+    source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#ea4b5d76475db84745aa8828000d009625fc1f98" ;;
 *)
     echo "Unknown host platform!"
     exit 1;;
@@ -26,7 +26,7 @@ setup() {
 
     echo Unpacking toolchain...
     cd android-ndk-$version
-    python build/tools/make_standalone_toolchain.py --verbose --arch $1 --api 14 --stl libc++ --force --install-dir $work_dir/$1
+    python build/tools/make_standalone_toolchain.py --verbose --arch $1 --api 21 --stl libc++ --force --install-dir $work_dir/$1
 
     echo Patching headers...
     cat $recipe_dir/langinfo.h >> $work_dir/$1/sysroot/usr/local/include/langinfo.h

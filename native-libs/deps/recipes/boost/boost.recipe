@@ -8,8 +8,12 @@ build() {
 
     cd boost_$version
 
-    echo Patching boost...
-    patch -p1 < $recipe_dir/fix-asio-android.patch
+    echo Patching boost for Android...
+    if [[ $target == android* ]]
+    then
+        patch libs/filesystem/src/operations.cpp $recipe_dir/operations.cpp.patch
+        patch -p1 < $recipe_dir/fix-asio-android.patch
+    fi
     cp $recipe_dir/user-config.jam tools/build/src/user-config.jam
 
     echo Bootstrapping boost...

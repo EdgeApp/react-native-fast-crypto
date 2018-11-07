@@ -10,12 +10,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:Airbitz/react-native-fast-crypto.git"
+    "url": "git@github.com:EdgeApp/react-native-fast-crypto.git"
   },
   "license": "MIT",
   "author": "Edge",
   "contributors": [
-    "Paul Puey <paul@edgesecure.co>"
+    "Paul Puey <paul@edge.app>"
   ],
   "files": [
     "README.md",
@@ -26,7 +26,8 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "echo Ok"
+    "build": "echo OK",
+    "build:native": "./build-deps"
   },
   "dependencies": {
     "buffer": "^5.0.8",
