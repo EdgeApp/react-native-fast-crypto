@@ -37,16 +37,13 @@ This library implements fast, fully native crypto routines for React Native unde
 
 ## Usage
 ```javascript
-import crypto from 'react-native-fast-crypto';
+import { scrypt } from 'react-native-fast-crypto';
 
-const p = crypto.scrypt('mypassword', 'mysalt', 16384, 8, 1, 32)
+const data = new Uint8Array([1, 250, 3, 4, 34, 64, 39, 43, 12])
+const salt = new Uint8Array([45, 124, 45, 29, 172, 238, 35])
 
-p.then((result) => {
-  console.log(result)
-}, (error) => {
-  console.log(error)
-})
-```
+const result: Uint8Array = await crypto.scrypt(data, salt, 16384, 8, 1, 32)
+console.log(result)
 
 ## Build the C/C++ binaries from scratch (optional)
 
