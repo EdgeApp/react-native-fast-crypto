@@ -48,12 +48,16 @@ set(
     ${MYMONERO_CORE_CPP_SRC}/monero_fee_utils.cpp
     ${MYMONERO_CORE_CPP_SRC}/monero_transfer_utils.hpp
     ${MYMONERO_CORE_CPP_SRC}/monero_transfer_utils.cpp
+    ${MYMONERO_CORE_CPP_SRC}/monero_send_routine.hpp
+    ${MYMONERO_CORE_CPP_SRC}/monero_send_routine.cpp
     ${MYMONERO_CORE_CPP_SRC}/monero_fork_rules.hpp
     ${MYMONERO_CORE_CPP_SRC}/monero_fork_rules.cpp
     ${MYMONERO_CORE_CPP_SRC}/monero_wallet_utils.hpp
     ${MYMONERO_CORE_CPP_SRC}/monero_wallet_utils.cpp
     ${MYMONERO_CORE_CPP_SRC}/serial_bridge_index.hpp
     ${MYMONERO_CORE_CPP_SRC}/serial_bridge_index.cpp
+    ${MYMONERO_CORE_CPP_SRC}/serial_bridge_utils.hpp
+    ${MYMONERO_CORE_CPP_SRC}/serial_bridge_utils.cpp
     ${MYMONERO_CORE_CPP_SRC}/tools__ret_vals.hpp
     ${MYMONERO_CORE_CPP_SRC}/tools__ret_vals.cpp
     #
@@ -62,7 +66,7 @@ set(
     ${MONERO_SRC}/cryptonote_basic/cryptonote_format_utils.cpp
     ${MONERO_SRC}/crypto/crypto.cpp
     ${MONERO_SRC}/crypto/hash.c
-    ${MONERO_SRC}/crypto/slow-hash.c
+    ${MONERO_SRC}/crypto/slow-hash-dummied.cpp
     ${MONERO_SRC}/crypto/oaes_lib.c
     ${MONERO_SRC}/crypto/crypto-ops.c
     ${MONERO_SRC}/crypto/crypto-ops-data.c
