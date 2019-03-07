@@ -52,8 +52,14 @@ unpack() {
 
         # Unpack:
         if [ $path != ${path%.git} ]; then
+            # Check out using git:
+            for i in {0..7}; do
+                # Parallel checkouts will fail, so wait:
+                if [ -e "$path/index.lock" ]; then sleep 1; fi
+            done
             git --git-dir="$path" --work-tree="$work_dir" reset --hard "${hash:-master}"
         elif [ $path != ${path%.tar*} -o $path != ${path%.tgz} ]; then
+            # Unpack using tar:
             echo "Unpacking $(relative $path) to $(relative $work_dir)..."
             tar -C "$work_dir" -xmf "$path"
         fi
