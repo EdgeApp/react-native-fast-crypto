@@ -34,6 +34,6 @@
     "rfc4648": "^1.0.0"
   },
   "peerDependencies": {
-    "react-native": "^0.47.0"
+    "react-native": ">=0.47.0 <1.0.0"
   }
 }
