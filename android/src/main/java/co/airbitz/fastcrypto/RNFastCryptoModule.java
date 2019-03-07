@@ -47,7 +47,6 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
             Promise promise) {
         try {
             String reply = scryptJNI(passwd, salt, N, r, p, size); // test response from JNI
-            Log.d("scryptJNI", String.format("reply = %s", reply));
             promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);
@@ -62,7 +61,6 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
         int iCompressed = compressed ? 1 : 0;
         try {
             String reply = secp256k1EcPubkeyCreateJNI(privateKeyHex, iCompressed); // test response from JNI
-            Log.d("EcPubkeyCreateJNI", String.format("reply = %s", reply));
             promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);
@@ -76,7 +74,6 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
             Promise promise) {
         try {
             String reply = secp256k1EcPrivkeyTweakAddJNI(privateKeyHex, tweakHex); // test response from JNI
-            Log.d("EcPrivkeyTweakAddJNI", String.format("reply = %s", reply));
             promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);
@@ -92,7 +89,6 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
         int iCompressed = compressed ? 1 : 0;
         try {
             String reply = secp256k1EcPubkeyTweakAddJNI(publicKeyHex, tweakHex, iCompressed); // test response from JNI
-            Log.d("EcPubkeyTweakAddJNI", String.format("reply = %s", reply));
             promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);
@@ -108,7 +104,6 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
             Promise promise) {
         try {
             String reply = pbkdf2Sha512JNI(passHex, saltHex, iterations, outputBytes); // test response from JNI
-            Log.d("pbkdf2Sha512JNI", String.format("reply = %s", reply));
             promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);
@@ -122,7 +117,6 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
             Promise promise) {
         try {
             String reply = moneroCoreJNI(method, jsonParams); // test response from JNI
-            Log.d("moneroCoreJNI", String.format("reply = %s", reply));
             promise.resolve(reply);
         } catch (Exception e) {
             promise.reject("Err", e);
