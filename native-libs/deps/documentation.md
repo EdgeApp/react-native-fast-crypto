@@ -58,7 +58,7 @@ If the URL ends with `.git`, the download task will use git to download the sour
 
 ### unpack
 
-The unpack task will search the same `source` variable used by the `download` task for files named `*.tar.*`. If it finds any, it upacks them inside the work directory.
+The unpack task will search the same `source` variable used by the `download` task for files named `*.tar.*`. If it finds any, it unpacks them inside the work directory.
 
 Likewise, if the unpack task finds any URL's ending with `.git`, it will checkout the contents into the work directory.
 
@@ -71,8 +71,9 @@ The clean task simply deletes the work directory and all its contents.
 There are a whole family of `build` tasks for different platform and architecture combinations:
 
 * android-arm
+* android-arm64
 * android-x86
-* android-mips
+* android-x86_64
 * ios-armv7
 * ios-armv7s
 * ios-arm64
