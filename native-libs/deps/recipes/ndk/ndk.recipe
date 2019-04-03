@@ -16,14 +16,17 @@ case $(uname -sm) in
     exit 1;;
 esac
 
-# Extracts a standalone toolchain from the NDK.
-# $1 arch name for installing the toolchain.
-# $2 NDK toolchain name.
-setup() {
+# Unzip the NDK archive.
+unzip_ndk() {
     echo Unpacking NDK...
     archive="$download_dir/android-ndk-$version-$system.zip"
     unzip -o -d"$work_dir" $archive
+}
+task unzip-ndk download
 
+# Extracts a standalone toolchain from the NDK.
+# $1 arch name for installing the toolchain.
+setup() {
     echo Unpacking toolchain...
     cd android-ndk-$version
     python build/tools/make_standalone_toolchain.py --verbose --arch $1 --api 21 --stl libc++ --force --install-dir $work_dir/$1
@@ -32,16 +35,19 @@ setup() {
     cat $recipe_dir/langinfo.h >> $work_dir/$1/sysroot/usr/local/include/langinfo.h
 }
 setup_arm() {
-    setup arm arm-linux-androideabi
+    setup arm
+}
+setup_arm64() {
+    setup arm64
 }
 setup_x86() {
-    setup x86 x86
+    setup x86
 }
-setup_mips() {
-    setup mips mipsel-linux-android
+setup_x86_64() {
+    setup x86_64
 }
-
-task setup-arm download
-task setup-x86 download
-task setup-mips download
+task setup-arm unzip-ndk
+task setup-arm64 unzip-ndk
+task setup-x86 unzip-ndk
+task setup-x86_64 unzip-ndk
 default=setup-arm

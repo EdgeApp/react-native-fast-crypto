@@ -16,6 +16,9 @@ build() {
             # Otherwise, let the config script guess:
             ./config --prefix=$install_dir "$CFLAGS"
         fi
+    elif [ $target = "android-x86_64" ]; then
+        # Disable inline assembly on Android x86_64:
+        ./Configure --prefix=$install_dir no-shared zlib gcc -DOPENSSL_THREADS -DOPENSSL_NO_INLINE_ASM "$CFLAGS"
     else
         # We are cross-compiling, so specify the target manually:
         case $target in
