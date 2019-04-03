@@ -1,5 +1,10 @@
 # react-native-fast-crypto
 
+## 1.8.0 (2019-04-03)
+
+- Add a podspec file.
+- Add 64-bit builds for Android.
+
 ## 1.7.0 (2019-03-07)
 
 - Upgrade `mymonero-core-cpp` for the v0.14.0 hard fork.
