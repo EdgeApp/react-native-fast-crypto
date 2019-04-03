@@ -8,6 +8,7 @@
     "fast",
     "native"
   ],
+  "homepage": "https://github.com/EdgeApp/react-native-fast-crypto",
   "repository": {
     "type": "git",
     "url": "git@github.com:EdgeApp/react-native-fast-crypto.git"
@@ -18,11 +19,12 @@
     "Paul Puey <paul@edge.app>"
   ],
   "files": [
-    "README.md",
-    "ios/*",
     "android/*",
     "index.js",
-    "package.json"
+    "ios/*",
+    "package.json",
+    "react-native-fast-crypto.podspec",
+    "README.md"
   ],
   "main": "index.js",
   "scripts": {
