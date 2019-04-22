@@ -1,5 +1,9 @@
 # react-native-fast-crypto
 
+## 1.8.1 (2019-04-22)
+
+- Fix compatibility with React Native v0.59.
+
 ## 1.8.0 (2019-04-03)
 
 - Add a podspec file.
