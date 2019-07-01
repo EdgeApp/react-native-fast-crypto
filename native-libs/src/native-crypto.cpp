@@ -233,6 +233,10 @@ void fast_crypto_monero_core(const char *szMethod, const char *szJsonParams, cha
             result = serial_bridge::derive_subaddress_public_key(strParams);
         } else if (method.compare("decodeRct") == 0) {
             result = serial_bridge::decodeRct(strParams);
+        } else if (method.compare("decodeRctSimple") == 0) {
+            result = serial_bridge::decodeRctSimple(strParams);
+        } else if (method.compare("derivation_to_scalar") == 0) {
+            result = serial_bridge::derivation_to_scalar(strParams);
         } else {
             *pszResult = NULL;
             return;
