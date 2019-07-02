@@ -4,7 +4,7 @@ version="1_62_0"
 source="https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_$version.tar.bz2#5fd97433c3f859d8cbab1eaed4156d3068ae3648"
 
 build() {
-    LIBRARIES=--with-libraries=chrono,date_time,filesystem,locale,program_options,regex,system,thread
+    LIBRARIES=--with-libraries=system,thread
 
     cd boost_$version
 
