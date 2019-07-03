@@ -2,25 +2,3 @@
 # yarn lockfile v1
 
 
-base64-js@^1.0.2:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.3.tgz#fb13668233d9614cf5fb4bce95a9ba4096cdf801"
-  integrity sha512-MsAhsUW1GxCdgYSO6tAfZrNapmUKk7mWx/k5mFY/A1gBtkaCaNapTg+FExCw1r9yeaZhqx/xPg43xgTFH6KL5w==
-
-buffer@^5.0.8:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.1.0.tgz#c913e43678c7cb7c8bd16afbcddb6c5505e8f9fe"
-  integrity sha512-YkIRgwsZwJWTnyQrsBTWefizHh+8GYj3kbL1BTiAQ/9pwpino0G7B2gp5tx/FUBqUlvtxV85KNR3mwfAtv15Yw==
-  dependencies:
-    base64-js "^1.0.2"
-    ieee754 "^1.1.4"
-
-ieee754@^1.1.4:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
-  integrity sha1-vjPUCsEO8ZJnAfbwii2G+/0a0+Q=
-
-rfc4648@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/rfc4648/-/rfc4648-1.0.0.tgz#fdcbf9a438feef09bde4b8ee7eaf6b7f47935528"
-  integrity sha512-iYXd6uR0TX7zjEOM7FOQPmCXbWYQRR4S9qxB3fgdVfqcBpygdEey/m8veh6AGeY+5z4Xi+HOqCx3dewu0smKQA==

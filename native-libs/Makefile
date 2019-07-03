@@ -23,9 +23,7 @@ endif
 # Compiler options:
 CFLAGS   += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -std=c99
 CXXFLAGS += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -std=c++11
-deps = libsecp256k1 libssl
-LIBS := $(shell pkg-config --libs --static $(deps)) \
-	-lmymonerocorecpp \
+LIBS := -lmymonerocorecpp \
 	-lboost_thread \
 	-lboost_system \
 	-lm
@@ -39,9 +37,7 @@ endif
 
 # Source files:
 abc_sources = \
-	$(wildcard src/*.cpp) \
-	minilibs/scrypt/crypto_scrypt.c \
-	minilibs/scrypt/sha256.c
+	$(wildcard src/*.cpp)
 
 cli_sources = $(wildcard cli/*.cpp cli/*/*.cpp)
 test_sources = $(wildcard test/*.cpp)
@@ -68,15 +64,6 @@ $(WORK_DIR)/libnativecrypto.a: $(abc_objects)
 $(WORK_DIR)/libnativecrypto.so: $(abc_objects)
 	$(RUN) $(CXX) -shared -Wl,-soname=libnativecrypto.so -o $@ $^ $(LDFLAGS) $(LIBS)
 
-$(WORK_DIR)/abc-cli: $(cli_objects) $(WORK_DIR)/libnativecrypto.a
-	$(RUN) $(CXX) -o $@ $^ $(LDFLAGS) $(LIBS)
-
-$(WORK_DIR)/abc-test: $(test_objects) $(WORK_DIR)/libnativecrypto.a
-	$(RUN) $(CXX) -o $@ $^ $(LDFLAGS) $(LIBS)
-
-check: $(WORK_DIR)/abc-test
-	$(RUN) $<
-
 format:
 	@astyle --options=astyle-options -Q --suffix=none --recursive --exclude=build --exclude=codegen --exclude=deps --exclude=minilibs "*.cpp" "*.hpp" "*.h"
 
@@ -87,40 +74,7 @@ ifneq (, $(shell which astyle))
 endif
 
 clean:
-	$(RM) -r $(WORK_DIR) codegen
-
-install: $(WORK_DIR)/libnativecrypto.a $(WORK_DIR)/abc-cli cli/doc/abc-cli.1
-	make doc
-	install -d $(INSTALL_PATH)/lib
-	install -d $(INSTALL_PATH)/bin
-	install -d $(INSTALL_PATH)/include
-	install -d $(INSTALL_PATH)/share/man/man1
-	install -d $(INSTALL_PATH)/share/bash-completion/completions
-	install $(WORK_DIR)/libnativecrypto.a $(INSTALL_PATH)/lib
-	install $(WORK_DIR)/abc-cli $(INSTALL_PATH)/bin
-	install src/ABC.h $(INSTALL_PATH)/include
-	install cli/doc/abc-cli.1 $(INSTALL_PATH)/share/man/man1
-	install cli/abc-cli-bash-completion.sh $(INSTALL_PATH)/share/bash-completion/completions
-
-uninstall:
-	rm -f $(INSTALL_PATH)/lib/libnativecrypto.a
-	rm -f $(INSTALL_PATH)/bin/abc-cli
-	rm -f $(INSTALL_PATH)/include/ABC.h
-	rm -f $(INSTALL_PATH)/share/man/man1/abc-cli.1
-	rm -f $(INSTALL_PATH)/share/bash-completion/completions/abc-cli-bash-completion.sh
-
-tar:
-	make
-	make doc
-	mkdir -p abctar abctar/lib abctar/bin abctar/include abctar/share/man/man1 abctar/share/bash-completion/completions
-	cp $(WORK_DIR)/libnativecrypto.a abctar/lib
-	cp $(WORK_DIR)/abc-cli abctar/bin
-	cp src/ABC.h abctar/include
-	cp cli/doc/abc-cli.1 abctar/share/man/man1
-	cp cli/abc-cli-bash-completion.sh abctar/share/bash-completion/completions
-	tar -cvf abc.tar abctar
-	gzip -f abc.tar
-	rm -rf abctar
+	$(RM) -r $(WORK_DIR)
 
 # Automatic dependency rules:
 $(WORK_DIR)/%.o: %.c

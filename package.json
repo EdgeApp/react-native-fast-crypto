@@ -31,10 +31,7 @@
     "build": "echo OK",
     "build:native": "./build-deps"
   },
-  "dependencies": {
-    "buffer": "^5.0.8",
-    "rfc4648": "^1.0.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react-native": ">=0.47.0 <1.0.0"
   }

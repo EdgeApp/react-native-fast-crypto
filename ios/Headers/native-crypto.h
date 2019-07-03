@@ -44,12 +44,6 @@
 extern "C" {
 #endif
 
-void fast_crypto_scrypt (const uint8_t *passwd, size_t passwdlen, const uint8_t *salt, size_t saltlen, uint64_t N,
-    uint32_t r, uint32_t p, uint8_t *buf, size_t buflen);
-void fast_crypto_secp256k1_ec_privkey_tweak_add(char *szPrivateKeyHex, const char *szTweak);
-void fast_crypto_secp256k1_ec_pubkey_tweak_add(char *szPublicKeyHex, const char *szTweak, int compressed);
-void fast_crypto_secp256k1_ec_pubkey_create(const char *szPrivateKeyHex, char *szPublicKeyHex, int compressed);
-void fast_crypto_pbkdf2_sha512(const char *szPass, const char *szSalt, int iterations, int outputBytes, char* szResultHex);
 void fast_crypto_monero_core(const char *szMethod, const char *szJsonParams, char **pszResult);
 
 #ifdef __cplusplus

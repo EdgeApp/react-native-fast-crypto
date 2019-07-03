@@ -7,15 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35687DEE22CD01A200AF4DB7 /* libboost_atomic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35687DE922CD01A200AF4DB7 /* libboost_atomic.a */; };
+		35687DEF22CD01A200AF4DB7 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35687DEA22CD01A200AF4DB7 /* libboost_system.a */; };
+		35687DF022CD01A200AF4DB7 /* libmymonerocorecpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35687DEB22CD01A200AF4DB7 /* libmymonerocorecpp.a */; };
+		35687DF122CD01A200AF4DB7 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35687DEC22CD01A200AF4DB7 /* libboost_thread.a */; };
+		35687DF222CD01A200AF4DB7 /* libnativecrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35687DED22CD01A200AF4DB7 /* libnativecrypto.a */; };
 		B3E7B58A1CC2AC0600A0062D /* RNFastCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */; };
-		DA0441A52187FADA00AE217A /* libmymonerocorecpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0441A42187FAD900AE217A /* libmymonerocorecpp.a */; };
-		DA0441A72187FF3D00AE217A /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0441A62187FF3D00AE217A /* libboost_thread.a */; };
-		DA0441A92187FF7800AE217A /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0441A82187FF7800AE217A /* libboost_system.a */; };
-		DAE53E701F0E150F00E466B0 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6B1F0E150F00E466B0 /* libcrypto.a */; };
-		DAE53E711F0E150F00E466B0 /* libnativecrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */; };
-		DAE53E721F0E150F00E466B0 /* libsecp256k1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */; };
-		DAE53E731F0E150F00E466B0 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6E1F0E150F00E466B0 /* libssl.a */; };
-		DAE53E741F0E150F00E466B0 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE53E6F1F0E150F00E466B0 /* libz.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,16 +29,13 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNFastCrypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNFastCrypto.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		35687DE922CD01A200AF4DB7 /* libboost_atomic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_atomic.a; path = Libraries/libboost_atomic.a; sourceTree = "<group>"; };
+		35687DEA22CD01A200AF4DB7 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = Libraries/libboost_system.a; sourceTree = "<group>"; };
+		35687DEB22CD01A200AF4DB7 /* libmymonerocorecpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmymonerocorecpp.a; path = Libraries/libmymonerocorecpp.a; sourceTree = "<group>"; };
+		35687DEC22CD01A200AF4DB7 /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_thread.a; path = Libraries/libboost_thread.a; sourceTree = "<group>"; };
+		35687DED22CD01A200AF4DB7 /* libnativecrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnativecrypto.a; path = Libraries/libnativecrypto.a; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNFastCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFastCrypto.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFastCrypto.m; sourceTree = "<group>"; };
-		DA0441A42187FAD900AE217A /* libmymonerocorecpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmymonerocorecpp.a; path = Libraries/libmymonerocorecpp.a; sourceTree = "<group>"; };
-		DA0441A62187FF3D00AE217A /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_thread.a; path = Libraries/libboost_thread.a; sourceTree = "<group>"; };
-		DA0441A82187FF7800AE217A /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = Libraries/libboost_system.a; sourceTree = "<group>"; };
-		DAE53E6B1F0E150F00E466B0 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Libraries/libcrypto.a; sourceTree = "<group>"; };
-		DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnativecrypto.a; path = Libraries/libnativecrypto.a; sourceTree = "<group>"; };
-		DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsecp256k1.a; path = Libraries/libsecp256k1.a; sourceTree = "<group>"; };
-		DAE53E6E1F0E150F00E466B0 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Libraries/libssl.a; sourceTree = "<group>"; };
-		DAE53E6F1F0E150F00E466B0 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = Libraries/libz.a; sourceTree = "<group>"; };
 		DAE53E761F0E153B00E466B0 /* native-crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "native-crypto.h"; path = "Headers/native-crypto.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -50,14 +44,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA0441A52187FADA00AE217A /* libmymonerocorecpp.a in Frameworks */,
-				DAE53E741F0E150F00E466B0 /* libz.a in Frameworks */,
-				DA0441A92187FF7800AE217A /* libboost_system.a in Frameworks */,
-				DAE53E731F0E150F00E466B0 /* libssl.a in Frameworks */,
-				DAE53E701F0E150F00E466B0 /* libcrypto.a in Frameworks */,
-				DA0441A72187FF3D00AE217A /* libboost_thread.a in Frameworks */,
-				DAE53E711F0E150F00E466B0 /* libnativecrypto.a in Frameworks */,
-				DAE53E721F0E150F00E466B0 /* libsecp256k1.a in Frameworks */,
+				35687DF022CD01A200AF4DB7 /* libmymonerocorecpp.a in Frameworks */,
+				35687DF122CD01A200AF4DB7 /* libboost_thread.a in Frameworks */,
+				35687DEF22CD01A200AF4DB7 /* libboost_system.a in Frameworks */,
+				35687DF222CD01A200AF4DB7 /* libnativecrypto.a in Frameworks */,
+				35687DEE22CD01A200AF4DB7 /* libboost_atomic.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,14 +77,11 @@
 		DAE53E6A1F0E14FB00E466B0 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				DA0441A62187FF3D00AE217A /* libboost_thread.a */,
-				DAE53E6B1F0E150F00E466B0 /* libcrypto.a */,
-				DA0441A42187FAD900AE217A /* libmymonerocorecpp.a */,
-				DAE53E6C1F0E150F00E466B0 /* libnativecrypto.a */,
-				DAE53E6D1F0E150F00E466B0 /* libsecp256k1.a */,
-				DAE53E6E1F0E150F00E466B0 /* libssl.a */,
-				DA0441A82187FF7800AE217A /* libboost_system.a */,
-				DAE53E6F1F0E150F00E466B0 /* libz.a */,
+				35687DE922CD01A200AF4DB7 /* libboost_atomic.a */,
+				35687DEA22CD01A200AF4DB7 /* libboost_system.a */,
+				35687DEC22CD01A200AF4DB7 /* libboost_thread.a */,
+				35687DEB22CD01A200AF4DB7 /* libmymonerocorecpp.a */,
+				35687DED22CD01A200AF4DB7 /* libnativecrypto.a */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -145,6 +133,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 58B511D21A9E6C8500147676;

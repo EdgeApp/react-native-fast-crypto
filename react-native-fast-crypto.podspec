@@ -20,12 +20,8 @@ Pod::Spec.new do |s|
   s.vendored_libraries =
     "ios/Libraries/libboost_system.a",
     "ios/Libraries/libboost_thread.a",
-    "ios/Libraries/libcrypto.a",
     "ios/Libraries/libmymonerocorecpp.a",
-    "ios/Libraries/libnativecrypto.a",
-    "ios/Libraries/libsecp256k1.a",
-    "ios/Libraries/libssl.a",
-    "ios/Libraries/libz.a"
+    "ios/Libraries/libnativecrypto.a"
 
   s.dependency "React"
 end
