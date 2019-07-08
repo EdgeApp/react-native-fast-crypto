@@ -12,7 +12,6 @@ using gcc : env : $(CXX) :
 <compileflags>$(CFLAGS)
 <compileflags>-fvisibility=hidden
 <compileflags>-fvisibility-inlines-hidden
-<compileflags>-fdata-sections
 <cxxflags>-D_REENTRANT
 <cxxflags>-D_GLIBCXX__PTHREADS
 ;

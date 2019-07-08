@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		35687DEE22CD01A200AF4DB7 /* libboost_atomic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35687DE922CD01A200AF4DB7 /* libboost_atomic.a */; };
-		35687DEF22CD01A200AF4DB7 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35687DEA22CD01A200AF4DB7 /* libboost_system.a */; };
-		35687DF022CD01A200AF4DB7 /* libmymonerocorecpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35687DEB22CD01A200AF4DB7 /* libmymonerocorecpp.a */; };
-		35687DF122CD01A200AF4DB7 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35687DEC22CD01A200AF4DB7 /* libboost_thread.a */; };
-		35687DF222CD01A200AF4DB7 /* libnativecrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35687DED22CD01A200AF4DB7 /* libnativecrypto.a */; };
+		35023A6822D343C800B629D6 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35023A6322D343C800B629D6 /* libboost_thread.a */; };
+		35023A6922D343C800B629D6 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35023A6422D343C800B629D6 /* libboost_system.a */; };
+		35023A6A22D343C800B629D6 /* libboost_atomic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35023A6522D343C800B629D6 /* libboost_atomic.a */; };
+		35023A6B22D343C800B629D6 /* libmymonerocorecpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35023A6622D343C800B629D6 /* libmymonerocorecpp.a */; };
+		35023A6C22D343C800B629D6 /* libnativecrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35023A6722D343C800B629D6 /* libnativecrypto.a */; };
 		B3E7B58A1CC2AC0600A0062D /* RNFastCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */; };
 /* End PBXBuildFile section */
 
@@ -29,11 +29,11 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNFastCrypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNFastCrypto.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		35687DE922CD01A200AF4DB7 /* libboost_atomic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_atomic.a; path = Libraries/libboost_atomic.a; sourceTree = "<group>"; };
-		35687DEA22CD01A200AF4DB7 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = Libraries/libboost_system.a; sourceTree = "<group>"; };
-		35687DEB22CD01A200AF4DB7 /* libmymonerocorecpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmymonerocorecpp.a; path = Libraries/libmymonerocorecpp.a; sourceTree = "<group>"; };
-		35687DEC22CD01A200AF4DB7 /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_thread.a; path = Libraries/libboost_thread.a; sourceTree = "<group>"; };
-		35687DED22CD01A200AF4DB7 /* libnativecrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnativecrypto.a; path = Libraries/libnativecrypto.a; sourceTree = "<group>"; };
+		35023A6322D343C800B629D6 /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_thread.a; path = Libraries/libboost_thread.a; sourceTree = "<group>"; };
+		35023A6422D343C800B629D6 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = Libraries/libboost_system.a; sourceTree = "<group>"; };
+		35023A6522D343C800B629D6 /* libboost_atomic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_atomic.a; path = Libraries/libboost_atomic.a; sourceTree = "<group>"; };
+		35023A6622D343C800B629D6 /* libmymonerocorecpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmymonerocorecpp.a; path = Libraries/libmymonerocorecpp.a; sourceTree = "<group>"; };
+		35023A6722D343C800B629D6 /* libnativecrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnativecrypto.a; path = Libraries/libnativecrypto.a; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNFastCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFastCrypto.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNFastCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFastCrypto.m; sourceTree = "<group>"; };
 		DAE53E761F0E153B00E466B0 /* native-crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "native-crypto.h"; path = "Headers/native-crypto.h"; sourceTree = "<group>"; };
@@ -44,11 +44,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35687DF022CD01A200AF4DB7 /* libmymonerocorecpp.a in Frameworks */,
-				35687DF122CD01A200AF4DB7 /* libboost_thread.a in Frameworks */,
-				35687DEF22CD01A200AF4DB7 /* libboost_system.a in Frameworks */,
-				35687DF222CD01A200AF4DB7 /* libnativecrypto.a in Frameworks */,
-				35687DEE22CD01A200AF4DB7 /* libboost_atomic.a in Frameworks */,
+				35023A6B22D343C800B629D6 /* libmymonerocorecpp.a in Frameworks */,
+				35023A6A22D343C800B629D6 /* libboost_atomic.a in Frameworks */,
+				35023A6922D343C800B629D6 /* libboost_system.a in Frameworks */,
+				35023A6C22D343C800B629D6 /* libnativecrypto.a in Frameworks */,
+				35023A6822D343C800B629D6 /* libboost_thread.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,11 +77,11 @@
 		DAE53E6A1F0E14FB00E466B0 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				35687DE922CD01A200AF4DB7 /* libboost_atomic.a */,
-				35687DEA22CD01A200AF4DB7 /* libboost_system.a */,
-				35687DEC22CD01A200AF4DB7 /* libboost_thread.a */,
-				35687DEB22CD01A200AF4DB7 /* libmymonerocorecpp.a */,
-				35687DED22CD01A200AF4DB7 /* libnativecrypto.a */,
+				35023A6522D343C800B629D6 /* libboost_atomic.a */,
+				35023A6422D343C800B629D6 /* libboost_system.a */,
+				35023A6322D343C800B629D6 /* libboost_thread.a */,
+				35023A6622D343C800B629D6 /* libmymonerocorecpp.a */,
+				35023A6722D343C800B629D6 /* libnativecrypto.a */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";

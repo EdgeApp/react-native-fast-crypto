@@ -32,8 +32,8 @@ build_ios() {
 
     platform_sdk="$platform_dir/SDKs/${2}.sdk"
     sdk_flags="-arch $1 -isysroot $platform_sdk -miphoneos-version-min=10.0 -O2 -maes"
-    export CFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability"
-    export CXXFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability"
+    export CFLAGS="$sdk_flags -fembed-bitcode -isystem${install_dir}/include -Werror=partial-availability"
+    export CXXFLAGS="$sdk_flags -fembed-bitcode -isystem${install_dir}/include -Werror=partial-availability"
     export LDFLAGS="$sdk_flags -L${install_dir}/lib"
 
     export PATH=$xcode_dir/Toolchains/XcodeDefault.xctoolchain/usr/bin:$xcode_dir/usr/bin:$PATH
