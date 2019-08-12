@@ -1,7 +1,7 @@
 inherit lib
 
-version="4f29efe73f06af98037a65d2eb1332267555cd97"
-source="https://github.com/mymonero/monero-core-custom.git#${version}"
+version="36f6892dbe9fe6c7c87e8a52ca863c51f331fc7b"
+source="https://github.com/ExodusMovement/monero-core-custom.git#${version}"
 
 build() {
     mkdir -p $install_dir/repos/monero-core-custom
