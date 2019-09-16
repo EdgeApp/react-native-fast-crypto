@@ -1,7 +1,6 @@
-
 # react-native-fast-crypto
 
-This library implements fast, fully native crypto routines for React Native under iOS and Android. Fully built binaries are committed for both platforms but can also be built from scratch. 
+This library implements fast, fully native crypto routines for React Native under iOS and Android. Fully built binaries are committed for both platforms but can also be built from scratch.
 
 ## Getting started
 
@@ -23,54 +22,52 @@ This library implements fast, fully native crypto routines for React Native unde
 #### Install in Android app
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactlibrary.RNFastCryptoPackage;` to the imports at the top of the file
-  - Add `new RNFastCryptoPackage()` to the list returned by the `getPackages()` method
+
+- Add `import com.reactlibrary.RNFastCryptoPackage;` to the imports at the top of the file
+- Add `new RNFastCryptoPackage()` to the list returned by the `getPackages()` method
+
 2. Append the following lines to `android/settings.gradle`:
-  	```
-  	include ':react-native-fast-crypto'
-  	project(':react-native-fast-crypto').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-fast-crypto/android')
-  	```
+   ```
+   include ':react-native-fast-crypto'
+   project(':react-native-fast-crypto').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-fast-crypto/android')
+   ```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-  	```
-      compile project(':react-native-fast-crypto')
-  	```
-
-## Usage
-```javascript
-import { scrypt } from 'react-native-fast-crypto';
-
-const data = new Uint8Array([1, 250, 3, 4, 34, 64, 39, 43, 12])
-const salt = new Uint8Array([45, 124, 45, 29, 172, 238, 35])
-
-const result: Uint8Array = await crypto.scrypt(data, salt, 16384, 8, 1, 32)
-console.log(result)
+   ```
+     compile project(':react-native-fast-crypto')
+   ```
 
 ## Build the C/C++ binaries from scratch (optional)
 
-The build process requires several pieces of software to be installed on the
-host system:
+### Prerequisites
 
-* autoconf
-* automake
-* cmake
-* git
-* libtool
-* pkgconfig
-* protobuf
-* astyle
+- brew
+- Xcode 10.3
 
-To install these on the Mac, please use [Homebrew](http://brew.sh/):
+### Setup
 
-    brew install autoconf automake cmake git libtool pkgconfig protobuf astyle
+1. Select Xcode command line tools in Xcode > Preferences > Locations
+2. Install build tools
 
-The 'wget' and 'cmake' that come from MacPorts are known to be broken.
-If you are building for iOS or Mac native, you also need a working installation
-of the XCode command-line tools.
+```bash
+brew install autoconf automake cmake git libtool pkgconfig protobuf astyle
+```
 
-### Xcode 10
+2. Install SDK headers
 
-Xcode 10 removes the /usr/include files so they must be re-installed by using the package at
+```bash
+open /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg
+```
 
-`/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg`
+3. Clone the repository
 
-To build `npm run build`. This can take quite a long time as it builds binaries for multiple different architectures.
+```bash
+git clone git@github.com:ExodusMovement/react-native-fast-crypto.git
+```
+
+### Build
+
+1. Build binaries
+
+```bash
+yarn build:native
+```
