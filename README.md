@@ -45,7 +45,13 @@ This library implements fast, fully native crypto routines for React Native unde
 
 ### Setup
 
-1. Select Xcode command line tools in Xcode > Preferences > Locations
+1. Setup Xcode
+
+```bash
+sudo xcode-select --switch /Applications/Xcode.app
+sudo xcodebuild -license
+```
+
 2. Install build tools
 
 ```bash
