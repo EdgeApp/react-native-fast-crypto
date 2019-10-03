@@ -10,7 +10,7 @@
 
 - (dispatch_queue_t)methodQueue
 {
-    return dispatch_get_main_queue();
+    return dispatch_queue_create("io.exodus.RNFastCrypto.MainQueue", DISPATCH_QUEUE_PRIORITY_DEFAULT);
 }
 
 RCT_EXPORT_MODULE()

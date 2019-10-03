@@ -36,11 +36,16 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
             String method,
             String jsonParams,
             Promise promise) {
-        try {
-            String reply = moneroCoreJNI(method, jsonParams); // test response from JNI
-            promise.resolve(reply);
-        } catch (Exception e) {
-            promise.reject("Err", e);
-        }
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String reply = moneroCoreJNI(method, jsonParams); // test response from JNI
+                    promise.resolve(reply);
+                } catch (Exception e) {
+                    promise.reject("Err", e);
+                }
+            }
+        });
     }
 }
