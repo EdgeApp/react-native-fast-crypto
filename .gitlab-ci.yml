@@ -1,0 +1,33 @@
+build:
+  image: node:10.15.3
+  tags:
+    - mac-runner
+  when: manual
+  script:
+    - ./build-deps
+    - shasum -a 256 ios/Libraries/* android/jni/libs/*/* > shasums.txt
+    - cat shasums.txt
+  artifacts:
+    paths:
+      - ./android
+      - ./ios
+      - ./native-libs/deps/classes
+      - ./native-libs/deps/recipes
+      - ./native-libs/deps/.gitignore
+      - ./native-libs/deps/Makefile
+      - ./native-libs/deps/documentation.md
+      - ./native-libs/deps/run.sh
+      - ./native-libs/src
+      - ./native-libs/.gitignore
+      - ./native-libs/Makefile
+      - ./.gitattributes
+      - ./.gitignore
+      - ./.gitlab-ci.yml
+      - ./.npmignore
+      - ./CHANGELOG.md
+      - ./README.md
+      - ./build-deps
+      - ./index.js
+      - ./package.json
+      - ./shasums.txt
+    expire_in: 1 week

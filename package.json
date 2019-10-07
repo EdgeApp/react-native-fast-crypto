@@ -18,21 +18,11 @@
   "contributors": [
     "Paul Puey <paul@edge.app>"
   ],
-  "files": [
-    "android/*",
-    "index.js",
-    "ios/*",
-    "package.json",
-    "react-native-fast-crypto.podspec",
-    "README.md"
-  ],
   "main": "index.js",
   "scripts": {
-    "build": "echo OK",
-    "build:native": "./build-deps"
-  },
-  "dependencies": {},
-  "peerDependencies": {
-    "react-native": ">=0.47.0 <1.0.0"
+    "build": "yarn build:native",
+    "prebuild:native": "rm -rf ios/Libraries android/jni/libs",
+    "build:native": "./build-deps",
+    "postbuild:native": "shasum -a 256 ios/Libraries/* android/jni/libs/*/* > shasums.txt"
   }
 }

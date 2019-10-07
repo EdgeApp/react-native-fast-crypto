@@ -1,5 +1,11 @@
 #!/bin/bash
 export ZERO_AR_DATE=1
+export SOURCE_DATE_EPOCH=0
+
+MACOSV=$(sw_vers -productVersion)
+XCODEV=$(xcodebuild -version)
+
+echo "macOS $MACOSV - $XCODEV"
 
 set -u
 set -e

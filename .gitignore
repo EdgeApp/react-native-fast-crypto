@@ -44,4 +44,7 @@ local.properties
 buck-out/
 \.buckd/
 *.keystore
-      
+
+# Binaries
+ios/Libraries/
+android/jni/libs/
