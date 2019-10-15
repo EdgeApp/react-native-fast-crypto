@@ -55,7 +55,7 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void scryptBulk(
-            String[] passwds,
+            Array passwds,
             String salt,
             Integer N,
             Integer r,
