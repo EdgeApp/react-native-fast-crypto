@@ -54,6 +54,28 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void scryptBulk(
+            String[] passwds,
+            String salt,
+            Integer N,
+            Integer r,
+            Integer p,
+            Integer size,
+            Promise promise) {
+        try {
+            String[] reply = new String[passwds.length]; 
+            for (int i=0; i < passwds.length; i++) {
+                String passwd = passwds[i];
+                String hash = scryptJNI(passwd, salt, N, r, p, size);
+                reply[i] = hash;
+            }
+            promise.resolve(reply);
+        } catch (Exception e) {
+            promise.reject("Err", e);
+        }
+    }
+
+    @ReactMethod
     public void secp256k1EcPubkeyCreate(
             String privateKeyHex,
             Boolean compressed,

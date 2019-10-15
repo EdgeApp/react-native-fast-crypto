@@ -12,10 +12,27 @@ export async function scrypt (passwd, salt, N, r, p, size) {
   const t = Date.now()
   const retval:string = await RNFastCrypto.scrypt(passwd, salt, N, r, p, size)
   const elapsed = Date.now() - t
-  console.log('RNFS:script finished in ' + elapsed + 'ms')
+  console.log('RNFS:scrypt finished in ' + elapsed + 'ms')
 
   let uint8array = base64.parse(retval)
   return uint8array.subarray(0, size)
+}
+
+export async function scryptBulk (passwds, salt, N, r, p, size) {
+  passwds = passwds.map((passwd) => base64.stringify(passwd))
+  salt = base64.stringify(salt)
+  console.log('RNFS:scrypt Got ' + passwds.length + ' passwds to Hash')
+  console.log('RNFS:scrypt(' + N.toString() + ', ' + r.toString() + ', ' + p.toString())
+  const t = Date.now()
+  const retval = await RNFastCrypto.scryptBulk(passwds, salt, N, r, p, size)
+  const elapsed = Date.now() - t
+  console.log('RNFS:scrypt bulk finished in ' + elapsed + 'ms')
+  const retvalArray = new Array(retval.length);
+  for (let i=0; i<retval.length; i++) {
+    const uint8array = base64.parse(retval[i])
+    retvalArray[i] = uint8array.subarray(0, size)
+  }
+  return retvalArray
 }
 
 async function publicKeyCreate (privateKey: Uint8Array, compressed: boolean) {
