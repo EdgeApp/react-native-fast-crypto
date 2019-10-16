@@ -13,7 +13,6 @@ export async function scrypt (passwd, salt, N, r, p, size) {
   const retval:string = await RNFastCrypto.scrypt(passwd, salt, N, r, p, size)
   const elapsed = Date.now() - t
   console.log('RNFS:scrypt finished in ' + elapsed + 'ms')
-
   let uint8array = base64.parse(retval)
   return uint8array.subarray(0, size)
 }
