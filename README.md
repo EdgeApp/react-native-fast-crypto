@@ -55,7 +55,7 @@ sudo xcodebuild -license
 2. Install build tools
 
 ```bash
-brew install autoconf automake cmake git libtool pkgconfig protobuf astyle
+brew install autoconf automake cmake git pkgconfig protobuf
 ```
 
 2. Install SDK headers
@@ -86,7 +86,7 @@ Setup (once)
 # macOS 10.14.6 - Xcode 11.0
 sudo xcode-select --switch /Applications/Xcode.app
 sudo xcodebuild -license
-brew install autoconf automake cmake git libtool pkgconfig protobuf astyle
+brew install autoconf automake cmake git pkgconfig protobuf
 open /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg
 ```
 
