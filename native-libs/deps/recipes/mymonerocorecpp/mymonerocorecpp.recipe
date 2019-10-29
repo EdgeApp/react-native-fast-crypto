@@ -1,7 +1,7 @@
 depends="boost monerocorecustom"
 inherit lib
 
-version="b72e653363db1cb2d654bd5c21ab01bea31675a0"
+version="b2fab10aaf0dab89dfc441a2416c0e67bd6b37c9"
 source="https://github.com/ExodusMovement/mymonero-core-cpp.git#${version}"
 
 build() {
@@ -39,9 +39,12 @@ build() {
 
     make
     cd ..
-    cp -f src/serial_bridge_index.hpp contrib/monero-core-custom/cryptonote_config.h $install_dir/include/
+    cp -R contrib/monero-core-custom/* $install_dir/include/
+    cp -R contrib/monero-core-custom/epee/include/* $install_dir/include/
+    cp -R contrib/monero-core-custom/contrib/libsodium/include/* $install_dir/include/
+    cp -f src/serial_bridge_index.hpp $install_dir/include/
     cp -f build/libmymonerocorecpp.a $install_dir/lib/
 }
 
-include="include/serial_bridge_index.hpp include/cryptonote_config.h"
+include="include/*"
 lib="lib/libmymonerocorecpp.a"
