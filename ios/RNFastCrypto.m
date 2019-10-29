@@ -10,7 +10,8 @@
 
 - (dispatch_queue_t)methodQueue
 {
-    return dispatch_queue_create("io.exodus.RNFastCrypto.MainQueue", DISPATCH_QUEUE_PRIORITY_DEFAULT);
+    dispatch_queue_attr_t qosAttribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_CONCURRENT, QOS_CLASS_BACKGROUND, 0);
+    return dispatch_queue_create("io.exodus.RNFastCrypto.MainQueue", qosAttribute);
 }
 
 RCT_EXPORT_MODULE()
