@@ -1,6 +1,7 @@
 
 package co.airbitz.fastcrypto;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
@@ -33,9 +34,9 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void moneroCore(
-            String method,
-            String jsonParams,
-            Promise promise) {
+            final String method,
+            final String jsonParams,
+            final Promise promise) {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
