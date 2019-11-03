@@ -2,6 +2,13 @@
 export ZERO_AR_DATE=1
 export SOURCE_DATE_EPOCH=0
 
+# List of dependencies that should be rebuilt.
+# If you specify dependency source that doesn't change (local directory)
+# add this dependency there so new files are copied during a build.
+reactive_deps=(
+    nativecrypto
+)
+
 MACOSV=$(sw_vers -productVersion)
 XCODEV=$(xcodebuild -version)
 
@@ -21,7 +28,11 @@ export BUILD_DIR=$CURRENT_DIR/native-libs/deps/build
 #fi
 
 # Do the build:
-touch native-libs/deps/recipes/nativecrypto/nativecrypto.recipe
+
+for dep in "${reactive_deps[@]}"; do
+    touch native-libs/deps/recipes/$dep/$dep.recipe
+done
+
 (
     targets=""
     targets="$targets nativecrypto.package-ios-universal"

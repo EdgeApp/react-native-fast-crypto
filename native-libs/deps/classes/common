@@ -14,7 +14,13 @@ download() {
         hash=${hash%"$url"}
 
         # Download:
-        if [ $path != ${path%.git} ]; then
+        if [ -e $s ]; then
+            if [ -e $path ]; then
+                rm -rf $path
+            fi
+
+            cp -a $s $path
+        elif [ $path != ${path%.git} ]; then
             if [ -e "$path" ]; then
                 git --git-dir="$path" fetch -f "$url" +refs/heads/*:refs/heads/*
             else
@@ -51,7 +57,13 @@ unpack() {
         hash=${hash%"$url"}
 
         # Unpack:
-        if [ $path != ${path%.git} ]; then
+        if [ -e $s ]; then
+            if [ -e $work_dir ]; then
+                rm -rf $work_dir
+            fi
+
+            cp -a $path $work_dir
+        elif [ $path != ${path%.git} ]; then
             # Check out using git:
             for i in {0..7}; do
                 # Parallel checkouts will fail, so wait:
