@@ -2,6 +2,8 @@
 export ZERO_AR_DATE=1
 export SOURCE_DATE_EPOCH=0
 
+NATIVE_TESTS=$NATIVE_TESTS
+
 # List of dependencies that should be rebuilt.
 # If you specify dependency source that doesn't change (local directory)
 # add this dependency there so new files are copied during a build.
@@ -38,18 +40,29 @@ done
 (
     targets=""
 
-    if [ Darwin = $(uname -s) ]; then
-        targets="$targets nativecrypto.package-ios-universal"
-    fi
+    if [[ "$NATIVE_TESTS" -eq "1" ]]; then
+        targets="$targets nativecrypto.build-native"
+    else
+        if [ Darwin = $(uname -s) ]; then
+            targets="$targets nativecrypto.package-ios-universal"
+        fi
 
-    targets="$targets nativecrypto.build-android-arm"
-    targets="$targets nativecrypto.build-android-arm64"
-    targets="$targets nativecrypto.build-android-x86"
-    targets="$targets nativecrypto.build-android-x86_64"
+        targets="$targets nativecrypto.build-android-arm"
+        targets="$targets nativecrypto.build-android-arm64"
+        targets="$targets nativecrypto.build-android-x86"
+        targets="$targets nativecrypto.build-android-x86_64"
+    fi
 
     cd native-libs/deps
     make $targets $@
 )
+
+if [[ "$NATIVE_TESTS" -eq "1" ]]; then
+    cd native-libs
+    make check V=1 T=1
+    echo "Finished running tests."
+    exit 0
+fi
 
 # Copy the results locally:
 if [ Darwin = $(uname -s) ]; then

@@ -20,6 +20,7 @@
   ],
   "main": "index.js",
   "scripts": {
+    "test": "NATIVE_TESTS=1 ./build-deps",
     "build": "yarn build:native",
     "prebuild:native": "rm -rf ios/Libraries android/jni/libs",
     "build:native": "./build-deps",

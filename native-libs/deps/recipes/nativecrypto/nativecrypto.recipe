@@ -16,11 +16,6 @@ build() {
     # Build:
     make $output V=1
 
-    # Native builds include unit tests and utilities:
-    if [ $target = native ]; then
-        make all V=1
-    fi
-
     # Install:
     mkdir -p $install_dir/lib
     cp $work_dir/$output $install_dir/lib
