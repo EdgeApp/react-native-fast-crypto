@@ -23,6 +23,6 @@
     "build": "yarn build:native",
     "prebuild:native": "rm -rf ios/Libraries android/jni/libs",
     "build:native": "./build-deps",
-    "postbuild:native": "shasum -a 256 ios/Libraries/* android/jni/libs/*/* > shasums.txt"
+    "postbuild:native": "./generate-sums.sh"
   }
 }

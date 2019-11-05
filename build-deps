@@ -9,16 +9,18 @@ reactive_deps=(
     nativecrypto
 )
 
-MACOSV=$(sw_vers -productVersion)
-XCODEV=$(xcodebuild -version)
-
-echo "macOS $MACOSV - $XCODEV"
-
 set -u
 set -e
 
 echo Build Started
 date
+
+if [ Darwin = $(uname -s) ]; then
+    MACOSV=$(sw_vers -productVersion)
+    XCODEV=$(xcodebuild -version)
+
+    echo "macOS $MACOSV - $XCODEV"
+fi
 
 # Pick up the current directory:
 CURRENT_DIR=$(pwd)
@@ -35,7 +37,11 @@ done
 
 (
     targets=""
-    targets="$targets nativecrypto.package-ios-universal"
+
+    if [ Darwin = $(uname -s) ]; then
+        targets="$targets nativecrypto.package-ios-universal"
+    fi
+
     targets="$targets nativecrypto.build-android-arm"
     targets="$targets nativecrypto.build-android-arm64"
     targets="$targets nativecrypto.build-android-x86"
@@ -46,10 +52,12 @@ done
 )
 
 # Copy the results locally:
-mkdir -m 0775 -p ios/Headers
-mkdir -m 0775 -p ios/Libraries
-cp -aL $BUILD_DIR/nativecrypto/nativecrypto-ios-universal/include/* ios/Headers
-cp -a $BUILD_DIR/nativecrypto/nativecrypto-ios-universal/lib/* ios/Libraries
+if [ Darwin = $(uname -s) ]; then
+    mkdir -m 0775 -p ios/Headers
+    mkdir -m 0775 -p ios/Libraries
+    cp -aL $BUILD_DIR/nativecrypto/nativecrypto-ios-universal/include/* ios/Headers
+    cp -a $BUILD_DIR/nativecrypto/nativecrypto-ios-universal/lib/* ios/Libraries
+fi
 
 BASE="./android"
 JNI_DIR="$BASE/jni"

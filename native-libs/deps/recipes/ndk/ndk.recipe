@@ -7,7 +7,7 @@ version="r15c"
 case $(uname -sm) in
 "Linux x86_64")
     system=linux-x86_64
-    source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#0600157c4ddf50ec15b8a037cfc474143f718fd0" ;;
+    source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#0bf02d4e8b85fd770fd7b9b2cdec57f9441f27a2" ;;
 "Darwin x86_64")
     system=darwin-x86_64
     source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#ea4b5d76475db84745aa8828000d009625fc1f98" ;;
