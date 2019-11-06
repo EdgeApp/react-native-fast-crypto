@@ -17,6 +17,22 @@ build() {
 
     cp -a $install_dir/repos/monero-core-custom/. contrib/monero-core-custom/
 
+    # HACK: Remove duplicate files from prefix
+    rm -rf \
+        $install_dir/include/crypto \
+        $install_dir/include/common \
+        $install_dir/include/ringct \
+        $install_dir/include/serialization \
+        $install_dir/include/sodium \
+        $install_dir/include/warnings.h \
+        $install_dir/include/memwipe.h \
+        $install_dir/include/mlocker.h \
+        $install_dir/include/hex.h \
+        $install_dir/include/wipeable_string.h \
+        $install_dir/include/fnv1.h \
+        $install_dir/include/span.h \
+        $install_dir/include/cryptonote_config.h
+
     # Replace CMakeLists.txt
     cp -f $recipe_dir/CMakeLists.txt .
 
@@ -38,10 +54,22 @@ build() {
     cmake .. $args
 
     make
+
     cd ..
-    cp -R contrib/monero-core-custom/* $install_dir/include/
-    cp -R contrib/monero-core-custom/epee/include/* $install_dir/include/
-    cp -R contrib/monero-core-custom/contrib/libsodium/include/* $install_dir/include/
+    cp -R contrib/monero-core-custom/crypto $install_dir/include/
+    cp -R contrib/monero-core-custom/common $install_dir/include/
+    cp -R contrib/monero-core-custom/ringct $install_dir/include/
+    cp -R contrib/monero-core-custom/serialization $install_dir/include/
+    cp -R contrib/monero-core-custom/contrib/libsodium/include/sodium $install_dir/include/
+
+    cp -f contrib/monero-core-custom/epee/include/warnings.h $install_dir/include/
+    cp -f contrib/monero-core-custom/epee/include/memwipe.h $install_dir/include/
+    cp -f contrib/monero-core-custom/epee/include/mlocker.h $install_dir/include/
+    cp -f contrib/monero-core-custom/epee/include/hex.h $install_dir/include/
+    cp -f contrib/monero-core-custom/epee/include/wipeable_string.h $install_dir/include/
+    cp -f contrib/monero-core-custom/epee/include/fnv1.h $install_dir/include/
+    cp -f contrib/monero-core-custom/epee/include/span.h $install_dir/include/
+    cp -f contrib/monero-core-custom/cryptonote_config.h $install_dir/include/
     cp -f src/serial_bridge_index.hpp $install_dir/include/
     cp -f build/libmymonerocorecpp.a $install_dir/lib/
 }
