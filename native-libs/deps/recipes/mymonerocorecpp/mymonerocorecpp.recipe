@@ -15,6 +15,7 @@ build() {
 #    patch -p1 < $recipe_dir/ios-build.patch
 #    patch -p1 < $recipe_dir/timeout.patch
 
+    rm -rf contrib/monero-core-custom
     cp -a $install_dir/repos/monero-core-custom/. contrib/monero-core-custom/
 
     # HACK: Remove duplicate files from prefix

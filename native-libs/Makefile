@@ -52,7 +52,6 @@ $(WORK_DIR)/libnativecrypto.so: $(abc_objects)
 	$(RUN) $(CXX) -shared -Wl,-soname=libnativecrypto.so -o $@ $^ $(LDFLAGS) $(LIBS)
 
 $(WORK_DIR)/abc-test: $(test_objects)
-	echo $(CXXFLAGS)
 	$(RUN) $(CXX) -o $@ $^ $(LDFLAGS) $(LIBS)
 
 check: $(WORK_DIR)/abc-test
