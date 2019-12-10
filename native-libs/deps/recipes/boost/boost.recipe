@@ -3,6 +3,43 @@ inherit lib
 version="1_62_0"
 source="https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_$version.tar.bz2#5fd97433c3f859d8cbab1eaed4156d3068ae3648"
 
+build_bjam() {
+    echo "Building BJAM manually"
+
+    xcode_dir=$(xcode-select -print-path | sed -e 's@/$@@')
+    platform_dir="$xcode_dir/Platforms/MacOSX.platform/Developer"
+    platform_sdk="$platform_dir/SDKs/MacOSX.sdk"
+
+    # We need to build bjam using MacOSX toolchain
+    PREV_CC=$CC
+    PREV_PATH=$PATH
+    PREV_CFLAGS=$CFLAGS
+    export CC="clang"
+    export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+    export CFLAGS="-isysroot $platform_sdk"
+
+    echo "STARTING X"
+
+    env
+
+    (cd tools/build/src/engine && ./build.sh cc) > bootstrap.log 2>&1
+    echo "ENDING"
+    if [ $? -ne 0 ]; then
+        echo
+        echo "Failed to build Boost.Build build engine"
+        echo "Consult 'bootstrap.log' for more details"
+        exit 1
+    fi
+    cd "$pwd"
+    arch=`cd tools/build/src/engine && ./bootstrap/jam0 -d0 -f build.jam --toolset=darwin --toolset-root= --show-locate-target && cd ..`
+    cp "tools/build/src/engine/$arch/b2" .
+    cp "tools/build/src/engine/$arch/bjam" .
+
+    export CC=$CC
+    export PATH=$PREV_PATH
+    export CFLAGS=$PREV_CFLAGS
+}
+
 build() {
     LIBRARIES=--with-libraries=system,thread
 
@@ -16,8 +53,10 @@ build() {
     fi
     cp $recipe_dir/user-config.jam tools/build/src/user-config.jam
 
+    build_bjam
+
     echo Bootstrapping boost...
-    ./bootstrap.sh --prefix=$install_dir $LIBRARIES
+    ./bootstrap.sh --prefix=$install_dir --with-bjam=bjam $LIBRARIES
 
     echo Building boost...
     export NO_BZIP2=1

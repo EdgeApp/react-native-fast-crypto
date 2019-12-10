@@ -32,6 +32,7 @@ build_ios() {
 
     platform_sdk="$platform_dir/SDKs/${2}.sdk"
     sdk_flags="-arch $1 -isysroot $platform_sdk -miphoneos-version-min=10.0 -O2 -maes"
+    export SDKROOT=$platform_sdk # https://cmake.org/cmake/help/latest/variable/CMAKE_OSX_SYSROOT.html
     export CFLAGS="$sdk_flags -fembed-bitcode -isystem${install_dir}/include -Werror=partial-availability"
     export CXXFLAGS="$sdk_flags -fembed-bitcode -isystem${install_dir}/include -Werror=partial-availability"
     export LDFLAGS="$sdk_flags -L${install_dir}/lib"
@@ -41,6 +42,8 @@ build_ios() {
 
     cd $work_dir
     build
+
+    unset SDKROOT
 
     # File lists:
     ([ -n "$lib" ] && (cd $install_dir; find $lib -type f) || true) > \
