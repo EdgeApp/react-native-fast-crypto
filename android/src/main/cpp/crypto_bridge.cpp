@@ -36,10 +36,35 @@ extern "C" {
 
 #include <string.h>
 
+JNIEXPORT jint JNICALL
+Java_co_airbitz_fastcrypto_RNFastCryptoModule_moneroCoreCreateRequest(JNIEnv *env, jobject thiz, jobject buf, jint height) {
+    size_t length = 0;
+    const char *m_body = create_blocks_request(height, &length);
+
+    char *data = (char *) env->GetDirectBufferAddress(buf);
+    memcpy(data, m_body, length);
+
+    return length;
+}
+
+JNIEXPORT jstring JNICALL
+Java_co_airbitz_fastcrypto_RNFastCryptoModule_extractUtxosFromBlocksResponse(JNIEnv *env, jobject thiz, jobject buf, jstring jsJsonParams) {
+    char *data = (char *) env->GetDirectBufferAddress(buf);
+    size_t length = (size_t) env->GetDirectBufferCapacity(buf);
+    char *szJsonParams = (char *) env->GetStringUTFChars(jsJsonParams, 0);
+
+    char *szResultHex = NULL;
+    extract_utxos_from_blocks_response(data, length, szJsonParams, &szResultHex);
+    jstring out = env->NewStringUTF(szResultHex);
+    free(szResultHex);
+
+    return out;
+}
+
 JNIEXPORT jstring JNICALL
 Java_co_airbitz_fastcrypto_RNFastCryptoModule_moneroCoreJNI(JNIEnv *env, jobject thiz,
-                                                                         jstring jsMethod,
-                                                                         jstring jsJsonParams) {
+                                                            jstring jsMethod,
+                                                            jstring jsJsonParams) {
     char *szJsonParams = (char *) 0;
     char *szMethod = (char *) 0;
 

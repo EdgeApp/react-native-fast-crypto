@@ -1,6 +1,6 @@
 inherit lib
 
-version="ee00979c6cb0eb45b586e3bb9710d8ec1e1a24fb"
+version="3027edb59520c64c365e9d4825822faec7b8ae18"
 source="https://github.com/ExodusMovement/monero-core-custom.git#${version}"
 
 build() {

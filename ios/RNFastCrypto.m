@@ -14,22 +14,78 @@
     return dispatch_queue_create("io.exodus.RNFastCrypto.MainQueue", qosAttribute);
 }
 
-RCT_EXPORT_MODULE()
++ (void) handleDownloadAndProcess:(NSString*) method
+                                 :(NSString*) params
+                                 :(RCTPromiseResolveBlock) resolve
+                                 :(RCTPromiseRejectBlock) reject {
 
-RCT_REMAP_METHOD(moneroCore,
-                 moneroCore:(NSString* ) methodEnum
-                 jsonParams:(NSString *)jsonParams
-                 resolver:(RCTPromiseResolveBlock)resolve
-                 rejecter:(RCTPromiseRejectBlock)reject)
-{
+    NSData *paramsData = [params dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *jsonError;
+    NSDictionary *jsonParams = [NSJSONSerialization JSONObjectWithData:paramsData options:kNilOptions error:&jsonError];
+
+    NSString *addr = jsonParams[@"url"];
+    NSString *startHeight = jsonParams[@"start_height"];
+
+
+    size_t length = 0;
+    const char *m_body = create_blocks_request([startHeight intValue], &length);
+
+    NSURL *url = [NSURL URLWithString:addr];
+    NSData *binaryData = [NSData dataWithBytes:m_body length:length];
+    free((void *)m_body);
+
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setHTTPBody:binaryData];
+
+    NSURLSession *session = [NSURLSession sharedSession];
+
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:urlRequest completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            resolve(@"{\"err_msg\":\"Network request failed\"}");
+            return;
+        }
+
+        char *pszResult = NULL;
+
+        extract_utxos_from_blocks_response(data.bytes, data.length, [params UTF8String], &pszResult);
+
+        NSString *jsonResult = [NSString stringWithUTF8String:pszResult];
+        free(pszResult);
+        resolve(jsonResult);
+    }];
+    [task resume];
+}
+
++ (void) handleDefault:(NSString*) method
+                      :(NSString*) params
+                      :(RCTPromiseResolveBlock) resolve
+                      :(RCTPromiseRejectBlock) reject {
     char *pszResult = NULL;
-    fast_crypto_monero_core([methodEnum UTF8String], [jsonParams UTF8String], &pszResult);
+
+    fast_crypto_monero_core([method UTF8String], [params UTF8String], &pszResult);
+
     if (pszResult == NULL) {
         resolve(NULL);
+        return;
     }
+
     NSString *jsonResult = [NSString stringWithUTF8String:pszResult];
     free(pszResult);
     resolve(jsonResult);
 }
-@end
 
+RCT_EXPORT_MODULE()
+
+RCT_REMAP_METHOD(moneroCore, :(NSString*) method
+                 :(NSString*) params
+                 :(RCTPromiseResolveBlock) resolve
+                 :(RCTPromiseRejectBlock) reject)
+{
+    if ([method isEqualToString:@"download_and_process"]) {
+        [RNFastCrypto handleDownloadAndProcess:method :params :resolve :reject];
+    } else {
+        [RNFastCrypto handleDefault:method :params :resolve :reject];
+    }
+}
+@end

@@ -11,6 +11,7 @@ CXXFLAGS += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -std=c++11
 LIBS := -lmymonerocorecpp \
 	-lboost_thread \
 	-lboost_system \
+	-lboost_regex \
 	-lm
 
 # Do not use -lpthread on Android:

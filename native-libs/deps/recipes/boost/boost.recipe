@@ -41,7 +41,7 @@ build_bjam() {
 }
 
 build() {
-    LIBRARIES=--with-libraries=system,thread
+    LIBRARIES=--with-libraries=system,thread,regex
 
     cd boost_$version
 
