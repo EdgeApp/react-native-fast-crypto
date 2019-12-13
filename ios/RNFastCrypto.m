@@ -37,6 +37,7 @@
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:binaryData];
+    [urlRequest setTimeoutInterval: 4 * 60];
 
     NSURLSession *session = [NSURLSession sharedSession];
 

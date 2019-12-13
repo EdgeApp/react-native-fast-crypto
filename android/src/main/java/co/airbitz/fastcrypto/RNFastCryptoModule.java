@@ -35,7 +35,7 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
         String applicationName = BuildConfig.FLAVOR;
         String version = BuildConfig.VERSION_NAME;
         // modeled after User-Agent on ios: exodus/1.13.0 CFNetwork/978.0.7 Darwin/18.6.0
-        USER_AGENT = (applicationName + "/" + version + " " + Build.VERSION.SDK_INT)
+        USER_AGENT = (applicationName + "/" + version + " Android/" + Build.VERSION.SDK_INT)
                 // strip off all non-ASCII characters (just in case)
                 .replaceAll("[^\\x00-\\x7F]", "");
     }
@@ -78,6 +78,8 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
                         connection.setRequestMethod("POST");
                         connection.setRequestProperty("Content-Type", "application/octet-stream");
                         connection.setRequestProperty("User-Agent", USER_AGENT);
+                        connection.setConnectTimeout(10000);
+                        connection.setReadTimeout(4 * 60 * 1000);
                         connection.setDoOutput(true);
 
                         try (OutputStream outputStream = connection.getOutputStream()) {
