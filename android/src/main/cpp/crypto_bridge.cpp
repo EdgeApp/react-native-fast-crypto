@@ -37,7 +37,7 @@ extern "C" {
 #include <string.h>
 
 JNIEXPORT jint JNICALL
-Java_co_airbitz_fastcrypto_DownloadAndProcessAsyncTask_moneroCoreCreateRequest(JNIEnv *env, jobject thiz, jobject buf, jint height) {
+Java_co_airbitz_fastcrypto_MoneroAsyncTask_moneroCoreCreateRequest(JNIEnv *env, jobject thiz, jobject buf, jint height) {
     size_t length = 0;
     const char *m_body = create_blocks_request(height, &length);
 
@@ -48,7 +48,7 @@ Java_co_airbitz_fastcrypto_DownloadAndProcessAsyncTask_moneroCoreCreateRequest(J
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_airbitz_fastcrypto_DownloadAndProcessAsyncTask_extractUtxosFromBlocksResponse(JNIEnv *env, jobject thiz, jobject buf, jstring jsJsonParams) {
+Java_co_airbitz_fastcrypto_MoneroAsyncTask_extractUtxosFromBlocksResponse(JNIEnv *env, jobject thiz, jobject buf, jstring jsJsonParams) {
     char *data = (char *) env->GetDirectBufferAddress(buf);
     size_t length = (size_t) env->GetDirectBufferCapacity(buf);
     char *szJsonParams = (char *) env->GetStringUTFChars(jsJsonParams, 0);
@@ -62,7 +62,7 @@ Java_co_airbitz_fastcrypto_DownloadAndProcessAsyncTask_extractUtxosFromBlocksRes
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_airbitz_fastcrypto_DownloadAndProcessAsyncTask_moneroCoreJNI(JNIEnv *env, jobject thiz,
+Java_co_airbitz_fastcrypto_MoneroAsyncTask_moneroCoreJNI(JNIEnv *env, jobject thiz,
                                                             jstring jsMethod,
                                                             jstring jsJsonParams) {
     char *szJsonParams = (char *) 0;
