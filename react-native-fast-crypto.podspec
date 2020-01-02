@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platform = :ios, "8.0"
+  s.platform = :ios, "9.0"
   s.requires_arc = true
   s.source = {
     :git => "https://github.com/EdgeApp/react-native-fast-crypto.git",
@@ -27,5 +27,10 @@ Pod::Spec.new do |s|
     "ios/Libraries/libssl.a",
     "ios/Libraries/libz.a"
 
+  s.library = "c++"
+  s.xcconfig = {
+    "CLANG_CXX_LANGUAGE_STANDARD" => "c++11",
+    "CLANG_CXX_LIBRARY" => "libc++",
+  }
   s.dependency "React"
 end
