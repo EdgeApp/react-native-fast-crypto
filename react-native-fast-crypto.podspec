@@ -30,5 +30,5 @@ Pod::Spec.new do |s|
   s.vendored_frameworks =
     "ios/secp256k1.xcframework"
 
-  s.dependency "React"
+  s.dependency "React-Core"
 end
