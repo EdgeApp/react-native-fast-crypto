@@ -44,6 +44,7 @@ const salt = new Uint8Array([45, 124, 45, 29, 172, 238, 35])
 
 const result: Uint8Array = await crypto.scrypt(data, salt, 16384, 8, 1, 32)
 console.log(result)
+```
 
 ## Build the C/C++ binaries from scratch (optional)
 
