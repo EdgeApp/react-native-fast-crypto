@@ -1,5 +1,9 @@
 # react-native-fast-crypto
 
+## 1.8.2 (2020-10-19)
+
+- Upgrade mymonero-core-cpp and mymonero-core-custom for v17 hard fork
+
 ## 1.8.1 (2019-04-22)
 
 - Fix compatibility with React Native v0.59.
