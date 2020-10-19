@@ -1,8 +1,8 @@
 depends="boost monerocorecustom"
 inherit lib
 
-version="95b6528d919819aaeca2e35791edf414d9afe889"
-source="https://github.com/mymonero/mymonero-core-cpp.git#${version}"
+version="15b6d0cb67f1e580fe2ab4324139af9c313c1c91"
+source="https://github.com/ndorf/mymonero-core-cpp.git#${version}"
 
 build() {
     case $target in
