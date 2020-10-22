@@ -25,7 +25,7 @@ build_osx() {
     export CXX="clang++"
 
     platform_sdk="$platform_dir/SDKs/MacOSX.sdk"
-    sdk_flags="-arch $1 -isysroot $platform_sdk -mmacosx-version-min=10.9 -O2"
+    sdk_flags="-arch $1 -isysroot $platform_sdk -mmacosx-version-min=10.9 -O0"
     export CFLAGS="$sdk_flags -isystem${install_dir}/include"
     export CXXFLAGS="$sdk_flags -isystem${install_dir}/include"
     export LDFLAGS="$sdk_flags -L${install_dir}/lib"

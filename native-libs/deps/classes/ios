@@ -31,7 +31,7 @@ build_ios() {
     export CXX="clang++"
 
     platform_sdk="$platform_dir/SDKs/${2}.sdk"
-    sdk_flags="-arch $1 -isysroot $platform_sdk -miphoneos-version-min=10.0 -O2 -maes"
+    sdk_flags="-arch $1 -isysroot $platform_sdk -miphoneos-version-min=10.0 -O0 -maes"
     export CFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability"
     export CXXFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability"
     export LDFLAGS="$sdk_flags -L${install_dir}/lib"

@@ -1,4 +1,4 @@
-CFLAGS += -Wall -D_GNU_SOURCE -std=c99 -g -O2
+CFLAGS += -Wall -D_GNU_SOURCE -std=c99 -g -O0
 LIBS := $(shell pkg-config --libs libgit2)
 
 sync: build/main.o build/sync.o

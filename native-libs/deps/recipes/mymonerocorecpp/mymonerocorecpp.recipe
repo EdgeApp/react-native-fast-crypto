@@ -20,8 +20,8 @@ build() {
     # Replace CMakeLists.txt
     cp -f $recipe_dir/CMakeLists.txt .
 
-    export CFLAGS="$CFLAGS -O2"
-    export CXXFLAGS="$CXXFLAGS -O2"
+    export CFLAGS="$CFLAGS -O0"
+    export CXXFLAGS="$CXXFLAGS -O0"
 
     mkdir -p build
     cd build

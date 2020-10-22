@@ -28,8 +28,8 @@ build_android() {
     export STRINGS="${cross}-strings"
     export STRIP="${cross}-strip"
 
-    export CFLAGS="-isystem${install_dir}/include -fPIC -O2"
-    export CXXFLAGS="-isystem${install_dir}/include -fPIC -O2"
+    export CFLAGS="-isystem${install_dir}/include -fPIC -O0"
+    export CXXFLAGS="-isystem${install_dir}/include -fPIC -O0"
     export LDFLAGS="-L${install_dir}/lib -fPIC"
 
     if [ $1 = "arm" ]; then
