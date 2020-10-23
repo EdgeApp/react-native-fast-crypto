@@ -1,7 +1,7 @@
 # This recipe contains the setup tasks for unpacking and installing the NDK
 inherit common
 
-version="r15c"
+version="r19c"
 
 # Select the correct NDK version for the host system:
 case $(uname -sm) in
@@ -10,7 +10,7 @@ case $(uname -sm) in
     source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#0600157c4ddf50ec15b8a037cfc474143f718fd0" ;;
 "Darwin x86_64")
     system=darwin-x86_64
-    source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#ea4b5d76475db84745aa8828000d009625fc1f98" ;;
+    source="https://dl.google.com/android/repository/android-ndk-r19c-darwin-x86_64.zip#f46b8193109bba8a58e0461c1a48f4534051fb25" ;;
 *)
     echo "Unknown host platform!"
     exit 1;;
