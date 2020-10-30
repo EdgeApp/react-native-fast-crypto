@@ -36,4 +36,4 @@ build() {
 }
 
 include="include/openssl/*"
-lib="lib/libcrypto.a lib/libssl.a"
+#lib="lib/libcrypto.a lib/libssl.a"
