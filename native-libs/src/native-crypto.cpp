@@ -6,22 +6,21 @@
  */
 
 #include "native-crypto.h"
+#include "../minilibs/scrypt/crypto_scrypt.h"
+
+#include <math.h>
+#include <openssl/crypto.h>
+#include <openssl/evp.h>
+#include <openssl/sha.h>
+#include <secp256k1.h>
+#include <serial_bridge_index.hpp>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
-#include <secp256k1.h>
-#include <openssl/evp.h>
-#include <openssl/sha.h>
-// crypto.h used for the version
-#include <openssl/crypto.h>
-#include "../minilibs/scrypt/crypto_scrypt.h"
-#include <serial_bridge_index.hpp>
 
 #define COMPRESSED_PUBKEY_LENGTH 33
 #define DECOMPRESSED_PUBKEY_LENGTH 65
 #define PRIVKEY_LENGTH 64
-
 
 void fast_crypto_scrypt (const uint8_t *passwd, size_t passwdlen, const uint8_t *salt, size_t saltlen, uint64_t N,
     uint32_t r, uint32_t p, uint8_t *buf, size_t buflen)

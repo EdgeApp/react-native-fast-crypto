@@ -1,3 +1,9 @@
+ios/Libraries/libboost_atomic.a
+ios/Libraries/libboost_chrono.a
+ios/Libraries/libboost_date_time.a
+ios/Libraries/libboost_filesystem.a
+ios/Libraries/libboost_program_options.a
+ios/Libraries/libboost_regex.a
 
 # OSX
 #
