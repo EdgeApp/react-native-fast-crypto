@@ -1,5 +1,10 @@
 # react-native-fast-crypto
 
+## 1.8.3 (2020-11-19)
+
+- android: Use `implementation` gradle command instead of deprecated `compile`.
+- android: Fix some documentation errors.
+
 ## 1.8.2 (2020-10-19)
 
 - Upgrade mymonero-core-cpp and mymonero-core-custom for v17 hard fork
