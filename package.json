@@ -18,6 +18,7 @@
   "contributors": [
     "Paul Puey <paul@edge.app>"
   ],
+  "main": "index.js",
   "files": [
     "android/*",
     "index.js",
@@ -26,7 +27,6 @@
     "react-native-fast-crypto.podspec",
     "README.md"
   ],
-  "main": "index.js",
   "scripts": {
     "build": "echo OK",
     "build:native": "./build-deps"

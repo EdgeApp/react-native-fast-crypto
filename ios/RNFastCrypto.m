@@ -106,21 +106,5 @@ RCT_REMAP_METHOD(pbkdf2Sha512,
 
     resolve(resultHex);
 }
-
-RCT_REMAP_METHOD(moneroCore,
-                 moneroCore:(NSString* ) methodEnum
-                 jsonParams:(NSString *)jsonParams
-                 resolver:(RCTPromiseResolveBlock)resolve
-                 rejecter:(RCTPromiseRejectBlock)reject)
-{
-    char *pszResult = NULL;
-    fast_crypto_monero_core([methodEnum UTF8String], [jsonParams UTF8String], &pszResult);
-    if (pszResult == NULL) {
-        resolve(NULL);
-    }
-    NSString *jsonResult = [NSString stringWithUTF8String:pszResult];
-    free(pszResult);
-    resolve(jsonResult);
-}
 @end
 
