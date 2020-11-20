@@ -22,7 +22,12 @@
   "files": [
     "android/*",
     "index.js",
-    "ios/*",
+    "ios/Headers",
+    "ios/Libraries/libnativecrypto.a",
+    "ios/Libraries/libsecp256k1.a",
+    "ios/RNFastCrypto.h",
+    "ios/RNFastCrypto.m",
+    "ios/RNFastCrypto.xcodeproj",
     "package.json",
     "react-native-fast-crypto.podspec",
     "README.md"
