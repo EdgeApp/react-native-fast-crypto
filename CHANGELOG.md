@@ -1,5 +1,11 @@
 # react-native-fast-crypto
 
+## 2.0.0 (2020-11-20)
+
+- Remove all Monero features. These live in [react-native-mymonero-core](https://github.com/EdgeApp/react-native-mymonero-core) now.
+- Use the OpenSSL-Universal package to provide OpenSSL libraries on iOS. This fixes react-native 0.63 compatibility.
+- Remove the deprecated `default` export. This library uses named ES6 exports.
+
 ## 1.8.3 (2020-11-19)
 
 - android: Use `implementation` gradle command instead of deprecated `compile`.
