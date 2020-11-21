@@ -1,3 +1,7 @@
+/ios/Libraries/libcrypto.a
+/ios/Libraries/libssl.a
+/ios/Libraries/libz.a
+
 # OSX
 #
 .DS_Store
@@ -7,7 +11,6 @@
 node_modules/
 npm-debug.log
 yarn-error.log
-  
 
 # Xcode
 #

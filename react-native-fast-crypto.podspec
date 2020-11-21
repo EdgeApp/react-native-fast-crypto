@@ -18,11 +18,9 @@ Pod::Spec.new do |s|
   }
   s.source_files = "ios/**/*.{h,m}"
   s.vendored_libraries =
-    "ios/Libraries/libcrypto.a",
     "ios/Libraries/libnativecrypto.a",
-    "ios/Libraries/libsecp256k1.a",
-    "ios/Libraries/libssl.a",
-    "ios/Libraries/libz.a"
+    "ios/Libraries/libsecp256k1.a"
 
   s.dependency "React"
+  s.dependency "OpenSSL-Universal"
 end
