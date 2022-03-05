@@ -1,8 +1,9 @@
 
 #import "RNFastCrypto.h"
 #import "native-crypto.h"
-#import <Foundation/Foundation.h>
 
+#import <CommonCrypto/CommonKeyDerivation.h>
+#import <Foundation/Foundation.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -14,6 +15,34 @@
 }
 
 RCT_EXPORT_MODULE()
+
+RCT_REMAP_METHOD(
+  pbkdf2Sha512,
+  pbkdf2Sha512:(NSString *)data64
+  salt:(NSString *)salt64
+  iterations:(NSInteger)iterations
+  size:(NSInteger)size
+  resolver:(RCTPromiseResolveBlock)resolve
+  rejecter:(RCTPromiseRejectBlock)reject
+) {
+  NSData *data = [[NSData alloc] initWithBase64EncodedString:data64 options:0];
+  NSData *salt = [[NSData alloc] initWithBase64EncodedString:salt64 options:0];
+  NSMutableData *out = [NSMutableData dataWithLength:size];
+
+  CCKeyDerivationPBKDF(
+    kCCPBKDF2,
+    data.bytes,
+    data.length,
+    salt.bytes,
+    salt.length,
+    kCCPRFHmacAlgSHA512,
+    iterations,
+    out.mutableBytes,
+    size
+  );
+
+  resolve([out base64EncodedStringWithOptions:0]);
+}
 
 RCT_REMAP_METHOD(scrypt, scrypt:(NSString *)passwd
                  salt:(NSString *)salt
@@ -90,21 +119,5 @@ RCT_REMAP_METHOD(secp256k1EcPubkeyTweakAdd,
   resolve(publicKeyTweakedHex);
 }
 
-RCT_REMAP_METHOD(pbkdf2Sha512,
-                 pbkdf2Sha512:(NSString *)pass
-                 salt:(NSString *)salt
-                 iterations:(NSInteger) iterations
-                 outputBytes:(NSInteger) outputBytes
-                 resolver:(RCTPromiseResolveBlock)resolve
-                 rejecter:(RCTPromiseRejectBlock)reject)
-{
-  char szResultHex[(outputBytes * 2) + 1];
-
-  fast_crypto_pbkdf2_sha512([pass UTF8String], [salt UTF8String], (int) iterations, (int) outputBytes, szResultHex);
-
-  NSString *resultHex = [NSString stringWithUTF8String:szResultHex];
-
-  resolve(resultHex);
-}
 @end
 

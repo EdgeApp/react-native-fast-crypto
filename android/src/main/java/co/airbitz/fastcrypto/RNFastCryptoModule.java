@@ -1,9 +1,12 @@
 package co.airbitz.fastcrypto;
 
+import android.util.Base64;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 public class RNFastCryptoModule extends ReactContextBaseJavaModule {
 
@@ -22,9 +25,6 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
   public native String secp256k1EcPubkeyTweakAddJNI(
       String publicKeyHex, String tweakHex, int compressed);
 
-  public native String pbkdf2Sha512JNI(
-      String passHex, String saltHex, int iterations, int outputBytes);
-
   private final ReactApplicationContext reactContext;
 
   public RNFastCryptoModule(ReactApplicationContext reactContext) {
@@ -35,6 +35,25 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
   @Override
   public String getName() {
     return "RNFastCrypto";
+  }
+
+  @ReactMethod
+  public void pbkdf2Sha512(
+      String data64, String salt64, int iterations, int keyLength, Promise promise) {
+    try {
+      byte[] data = Base64.decode(data64, Base64.DEFAULT);
+      byte[] salt = Base64.decode(salt64, Base64.DEFAULT);
+
+      // Pack our arguments into an object:
+      char[] dataChars = new String(data, "UTF-8").toCharArray();
+      PBEKeySpec keySpec = new PBEKeySpec(dataChars, salt, iterations, keyLength);
+
+      SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+      byte[] out = secretKeyFactory.generateSecret(keySpec).getEncoded();
+      promise.resolve(Base64.encodeToString(out, Base64.NO_WRAP));
+    } catch (Exception e) {
+      promise.reject(e);
+    }
   }
 
   @ReactMethod
@@ -79,18 +98,6 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
       String reply =
           secp256k1EcPubkeyTweakAddJNI(
               publicKeyHex, tweakHex, iCompressed); // test response from JNI
-      promise.resolve(reply);
-    } catch (Exception e) {
-      promise.reject("Err", e);
-    }
-  }
-
-  @ReactMethod
-  public void pbkdf2Sha512(
-      String passHex, String saltHex, int iterations, int outputBytes, Promise promise) {
-    try {
-      String reply =
-          pbkdf2Sha512JNI(passHex, saltHex, iterations, outputBytes); // test response from JNI
       promise.resolve(reply);
     } catch (Exception e) {
       promise.reject("Err", e);

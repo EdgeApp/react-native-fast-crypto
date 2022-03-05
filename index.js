@@ -4,6 +4,25 @@ import { base16, base64 } from 'rfc4648'
 const { RNFastCrypto } = NativeModules
 const Buffer = require('buffer/').Buffer
 
+async function pbkdf2DeriveAsync(
+  data: Uint8Array,
+  salt: Uint8Array,
+  iterations: number,
+  size: number,
+  alg: string
+) {
+  if (alg !== 'sha512') {
+    throw new Error('ErrorUnsupportedPbkdf2Algorithm: ' + alg)
+  }
+  const out = await RNFastCrypto.pbkdf2Sha512(
+    base64.stringify(data),
+    base64.stringify(salt),
+    iterations,
+    size
+  )
+  return base64.parse(out, { out: Buffer.allocUnsafe })
+}
+
 export async function scrypt(passwd, salt, N, r, p, size) {
   passwd = base64.stringify(passwd)
   salt = base64.stringify(salt)
@@ -57,23 +76,6 @@ async function publicKeyTweakAdd(
   const outBuf = base16.parse(publickKeyTweakedHex, {
     out: Buffer.allocUnsafe
   })
-  return outBuf
-}
-
-async function pbkdf2DeriveAsync(
-  key: Uint8Array,
-  salt: Uint8Array,
-  iter: number,
-  len: number,
-  alg: string
-) {
-  if (alg !== 'sha512') {
-    throw new Error('ErrorUnsupportedPbkdf2Algorithm: ' + alg)
-  }
-  const keyHex = base16.stringify(key)
-  const saltHex = base16.stringify(salt)
-  const resultHex = await RNFastCrypto.pbkdf2Sha512(keyHex, saltHex, iter, len)
-  const outBuf = base16.parse(resultHex, { out: Buffer.allocUnsafe })
   return outBuf
 }
 
