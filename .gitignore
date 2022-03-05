@@ -1,3 +1,5 @@
+# Build output:
+/android/*.jar
 /ios/Libraries/libcrypto.a
 /ios/Libraries/libssl.a
 /ios/Libraries/libz.a
