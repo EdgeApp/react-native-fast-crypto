@@ -34,12 +34,17 @@
     "README.md"
   ],
   "scripts": {
+    "build:native": "./build-deps",
     "build": "echo OK",
-    "build:native": "./build-deps"
+    "fix.android": "(cd android; ./format-java.sh)",
+    "fix": "prettier --write index.js"
   },
   "dependencies": {
     "buffer": "^5.0.8",
     "rfc4648": "^1.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
   },
   "peerDependencies": {
     "react-native": ">=0.47.0 <1.0.0"

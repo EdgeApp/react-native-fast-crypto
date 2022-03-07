@@ -49,7 +49,6 @@ void fast_crypto_scrypt (const uint8_t *passwd, size_t passwdlen, const uint8_t 
 void fast_crypto_secp256k1_ec_privkey_tweak_add(char *szPrivateKeyHex, const char *szTweak);
 void fast_crypto_secp256k1_ec_pubkey_tweak_add(char *szPublicKeyHex, const char *szTweak, int compressed);
 void fast_crypto_secp256k1_ec_pubkey_create(const char *szPrivateKeyHex, char *szPublicKeyHex, int compressed);
-void fast_crypto_pbkdf2_sha512(const char *szPass, const char *szSalt, int iterations, int outputBytes, char* szResultHex);
 
 #ifdef __cplusplus
 }

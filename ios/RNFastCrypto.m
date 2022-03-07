@@ -1,8 +1,9 @@
 
 #import "RNFastCrypto.h"
 #import "native-crypto.h"
-#import <Foundation/Foundation.h>
 
+#import <CommonCrypto/CommonKeyDerivation.h>
+#import <Foundation/Foundation.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -10,10 +11,38 @@
 
 - (dispatch_queue_t)methodQueue
 {
-    return dispatch_get_main_queue();
+  return dispatch_get_main_queue();
 }
 
 RCT_EXPORT_MODULE()
+
+RCT_REMAP_METHOD(
+  pbkdf2Sha512,
+  pbkdf2Sha512:(NSString *)data64
+  salt:(NSString *)salt64
+  iterations:(NSInteger)iterations
+  size:(NSInteger)size
+  resolver:(RCTPromiseResolveBlock)resolve
+  rejecter:(RCTPromiseRejectBlock)reject
+) {
+  NSData *data = [[NSData alloc] initWithBase64EncodedString:data64 options:0];
+  NSData *salt = [[NSData alloc] initWithBase64EncodedString:salt64 options:0];
+  NSMutableData *out = [NSMutableData dataWithLength:size];
+
+  CCKeyDerivationPBKDF(
+    kCCPBKDF2,
+    data.bytes,
+    data.length,
+    salt.bytes,
+    salt.length,
+    kCCPRFHmacAlgSHA512,
+    iterations,
+    out.mutableBytes,
+    size
+  );
+
+  resolve([out base64EncodedStringWithOptions:0]);
+}
 
 RCT_REMAP_METHOD(scrypt, scrypt:(NSString *)passwd
                  salt:(NSString *)salt
@@ -25,23 +54,23 @@ RCT_REMAP_METHOD(scrypt, scrypt:(NSString *)passwd
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    NSData *passwdData = [[NSData alloc] initWithBase64EncodedString:passwd options:0];
-    NSData *saltData = [[NSData alloc] initWithBase64EncodedString:salt options:0];
-    char *rawPasswd = (char *)[passwdData bytes];
-    char *rawSalt = (char *)[saltData bytes];
-    size_t passwdlen = [passwdData length];
-    size_t saltlen = [saltData length];
+  NSData *passwdData = [[NSData alloc] initWithBase64EncodedString:passwd options:0];
+  NSData *saltData = [[NSData alloc] initWithBase64EncodedString:salt options:0];
+  char *rawPasswd = (char *)[passwdData bytes];
+  char *rawSalt = (char *)[saltData bytes];
+  size_t passwdlen = [passwdData length];
+  size_t saltlen = [saltData length];
 
-    uint8_t *buffer = malloc(sizeof(char) * size);
-    fast_crypto_scrypt(rawPasswd, passwdlen, rawSalt, saltlen, N, r, p, buffer, size);
-    
-    NSData *data = [NSData dataWithBytes:buffer length:size];
-    NSString *str = [data base64EncodedStringWithOptions:0];
-    free(buffer);
-    
-    // Already initialized
-    resolve(str);
-    //    callback(@[[NSNull null], str]);
+  uint8_t *buffer = malloc(sizeof(char) * size);
+  fast_crypto_scrypt(rawPasswd, passwdlen, rawSalt, saltlen, N, r, p, buffer, size);
+
+  NSData *data = [NSData dataWithBytes:buffer length:size];
+  NSString *str = [data base64EncodedStringWithOptions:0];
+  free(buffer);
+
+  // Already initialized
+  resolve(str);
+  //    callback(@[[NSNull null], str]);
 }
 
 RCT_REMAP_METHOD(secp256k1EcPubkeyCreate,
@@ -50,11 +79,11 @@ RCT_REMAP_METHOD(secp256k1EcPubkeyCreate,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    char *szPublicKeyHex = malloc(sizeof(char) * [privateKeyHex length] * 2);
-    fast_crypto_secp256k1_ec_pubkey_create([privateKeyHex UTF8String], szPublicKeyHex, compressed);
-    NSString *publicKeyHex = [NSString stringWithUTF8String:szPublicKeyHex];
-    free(szPublicKeyHex);
-    resolve(publicKeyHex);
+  char *szPublicKeyHex = malloc(sizeof(char) * [privateKeyHex length] * 2);
+  fast_crypto_secp256k1_ec_pubkey_create([privateKeyHex UTF8String], szPublicKeyHex, compressed);
+  NSString *publicKeyHex = [NSString stringWithUTF8String:szPublicKeyHex];
+  free(szPublicKeyHex);
+  resolve(publicKeyHex);
 }
 
 RCT_REMAP_METHOD(secp256k1EcPrivkeyTweakAdd,
@@ -63,14 +92,14 @@ RCT_REMAP_METHOD(secp256k1EcPrivkeyTweakAdd,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    int privateKeyHexLen = [privateKeyHex length] + 1;
-    char szPrivateKeyHex[privateKeyHexLen];
-    const char *szPrivateKeyHexConst = [privateKeyHex UTF8String];
-    
-    strcpy(szPrivateKeyHex, szPrivateKeyHexConst);
-    fast_crypto_secp256k1_ec_privkey_tweak_add(szPrivateKeyHex, [tweakHex UTF8String]);
-    NSString *privateKeyTweakedHex = [NSString stringWithUTF8String:szPrivateKeyHex];
-    resolve(privateKeyTweakedHex);
+  int privateKeyHexLen = [privateKeyHex length] + 1;
+  char szPrivateKeyHex[privateKeyHexLen];
+  const char *szPrivateKeyHexConst = [privateKeyHex UTF8String];
+
+  strcpy(szPrivateKeyHex, szPrivateKeyHexConst);
+  fast_crypto_secp256k1_ec_privkey_tweak_add(szPrivateKeyHex, [tweakHex UTF8String]);
+  NSString *privateKeyTweakedHex = [NSString stringWithUTF8String:szPrivateKeyHex];
+  resolve(privateKeyTweakedHex);
 }
 
 RCT_REMAP_METHOD(secp256k1EcPubkeyTweakAdd,
@@ -80,31 +109,15 @@ RCT_REMAP_METHOD(secp256k1EcPubkeyTweakAdd,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    int publicKeyHexLen = [publicKeyHex length] + 1;
-    char szPublicKeyHex[publicKeyHexLen];
-    const char *szPublicKeyHexConst = [publicKeyHex UTF8String];
-    
-    strcpy(szPublicKeyHex, szPublicKeyHexConst);
-    fast_crypto_secp256k1_ec_pubkey_tweak_add(szPublicKeyHex, [tweakHex UTF8String], compressed);
-    NSString *publicKeyTweakedHex = [NSString stringWithUTF8String:szPublicKeyHex];
-    resolve(publicKeyTweakedHex);
+  int publicKeyHexLen = [publicKeyHex length] + 1;
+  char szPublicKeyHex[publicKeyHexLen];
+  const char *szPublicKeyHexConst = [publicKeyHex UTF8String];
+
+  strcpy(szPublicKeyHex, szPublicKeyHexConst);
+  fast_crypto_secp256k1_ec_pubkey_tweak_add(szPublicKeyHex, [tweakHex UTF8String], compressed);
+  NSString *publicKeyTweakedHex = [NSString stringWithUTF8String:szPublicKeyHex];
+  resolve(publicKeyTweakedHex);
 }
 
-RCT_REMAP_METHOD(pbkdf2Sha512,
-                 pbkdf2Sha512:(NSString *)pass
-                 salt:(NSString *)salt
-                 iterations:(NSInteger) iterations
-                 outputBytes:(NSInteger) outputBytes
-                 resolver:(RCTPromiseResolveBlock)resolve
-                 rejecter:(RCTPromiseRejectBlock)reject)
-{
-    char szResultHex[(outputBytes * 2) + 1];
-
-    fast_crypto_pbkdf2_sha512([pass UTF8String], [salt UTF8String], (int) iterations, (int) outputBytes, szResultHex);
-
-    NSString *resultHex = [NSString stringWithUTF8String:szResultHex];
-
-    resolve(resultHex);
-}
 @end
 

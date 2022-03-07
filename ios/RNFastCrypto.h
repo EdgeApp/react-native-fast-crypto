@@ -8,4 +8,3 @@
 @interface RNFastCrypto : NSObject <RCTBridgeModule>
 
 @end
-  

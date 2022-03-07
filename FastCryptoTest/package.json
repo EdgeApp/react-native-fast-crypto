@@ -1,0 +1,27 @@
+{
+  "name": "fastcryptotest",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "prepare-ios": "(cd ios; pod install)",
+    "start": "react-native start",
+    "update": "(cd ..; ./update-test.sh)"
+  },
+  "dependencies": {
+    "@types/chai": "^4.3.0",
+    "chai": "^4.3.6",
+    "react": "17.0.2",
+    "react-native": "0.67.3",
+    "react-native-fast-crypto": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/runtime": "^7.16.3",
+    "@types/react": "^17.0.37",
+    "@types/react-native": "^0.67.2",
+    "metro-react-native-babel-preset": "^0.67.0",
+    "typescript": "^4.5.2"
+  }
+}

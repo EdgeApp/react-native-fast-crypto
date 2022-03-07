@@ -5,7 +5,7 @@ INSTALL_PATH ?= /usr/local
 # Compiler options:
 CFLAGS   += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -std=c99
 CXXFLAGS += -D_GNU_SOURCE -DDEBUG -g -Wall -fPIC -std=c++11
-deps = libsecp256k1 libssl
+deps = libsecp256k1
 LIBS := $(shell pkg-config --libs --static $(deps)) \
 	-lm
 
