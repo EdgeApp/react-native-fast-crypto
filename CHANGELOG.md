@@ -1,5 +1,12 @@
 # react-native-fast-crypto
 
+## 2.1.0 (2022-03-20)
+
+- Remove the OpenSSL-Universal package
+- Add a unit-test application
+- Upgrade to the Android gradle plugin v3.6.0
+- Add code-formatting tools
+
 ## 2.0.0 (2020-11-20)
 
 - Remove all Monero features. These live in [react-native-mymonero-core](https://github.com/EdgeApp/react-native-mymonero-core) now.
@@ -33,4 +40,4 @@
 ## 1.6.0
 
 * Add support for monero core libaries
-* 
+*
