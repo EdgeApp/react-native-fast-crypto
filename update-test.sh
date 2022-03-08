@@ -13,5 +13,6 @@
     ./react-native-fast-crypto.podspec \
     ./ios \
     ./package.json \
+    ./index.js \
     ./FastCryptoTest/node_modules/react-native-fast-crypto/
 )
