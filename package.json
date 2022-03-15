@@ -25,16 +25,11 @@
     "/android/jni/*",
     "/android/src/*",
     "/CHANGELOG.md",
-    "index.js",
-    "ios/Headers",
-    "ios/Libraries/libnativecrypto.a",
-    "ios/Libraries/libsecp256k1.a",
-    "ios/RNFastCrypto.h",
-    "ios/RNFastCrypto.m",
-    "ios/RNFastCrypto.xcodeproj",
-    "package.json",
-    "react-native-fast-crypto.podspec",
-    "README.md"
+    "/index.js",
+    "/ios/*",
+    "/package.json",
+    "/react-native-fast-crypto.podspec",
+    "/README.md"
   ],
   "scripts": {
     "build:native": "./build-deps",
