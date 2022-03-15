@@ -22,5 +22,4 @@ Pod::Spec.new do |s|
     "ios/Libraries/libsecp256k1.a"
 
   s.dependency "React"
-  s.dependency "OpenSSL-Universal"
 end
