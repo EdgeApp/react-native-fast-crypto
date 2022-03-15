@@ -32,9 +32,8 @@
     "/README.md"
   ],
   "scripts": {
-    "build:native": "./build-deps",
-    "build": "echo OK",
-    "fix.android": "(cd android; ./format-java.sh)",
+    "build-secp256k1": "./build-secp256k1.sh",
+    "fix-android": "(cd android; ./format-java.sh)",
     "fix": "prettier --write index.js"
   },
   "dependencies": {

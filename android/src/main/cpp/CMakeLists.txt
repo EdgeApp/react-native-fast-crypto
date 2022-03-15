@@ -1,34 +1,30 @@
 cmake_minimum_required(VERSION 3.4.1)
 
+add_compile_options(-fvisibility=hidden -w)
+include_directories(${CMAKE_SOURCE_DIR}/scrypt)
+include_directories(${CMAKE_SOURCE_DIR}/../../../jni/include)
+
 add_library(
   crypto_bridge
   SHARED
   crypto_bridge.cpp
+  native-crypto.cpp
+  scrypt/crypto_scrypt.c
+  scrypt/sha256.c
 )
 
-include_directories(${CMAKE_SOURCE_DIR}/../../../jni/libs/${ANDROID_ABI})
-
 add_library(
-  nativecrypto
+  secp256k1
   SHARED
   IMPORTED
 )
 
 set_target_properties(
-  nativecrypto
+  secp256k1
   PROPERTIES
   IMPORTED_LOCATION
-  ${CMAKE_SOURCE_DIR}/../../../jni/libs/${ANDROID_ABI}/libnativecrypto.so
+  ${CMAKE_SOURCE_DIR}/../../../jni/libs/${ANDROID_ABI}/libsecp256k1.so
 )
 
 # Include libraries needed for crypto_bridge lib
-target_link_libraries(crypto_bridge nativecrypto android log)
-
-# copy out the lib binary... need to leave the static lib around to pass gradle check
-set(distribution_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set_target_properties(
-  crypto_bridge
-  PROPERTIES
-  ARCHIVE_OUTPUT_DIRECTORY
-  "${distribution_DIR}/lib/${ANDROID_ABI}"
-)
+target_link_libraries(crypto_bridge secp256k1 android log)

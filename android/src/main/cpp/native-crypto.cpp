@@ -7,7 +7,7 @@
 
 #include "native-crypto.h"
 extern "C" {
-#include "../minilibs/scrypt/crypto_scrypt.h"
+#include "crypto_scrypt.h"
 }
 
 #include <math.h>

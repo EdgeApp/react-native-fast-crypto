@@ -12,7 +12,7 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
 
   // this loads the library when the class is loaded
   static {
-    System.loadLibrary("nativecrypto");
+    System.loadLibrary("secp256k1");
     System.loadLibrary("crypto_bridge"); // this loads the library when the class is loaded
   }
 

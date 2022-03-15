@@ -16,10 +16,19 @@ Pod::Spec.new do |s|
     :git => "https://github.com/EdgeApp/react-native-fast-crypto.git",
     :tag => "v#{s.version}"
   }
-  s.source_files = "ios/**/*.{h,m}"
-  s.vendored_libraries =
-    "ios/Libraries/libnativecrypto.a",
-    "ios/Libraries/libsecp256k1.a"
+  s.source_files =
+    "android/jni/include/secp256k1.h",
+    "android/src/main/cpp/native-crypto.cpp",
+    "android/src/main/cpp/native-crypto.h",
+    "android/src/main/cpp/scrypt/crypto_scrypt.c",
+    "android/src/main/cpp/scrypt/crypto_scrypt.h",
+    "android/src/main/cpp/scrypt/sha256.c",
+    "android/src/main/cpp/scrypt/sha256.h",
+    "android/src/main/cpp/scrypt/sysendian.h",
+    "ios/RNFastCrypto.h",
+    "ios/RNFastCrypto.m"
+  s.vendored_frameworks =
+    "ios/secp256k1.xcframework"
 
   s.dependency "React"
 end
