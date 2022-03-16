@@ -1,6 +1,14 @@
 # react-native-fast-crypto
 
-## 2.1.0 (2022-03-20)
+## 2.1.1 (2022-03-16)
+
+- fixed: Return the correct number of bytes from PBKDF2 on Android.
+- fixed: Include the correct libraries in the APK when using Android Gradle plugin v3 or below.
+- fixed: Stop including extra files in the NPM bundle that should not have been there.
+- fixed: Remove the iOS dependency on OpenSSL.
+- added: Unit tests for secp256k1 functions.
+
+## 2.1.0 (2022-03-07)
 
 - Remove the OpenSSL-Universal package
 - Add a unit-test application
