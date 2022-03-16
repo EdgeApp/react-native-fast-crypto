@@ -21,7 +21,10 @@
   ],
   "main": "index.js",
   "files": [
-    "android/*",
+    "/android/build.gradle",
+    "/android/jni/*",
+    "/android/src/*",
+    "/CHANGELOG.md",
     "index.js",
     "ios/Headers",
     "ios/Libraries/libnativecrypto.a",

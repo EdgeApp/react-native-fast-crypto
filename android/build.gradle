@@ -38,6 +38,16 @@ android {
       path "src/main/cpp/CMakeLists.txt"
     }
   }
+
+  // Older vesions of the Android Gradle plugin need us to manually add
+  // the static libraries to the APK:
+  if (com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION < '4.0') {
+    sourceSets {
+      main {
+        jniLibs.srcDirs 'jni/libs/'
+      }
+    }
+  }
 }
 
 repositories {
