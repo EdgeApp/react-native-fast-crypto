@@ -46,7 +46,7 @@ public class RNFastCryptoModule extends ReactContextBaseJavaModule {
 
       // Pack our arguments into an object:
       char[] dataChars = new String(data, "UTF-8").toCharArray();
-      PBEKeySpec keySpec = new PBEKeySpec(dataChars, salt, iterations, keyLength);
+      PBEKeySpec keySpec = new PBEKeySpec(dataChars, salt, iterations, 8 * keyLength);
 
       SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
       byte[] out = secretKeyFactory.generateSecret(keySpec).getEncoded();
