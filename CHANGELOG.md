@@ -1,5 +1,9 @@
 # react-native-fast-crypto
 
+## 2.2.0 (2022-03-18)
+
+- changed: Compile secp256k1 as an XCFramework, making it compatible with the iOS simulator on M1 Macs.
+
 ## 2.1.1 (2022-03-16)
 
 - fixed: Return the correct number of bytes from PBKDF2 on Android.
