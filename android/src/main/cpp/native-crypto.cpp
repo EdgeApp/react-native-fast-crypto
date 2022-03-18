@@ -6,7 +6,9 @@
  */
 
 #include "native-crypto.h"
-#include "../minilibs/scrypt/crypto_scrypt.h"
+extern "C" {
+#include "crypto_scrypt.h"
+}
 
 #include <math.h>
 #include <secp256k1.h>
@@ -39,7 +41,7 @@ void bytesToHex(uint8_t * in, int inlen, char * out)
 bool hexToBytes(const char * string, uint8_t *outBytes) {
     uint8_t *data = outBytes;
 
-    if(string == NULL) 
+    if(string == NULL)
        return false;
 
     size_t slength = strlen(string);
@@ -56,7 +58,7 @@ bool hexToBytes(const char * string, uint8_t *outBytes) {
         int value = 0;
         if(c >= '0' && c <= '9')
             value = (c - '0');
-        else if (c >= 'A' && c <= 'F') 
+        else if (c >= 'A' && c <= 'F')
             value = (10 + (c - 'A'));
         else if (c >= 'a' && c <= 'f')
              value = (10 + (c - 'a'));
@@ -82,7 +84,7 @@ void fast_crypto_secp256k1_ec_pubkey_create(const char *szPrivateKeyHex, char *s
 
     int flags = compressed ? SECP256K1_EC_COMPRESSED : SECP256K1_EC_UNCOMPRESSED;
     uint8_t privateKey[PRIVKEY_LENGTH];
-    szPublicKeyHex[0] = 0; 
+    szPublicKeyHex[0] = 0;
 
     bool success = hexToBytes(szPrivateKeyHex, privateKey);
     if (!success) {

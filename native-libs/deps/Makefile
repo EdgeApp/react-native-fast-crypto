@@ -1,6 +1,6 @@
 BUILD_DIR ?= build
 
-default: native-crypto
+default: libsecp256k1
 
 $(BUILD_DIR)/%/tasks.mk: recipes/%
 	@ ./run.sh $* write-tasks

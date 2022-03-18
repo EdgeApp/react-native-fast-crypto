@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-//#include "scrypt_platform.h"
+/* #include "scrypt_platform.h" */
 
 #include <sys/types.h>
 
@@ -204,15 +204,15 @@ SHA256_Pad(SHA256_CTX * ctx)
 	/* Add 1--64 bytes so that the resulting length is 56 mod 64 */
 	r = (ctx->count[1] >> 3) & 0x3f;
 	plen = (r < 56) ? (56 - r) : (120 - r);
-	sc_SHA256_Update(ctx, PAD, (size_t)plen);
+	SHA256_Update(ctx, PAD, (size_t)plen);
 
 	/* Add the terminating bit-count */
-	sc_SHA256_Update(ctx, len, 8);
+	SHA256_Update(ctx, len, 8);
 }
 
 /* SHA-256 initialization.  Begins a SHA-256 operation. */
 void
-sc_SHA256_Init(SHA256_CTX * ctx)
+SHA256_Init(SHA256_CTX * ctx)
 {
 
 	/* Zero bits processed so far */
@@ -231,7 +231,7 @@ sc_SHA256_Init(SHA256_CTX * ctx)
 
 /* Add bytes into the hash */
 void
-sc_SHA256_Update(SHA256_CTX * ctx, const void *in, size_t len)
+SHA256_Update(SHA256_CTX * ctx, const void *in, size_t len)
 {
 	uint32_t bitlen[2];
 	uint32_t r;
@@ -277,7 +277,7 @@ sc_SHA256_Update(SHA256_CTX * ctx, const void *in, size_t len)
  * and clears the context state.
  */
 void
-sc_SHA256_Final(unsigned char digest[32], SHA256_CTX * ctx)
+SHA256_Final(unsigned char digest[32], SHA256_CTX * ctx)
 {
 
 	/* Add padding */
@@ -301,26 +301,26 @@ HMAC_SHA256_Init(HMAC_SHA256_CTX * ctx, const void * _K, size_t Klen)
 
 	/* If Klen > 64, the key is really SHA256(K). */
 	if (Klen > 64) {
-		sc_SHA256_Init(&ctx->ictx);
-		sc_SHA256_Update(&ctx->ictx, K, Klen);
-		sc_SHA256_Final(khash, &ctx->ictx);
+		SHA256_Init(&ctx->ictx);
+		SHA256_Update(&ctx->ictx, K, Klen);
+		SHA256_Final(khash, &ctx->ictx);
 		K = khash;
 		Klen = 32;
 	}
 
 	/* Inner SHA256 operation is SHA256(K xor [block of 0x36] || data). */
-	sc_SHA256_Init(&ctx->ictx);
+	SHA256_Init(&ctx->ictx);
 	memset(pad, 0x36, 64);
 	for (i = 0; i < Klen; i++)
 		pad[i] ^= K[i];
-	sc_SHA256_Update(&ctx->ictx, pad, 64);
+	SHA256_Update(&ctx->ictx, pad, 64);
 
 	/* Outer SHA256 operation is SHA256(K xor [block of 0x5c] || hash). */
-	sc_SHA256_Init(&ctx->octx);
+	SHA256_Init(&ctx->octx);
 	memset(pad, 0x5c, 64);
 	for (i = 0; i < Klen; i++)
 		pad[i] ^= K[i];
-	sc_SHA256_Update(&ctx->octx, pad, 64);
+	SHA256_Update(&ctx->octx, pad, 64);
 
 	/* Clean the stack. */
 	memset(khash, 0, 32);
@@ -332,7 +332,7 @@ HMAC_SHA256_Update(HMAC_SHA256_CTX * ctx, const void *in, size_t len)
 {
 
 	/* Feed data to the inner SHA256 operation. */
-	sc_SHA256_Update(&ctx->ictx, in, len);
+	SHA256_Update(&ctx->ictx, in, len);
 }
 
 /* Finish an HMAC-SHA256 operation. */
@@ -342,13 +342,13 @@ HMAC_SHA256_Final(unsigned char digest[32], HMAC_SHA256_CTX * ctx)
 	unsigned char ihash[32];
 
 	/* Finish the inner SHA256 operation. */
-	sc_SHA256_Final(ihash, &ctx->ictx);
+	SHA256_Final(ihash, &ctx->ictx);
 
 	/* Feed the inner hash to the outer SHA256 operation. */
-	sc_SHA256_Update(&ctx->octx, ihash, 32);
+	SHA256_Update(&ctx->octx, ihash, 32);
 
 	/* Finish the outer SHA256 operation. */
-	sc_SHA256_Final(digest, &ctx->octx);
+	SHA256_Final(digest, &ctx->octx);
 
 	/* Clean the stack. */
 	memset(ihash, 0, 32);

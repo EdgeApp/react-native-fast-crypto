@@ -1,46 +1,13 @@
 # Build output:
 /android/*.jar
 
-# OSX
-#
-.DS_Store
-
-# node.js
-#
+# Package managers:
 node_modules/
 npm-debug.log
+package-lock.json
 yarn-error.log
 
-# Xcode
-#
-build/
-build*/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
-*.hmap
-*.ipa
-*.xcuserstate
-project.xcworkspace
-
-# Android/IntelliJ
-#
-build/
-.idea
-.gradle
-local.properties
-*.iml
-
-# BUCK
-buck-out/
-\.buckd/
-*.keystore
+# Editors:
+.DS_Store
+.idea/
+.vscode/

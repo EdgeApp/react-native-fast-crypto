@@ -4,36 +4,45 @@ inherit common
 # $1 arch name for compiler, work_dir and install_dir.
 # $2 platform (either iPhoneOS or iPhoneSimulator)
 build_ios() {
+    arch=$1
+    sdk=$2
+
     # Put the source in the working directory:
     top_work_dir=$work_dir
-    work_dir=$work_dir/ios-$1
+    work_dir=$work_dir/$sdk-$arch
     mkdir -p $work_dir
     unpack
 
     # Establish expected variables:
-    target=ios-$1
-    install_dir=$build_dir/prefix/ios/$1
+    target=ios-$arch
+    install_dir=$build_dir/prefix/$sdk/$arch
 
-    case $1 in
+    case $arch in
+    arm64)  cross=arm64-apple-darwin10 ;;
     arm*)   cross=arm-apple-darwin10 ;;
     i386)   cross=i386-apple-darwin10 ;;
     x86_64) cross=x86_64-apple-darwin10 ;;
     esac
 
+    case $sdk in
+    iPhoneOS)        triple=${arch}-apple-ios10.0 ;;
+    iPhoneSimulator) triple=${arch}-apple-ios10.0-simulator ;;
+    esac
+
     # Locate Xcode build tools:
     xcode_dir=$(xcode-select -print-path | sed -e 's@/$@@')
-    platform_dir=$xcode_dir/Platforms/${2}.platform/Developer
+    platform_dir=$xcode_dir/Platforms/$sdk.platform/Developer
 
     export AR="ar"
-    export CC="clang"
-    export CCLD="clang"
+    export CC="clang -target $triple"
+    export CCLD="clang -target $triple"
     export CPP="clang -E"
-    export CXX="clang++"
+    export CXX="clang++ -target $triple"
 
-    platform_sdk="$platform_dir/SDKs/${2}.sdk"
-    sdk_flags="-arch $1 -isysroot $platform_sdk -miphoneos-version-min=10.0 -O2 -maes"
-    export CFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability"
-    export CXXFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability"
+    platform_sdk="$platform_dir/SDKs/$sdk.sdk"
+    sdk_flags="-arch $arch -isysroot $platform_sdk -miphoneos-version-min=10.0"
+    export CFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability -O2 -maes"
+    export CXXFLAGS="$sdk_flags -isystem${install_dir}/include -Werror=partial-availability -O2 -maes"
     export LDFLAGS="$sdk_flags -L${install_dir}/lib"
 
     export PATH=$xcode_dir/Toolchains/XcodeDefault.xctoolchain/usr/bin:$xcode_dir/usr/bin:$PATH
@@ -41,79 +50,37 @@ build_ios() {
 
     cd $work_dir
     build
-
-    # File lists:
-    ([ -n "$lib" ] && (cd $install_dir; find $lib -type f) || true) > \
-        $top_work_dir/lib-${target}.txt
-    ([ -n "$include" ] && (cd $install_dir; find $include -type f) || true) > \
-        $top_work_dir/include-${target}.txt
 }
-build_ios_armv7() {
+build_iphoneos_armv7() {
     build_ios armv7 iPhoneOS
 }
-build_ios_armv7s() {
+build_iphoneos_armv7s() {
     build_ios armv7s iPhoneOS
 }
-build_ios_arm64() {
+build_iphoneos_arm64() {
     build_ios arm64 iPhoneOS
 }
-build_ios_i386() {
+build_iphonesimulator_arm64() {
+    build_ios arm64 iPhoneSimulator
+}
+build_iphonesimulator_i386() {
     build_ios i386 iPhoneSimulator
 }
-build_ios_x86_64() {
+build_iphonesimulator_x86_64() {
     build_ios x86_64 iPhoneSimulator
 }
 
-arches="armv7 armv7s arm64 i386 x86_64"
-
-for arch in $arches ; do
+make_task() {
     deps="download"
     for dep in $depends; do
-        deps="$deps $dep.build-ios-$arch"
+        deps="$deps $dep.build-$1"
     done
-    task build-ios-$arch $deps
-done
-
-# Creates a universal binary from the various platform-specific files
-ios_universal() {
-    # Expand wildcards:
-    libs=$(cd $build_dir/prefix/ios/armv7; echo $lib)
-    for l in $libs; do
-        in_libs=$(echo $build_dir/prefix/ios/*/$l)
-        out_name=$work_dir/ios-universal/$l
-        mkdir -p $(dirname $out_name)
-        echo "lipo -create $in_libs -output $out_name"
-        lipo -create $in_libs -output $out_name
-    done
+    task build-$1 $deps
 }
-task ios-universal $(for arch in $arches; do echo build-ios-$arch; done) \
-    $(for dep in $depends; do echo $dep.ios-universal; done)
 
-package_ios_universal() {
-    package_dir=${recipe}-ios-universal
-    rm -rf $package_dir
-    mkdir $package_dir
-    depends=$(cat depends)
-
-    # Gather universal libraries:
-    cp -rv ios-universal/* $package_dir
-    for dep in $depends; do
-        echo "package:" $package_dir
-        if [ -d $build_dir/$dep/ios-universal ]
-        then
-            cp -rv $build_dir/$dep/ios-universal/* $package_dir
-        fi
-    done
-
-    # Gather headers:
-    for f in $(cat include-ios-armv7.txt); do
-        mkdir -p $(dirname $package_dir/$f)
-        ln -vs $build_dir/prefix/ios/armv7/$f $package_dir/$f
-    done
-
-    # Make the archive:
-    zip -r $recipe-ios-universal-$(date +%Y-%m-%d) $package_dir
-}
-task package-ios-universal write-deps ios-universal
-
-default=package-ios-universal
+make_task iphoneos-arm64
+make_task iphoneos-armv7
+make_task iphoneos-armv7s
+make_task iphonesimulator-arm64
+make_task iphonesimulator-i386
+make_task iphonesimulator-x86_64
