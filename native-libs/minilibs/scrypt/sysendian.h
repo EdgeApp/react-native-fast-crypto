@@ -29,7 +29,7 @@
 #ifndef _SYSENDIAN_H_
 #define _SYSENDIAN_H_
 
-//#include "scrypt_platform.h"
+/* #include "scrypt_platform.h" */
 
 /* If we don't have be64enc, the <sys/endian.h> we have isn't usable. */
 #if !HAVE_DECL_BE64ENC

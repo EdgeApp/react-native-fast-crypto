@@ -30,11 +30,6 @@
 #define _CRYPTO_SCRYPT_H_
 
 #include <stdint.h>
-#include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /**
  * crypto_scrypt(passwd, passwdlen, salt, saltlen, N, r, p, buf, buflen):
@@ -47,9 +42,5 @@ extern "C" {
  */
 int crypto_scrypt(const uint8_t *, size_t, const uint8_t *, size_t, uint64_t,
     uint32_t, uint32_t, uint8_t *, size_t);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* !_CRYPTO_SCRYPT_H_ */
