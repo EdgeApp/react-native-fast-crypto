@@ -1,5 +1,9 @@
 # react-native-fast-crypto
 
+## Unreleased
+
+- fixed: Malloc proper size for secp256k1 keys.
+
 ## 2.2.0 (2022-03-18)
 
 - changed: Compile secp256k1 as an XCFramework, making it compatible with the iOS simulator on M1 Macs.

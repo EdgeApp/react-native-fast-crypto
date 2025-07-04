@@ -16,10 +16,6 @@ extern "C" {
 #include <stdlib.h>
 #include <string.h>
 
-#define COMPRESSED_PUBKEY_LENGTH 33
-#define DECOMPRESSED_PUBKEY_LENGTH 65
-#define PRIVKEY_LENGTH 64
-
 void fast_crypto_scrypt (const uint8_t *passwd, size_t passwdlen, const uint8_t *salt, size_t saltlen, uint64_t N,
     uint32_t r, uint32_t p, uint8_t *buf, size_t buflen)
 {
