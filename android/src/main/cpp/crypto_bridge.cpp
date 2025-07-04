@@ -1,7 +1,7 @@
 //fastCrypto.cpp
 #include <android/log.h>
 #include <jni.h>
-#include "fast_crypto.h"
+#include "native-crypto.h"
 
 #define LOG_TAG "crypto_bridge-JNI"
 
