@@ -80,10 +80,9 @@ RCT_REMAP_METHOD(secp256k1EcPubkeyCreate,
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
   // Hex with a null terminator is 2 * bytes + 1:
-  char *szPublicKeyHex = malloc(2 * DECOMPRESSED_PUBKEY_LENGTH + 1);
+  char szPublicKeyHex[2 * DECOMPRESSED_PUBKEY_LENGTH + 1];
   fast_crypto_secp256k1_ec_pubkey_create([privateKeyHex UTF8String], szPublicKeyHex, compressed);
   NSString *publicKeyHex = [NSString stringWithUTF8String:szPublicKeyHex];
-  free(szPublicKeyHex);
   resolve(publicKeyHex);
 }
 
