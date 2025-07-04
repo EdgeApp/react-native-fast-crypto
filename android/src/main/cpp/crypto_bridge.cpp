@@ -292,9 +292,8 @@ Java_co_airbitz_fastcrypto_RNFastCryptoModule_secp256k1EcPubkeyCreateJNI(JNIEnv 
     }
     int privateKeyLen = strlen(szPrivateKeyHex);
 
-    // Buffer size: privateKeyLen * 2 + 3 bytes
-    // For 64-char private key: uncompressed public key = 130 hex chars (string) + 1 null terminator = 131 bytes
-    char szPublicKeyHex[privateKeyLen * 2 + 3];
+    // Hex with a null terminator is 2 * bytes + 1:
+    char szPublicKeyHex[2 * DECOMPRESSED_PUBKEY_LENGTH + 1];
 
     fast_crypto_secp256k1_ec_pubkey_create(szPrivateKeyHex, szPublicKeyHex, jiCompressed);
     jstring out = env->NewStringUTF(szPublicKeyHex);
