@@ -79,7 +79,9 @@ RCT_REMAP_METHOD(secp256k1EcPubkeyCreate,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-  char *szPublicKeyHex = malloc(sizeof(char) * [privateKeyHex length] * 2);
+  // Buffer size: privateKeyLen * 2 + 3 bytes
+  // For 64-char private key: uncompressed public key = 130 hex chars (string) + 1 null terminator = 131 bytes
+  char *szPublicKeyHex = malloc(sizeof(char) * ([privateKeyHex length] * 2 + 3)); 
   fast_crypto_secp256k1_ec_pubkey_create([privateKeyHex UTF8String], szPublicKeyHex, compressed);
   NSString *publicKeyHex = [NSString stringWithUTF8String:szPublicKeyHex];
   free(szPublicKeyHex);
