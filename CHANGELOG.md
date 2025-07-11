@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.2.1 (2025-07-11)
+
 - fixed: Malloc proper size for secp256k1 keys.
 
 ## 2.2.0 (2022-03-18)
