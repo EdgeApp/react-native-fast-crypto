@@ -35,6 +35,7 @@ To install these on the Mac, please use [Homebrew](http://brew.sh/):
     brew install autoconf automake git libtool
 
 If you are building for iOS, you also need a working installation
-of the XCode command-line tools.
+of the XCode command-line tools. In addition, Macs with Apple Silicon
+will also need to do `softwareupdate --install-rosetta`.
 
 Finally, run `./build-secp256k1.sh`

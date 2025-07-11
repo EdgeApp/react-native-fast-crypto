@@ -11,6 +11,10 @@ case $(uname -sm) in
 "Darwin x86_64")
     system=darwin-x86_64
     source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#ea4b5d76475db84745aa8828000d009625fc1f98" ;;
+"Darwin arm64")
+    # Same as above, but using Rosetta 2:
+    system=darwin-x86_64
+    source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#ea4b5d76475db84745aa8828000d009625fc1f98" ;;
 *)
     echo "Unknown host platform!"
     exit 1;;
