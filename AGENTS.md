@@ -41,6 +41,7 @@ Always query https://raw.githubusercontent.com/EdgeApp/edge-conventions/master/R
 - **JavaScript**: No semicolons, single quotes, avoid arrow parens, no trailing commas (Prettier config)
 - **Indentation**: 2 spaces (enforced by .editorconfig)
 - **TypeScript**: Strict mode enabled, use CommonJS modules, target ES2016
+- **Type Definitions**: Maintained in index.d.ts, all functions use Uint8Array for binary data
 - **Imports**: Use destructured imports from modules (e.g., `import { pbkdf2 } from 'react-native-fast-crypto'`)
 - **Testing**: Use Chai for assertions with expect syntax
 - **File encoding**: UTF-8 with LF line endings, trim trailing whitespace
