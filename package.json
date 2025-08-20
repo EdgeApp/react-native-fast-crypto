@@ -20,12 +20,15 @@
     "William Swanson <william@edge.app>"
   ],
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
     "/android/build.gradle",
     "/android/jni/*",
     "/android/src/*",
     "/CHANGELOG.md",
+    "/docs/*",
     "/index.js",
+    "/index.d.ts",
     "/ios/*",
     "/package.json",
     "/react-native-fast-crypto.podspec",
