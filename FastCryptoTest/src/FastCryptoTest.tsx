@@ -4,7 +4,6 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TextStyle,
   View
 } from 'react-native'
 
@@ -14,22 +13,30 @@ interface Results {
   [name: string]: undefined | true | string
 }
 
-export function FastCryptoTest(props: {}): JSX.Element {
+export function FastCryptoTest(): JSX.Element {
   const [results, setResults] = React.useState<Results>({})
 
-  async function runTests(): Promise<void> {
-    for (const name of Object.keys(tests)) {
-      await tests[name]()
-        .then(() => setResults(results => ({ ...results, [name]: true })))
-        .catch(error => {
-          console.log(error)
-          setResults(results => ({ ...results, [name]: String(error) }))
-        })
+  async function runAllTests(): Promise<void> {
+    console.log(`Running ${Object.keys(tests).length} crypto tests...`)
+
+    for (const name in tests) {
+      try {
+        console.log(`Running: ${name}`)
+        await tests[name]()
+        console.log(`PASSED: ${name}`)
+        setResults(results => ({ ...results, [name]: true }))
+      } catch (e: any) {
+        console.error(`FAILED: ${name} - ${String(e)}`)
+        setResults(results => ({ ...results, [name]: String(e) }))
+      }
     }
+
+    console.log('Tests completed')
   }
 
   React.useEffect(() => {
-    runTests().catch(error => console.error(error))
+    console.log('FastCryptoTest - Starting tests...')
+    setTimeout(() => runAllTests(), 1000)
   }, [])
 
   function statusLine(
@@ -72,28 +79,41 @@ export function FastCryptoTest(props: {}): JSX.Element {
   )
 }
 
-const testStyle = (color: string): TextStyle => ({
-  color,
-  margin: 5
-})
-
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#205030',
     flex: 1,
-    paddingTop: StatusBar.currentHeight
+    backgroundColor: '#205030',
+    padding: 20
   },
   header: {
+    fontSize: 24,
+    fontWeight: 'bold',
     color: '#ffffff',
-    fontSize: 20,
-    padding: 5,
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: 20
   },
   results: {
+    flex: 1,
     backgroundColor: '#ffffff',
-    flex: 1
+    borderRadius: 8,
+    padding: 10
   },
-  running: testStyle('#000000'),
-  bad: testStyle('#7f4f30'),
-  good: testStyle('#307f4f')
+  running: {
+    color: '#888888',
+    fontSize: 14,
+    marginBottom: 3,
+    fontFamily: 'monospace'
+  },
+  good: {
+    color: '#008800',
+    fontSize: 14,
+    marginBottom: 3,
+    fontFamily: 'monospace'
+  },
+  bad: {
+    color: '#cc0000',
+    fontSize: 14,
+    marginBottom: 3,
+    fontFamily: 'monospace'
+  }
 })

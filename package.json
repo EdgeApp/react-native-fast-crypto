@@ -38,7 +38,8 @@
     "fix": "eslint --fix .",
     "lint": "eslint .",
     "precommit": "lint-staged && tsc && npm run build-js",
-    "prepare": "husky && npm run build-js"
+    "prepare": "husky && npm run build-js",
+    "update-tests": "./scripts/update-tests.sh"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint"

@@ -1,5 +1,7 @@
 # Build output:
+/android/.cxx/
 /android/*.jar
+/android/build/
 /lib/
 
 # Package managers:
