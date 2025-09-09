@@ -1,60 +1,95 @@
-# OSX
-#
-.DS_Store
+# React Native Fast Crypto Test App
 
-# Xcode
-#
-build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
-*.hmap
-*.ipa
-*.xcuserstate
-
-# Android/IntelliJ
-#
-build/
-.idea
-.gradle
-local.properties
-*.iml
-*.hprof
-
-# node.js
-#
+# React Native
 node_modules/
-npm-debug.log
-yarn-error.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# BUCK
-buck-out/
-\.buckd/
-*.keystore
-!debug.keystore
+# Metro
+.metro-health-check*
+.haste_cache/
 
-# fastlane
-#
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
-# screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/
+# Debug
+flipper-dump.txt
 
-*/fastlane/report.xml
-*/fastlane/Preview.html
-*/fastlane/screenshots
+# React Native Codegen
+FBReactNativeSpec/
+react-native-codegen-*.tgz
 
-# Bundle artifact
+# Bundle artifacts
 *.jsbundle
 
-# CocoaPods
-/ios/Pods/
+# Android
+**/.gradle/
+**/build/
+**/.cxx/
+android/app/debug/
+android/app/release/
+android/gradle/wrapper/gradle-wrapper.jar
+android/local.properties
+android/gradlew
+android/gradlew.bat
+*.hprof
+*.ap_
+*.dex
+
+# iOS
+ios/build/
+ios/Pods/
+ios/Podfile.lock
+ios/*.xcworkspace/xcuserdata/
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcodeproj/project.xcworkspace/xcuserdata/
+ios/build/Build/Intermediates.noindex/
+ios/build/Build/Products/
+ios/.xcode.env.local
+DerivedData/
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+
+# Local Environment
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Misc
+*.tgz
+*.tar.gz
+
+# React Native Debugger
+.vscode/settings.json
+
+# Testing
+e2e/artifacts/
+
+# Babel
+.babel_cache/
+
+# Ruby (CocoaPods)
+Gemfile.lock
+vendor/

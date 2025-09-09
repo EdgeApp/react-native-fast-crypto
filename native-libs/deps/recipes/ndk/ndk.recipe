@@ -1,42 +1,25 @@
 # This recipe contains the setup tasks for unpacking and installing the NDK
 inherit common
 
-version="r15c"
+version="28.0.12674087"
 
-# Select the correct NDK version for the host system:
-case $(uname -sm) in
-"Linux x86_64")
-    system=linux-x86_64
-    source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#0600157c4ddf50ec15b8a037cfc474143f718fd0" ;;
-"Darwin x86_64")
-    system=darwin-x86_64
-    source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#ea4b5d76475db84745aa8828000d009625fc1f98" ;;
-"Darwin arm64")
-    # Same as above, but using Rosetta 2:
-    system=darwin-x86_64
-    source="https://dl.google.com/android/repository/android-ndk-$version-$system.zip#ea4b5d76475db84745aa8828000d009625fc1f98" ;;
-*)
-    echo "Unknown host platform!"
-    exit 1;;
-esac
-
-# Unzip the NDK archive.
+# Use system NDK instead of downloading
 unzip_ndk() {
-    echo Unpacking NDK...
-    archive="$download_dir/android-ndk-$version-$system.zip"
-    unzip -o -d"$work_dir" $archive
+    echo "Using system NDK $version..."
+    # Create symlink to system NDK
+    ln -sf "$ANDROID_HOME/ndk/$version" "$work_dir/android-ndk-$version"
 }
-task unzip-ndk download
+task unzip-ndk
 
-# Extracts a standalone toolchain from the NDK.
-# $1 arch name for installing the toolchain.
+# NDK 28.0 uses integrated toolchains, no standalone needed
+# $1 arch name for creating the symlink.
 setup() {
-    echo Unpacking toolchain...
-    cd android-ndk-$version
-    python build/tools/make_standalone_toolchain.py --verbose --arch $1 --api 21 --stl libc++ --force --install-dir $work_dir/$1
-
-    echo Patching headers...
-    cat $recipe_dir/langinfo.h >> $work_dir/$1/sysroot/usr/local/include/langinfo.h
+    echo Setting up NDK 28.0 integrated toolchain for $1...
+    
+    # Create symlink to main NDK toolchain (NDK 28 doesn't need standalone)
+    ln -sf "$work_dir/android-ndk-$version/toolchains/llvm/prebuilt/darwin-x86_64" "$work_dir/$1"
+    
+    echo NDK 28.0 toolchain ready for $1
 }
 setup_arm() {
     setup arm

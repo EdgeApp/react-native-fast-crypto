@@ -38,12 +38,21 @@
   },
   "dependencies": {
     "buffer": "^5.0.8",
-    "rfc4648": "^1.0.0"
+    "rfc4648": "^1.5.4"
   },
   "devDependencies": {
     "prettier": "^2.5.1"
   },
   "peerDependencies": {
     "react-native": ">=0.47.0 <1.0.0"
+  },
+  "react-native": {
+    "android": {
+      "sourceDir": "./android",
+      "packageImportPath": "import co.airbitz.fastcrypto.RNFastCryptoPackage;"
+    },
+    "ios": {
+      "project": "./ios/RNFastCrypto.xcodeproj"
+    }
   }
 }

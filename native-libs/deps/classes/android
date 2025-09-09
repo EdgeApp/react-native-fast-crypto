@@ -14,41 +14,44 @@ build_android() {
     install_dir=$build_dir/prefix/android/$1
 
     cross=$2
-    export AR="${cross}-ar"
-    export AS="${cross}-as"
-    export CC="${cross}-clang"
-    export CCLD="${cross}-clang"
-    export CPP="${cross}-clang -E"
-    export CXX="${cross}-clang++"
-    export LD="${cross}-ld"
-    export NM="${cross}-nm"
-    export OBJCOPY="${cross}-objcopy"
-    export OBJDUMP="${cross}-objdump"
-    export RANLIB="${cross}-ranlib"
-    export STRINGS="${cross}-strings"
-    export STRIP="${cross}-strip"
+    # NDK 28.0 integrated toolchain paths
+    ndk_toolchain="$build_dir/ndk/$1"
+    export AR="${ndk_toolchain}/bin/llvm-ar"
+    export AS="${ndk_toolchain}/bin/${cross}24-clang"
+    export CC="${ndk_toolchain}/bin/${cross}24-clang"
+    export CCLD="${ndk_toolchain}/bin/${cross}24-clang"
+    export CPP="${ndk_toolchain}/bin/${cross}24-clang -E"
+    export CXX="${ndk_toolchain}/bin/${cross}24-clang++"
+    export LD="${ndk_toolchain}/bin/ld.lld"
+    export NM="${ndk_toolchain}/bin/llvm-nm"
+    export OBJCOPY="${ndk_toolchain}/bin/llvm-objcopy"
+    export OBJDUMP="${ndk_toolchain}/bin/llvm-objdump"
+    export RANLIB="${ndk_toolchain}/bin/llvm-ranlib"
+    export STRINGS="${ndk_toolchain}/bin/llvm-strings"
+    export STRIP="${ndk_toolchain}/bin/llvm-strip"
 
-    export CFLAGS="-isystem${install_dir}/include -fPIC -O2"
-    export CXXFLAGS="-isystem${install_dir}/include -fPIC -O2"
-    export LDFLAGS="-L${install_dir}/lib -fPIC"
+    export CFLAGS="-isystem${install_dir}/include -fPIC -O2 -DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON -ffunction-sections -fdata-sections"
+    export CXXFLAGS="-isystem${install_dir}/include -fPIC -O2 -DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON -ffunction-sections -fdata-sections"
+    export LDFLAGS="-L${install_dir}/lib -fPIC -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384 -Wl,--gc-sections"
 
     if [ $1 = "arm" ]; then
         export CFLAGS="$CFLAGS -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb"
         export CXXFLAGS="$CXXFLAGS -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb"
         export LDFLAGS="$LDFLAGS -march=armv7-a -Wl,--fix-cortex-a8"
-    else
+    elif [ $1 = "x86" ] || [ $1 = "x86_64" ]; then
+        # Only add -maes for x86 architectures (arm64 doesn't support -maes)
         export CFLAGS="$CFLAGS -maes"
         export CXXFLAGS="$CXXFLAGS -maes"
     fi
 
-    export PATH=$build_dir/ndk/$1/bin:$PATH
+    export PATH=${ndk_toolchain}/bin:$PATH
     export PKG_CONFIG_PATH=$install_dir/lib/pkgconfig
 
     cd $work_dir
     build
 }
 build_android_arm() {
-    build_android arm arm-linux-androideabi
+    build_android arm armv7a-linux-androideabi
 }
 build_android_arm64() {
     build_android arm64 aarch64-linux-android

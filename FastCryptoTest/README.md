@@ -1,7 +1,26 @@
-# react-native-fast-crypto Test App
+# FastCryptoTest
 
-This app runs react-native-fast-crypto unit tests.
+Simple test app for `react-native-fast-crypto` library.
 
-To launch the tests, first run `yarn install` in this folder to set up the dependencies, and then run either `yarn android` or `yarn ios`.
+## Running the tests
 
-If you want to edit the react-native-fast-crypto library while using this app, run the `update-test.sh` script located in the outer folder to copy your changes into `node_modules`.
+```bash
+# Install dependencies
+yarn install
+
+# Start Metro
+yarn start
+
+# Run on Android
+yarn android
+
+# Run on iOS  
+yarn ios
+```
+
+The app will automatically run crypto tests including:
+- pbkdf2 (ASCII and UTF-8 inputs)
+- secp256k1 operations
+- scrypt key derivation
+
+Test results are displayed on screen.
