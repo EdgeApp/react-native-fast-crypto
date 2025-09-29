@@ -3,10 +3,27 @@ inherit common
 
 version="28.0.12674087"
 
-# Use system NDK instead of downloading
+# Install NDK using sdkmanager if not present, otherwise use system NDK
 unzip_ndk() {
-    echo "Using system NDK $version..."
-    # Create symlink to system NDK
+    echo "Setting up NDK $version..."
+    
+    # Check if NDK exists
+    if [ ! -d "$ANDROID_HOME/ndk/$version" ]; then
+        echo "NDK $version not found. Attempting to install via sdkmanager..."
+        
+        # Try to install using sdkmanager
+        if [ -f "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" ]; then
+            echo "Installing NDK $version via sdkmanager..."
+            "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "ndk;$version"
+        else
+            echo "Warning: sdkmanager not found. Please install NDK $version manually."
+            echo "Run: \$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \"ndk;$version\""
+            exit 1
+        fi
+    fi
+    
+    echo "Using NDK $version from $ANDROID_HOME/ndk/$version"
+    # Create symlink to NDK
     ln -sf "$ANDROID_HOME/ndk/$version" "$work_dir/android-ndk-$version"
 }
 task unzip-ndk
