@@ -1,4 +1,0 @@
-inherit android
-if [ Darwin = $(uname -s) ]; then
-    inherit ios
-fi

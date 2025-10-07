@@ -10,25 +10,18 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platform = :ios, "8.0"
+  s.platform = :ios, "13.0"
   s.requires_arc = true
   s.source = {
     :git => "https://github.com/EdgeApp/react-native-fast-crypto.git",
     :tag => "v#{s.version}"
   }
   s.source_files =
-    "android/jni/include/secp256k1.h",
-    "android/src/main/cpp/native-crypto.cpp",
-    "android/src/main/cpp/native-crypto.h",
-    "android/src/main/cpp/scrypt/crypto_scrypt.c",
-    "android/src/main/cpp/scrypt/crypto_scrypt.h",
-    "android/src/main/cpp/scrypt/sha256.c",
-    "android/src/main/cpp/scrypt/sha256.h",
-    "android/src/main/cpp/scrypt/sysendian.h",
     "ios/RNFastCrypto.h",
-    "ios/RNFastCrypto.m"
+    "ios/RNFastCrypto.m",
+    "src/native-crypto.h"
   s.vendored_frameworks =
-    "ios/secp256k1.xcframework"
+    "ios/RNFastCrypto.xcframework"
 
   s.dependency "React-Core"
 end

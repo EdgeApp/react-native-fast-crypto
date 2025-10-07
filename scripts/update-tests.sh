@@ -9,9 +9,9 @@ mkdir -p $dest/lib
 mkdir -p $dest/src
 
 cp -rv android/build.gradle $dest/android
-cp -rv android/jni $dest/android
 cp -rv android/src $dest/android
 cp -rv ios $dest
 cp -rv lib/index.js $dest/lib
 cp -rv package.json $dest
 cp -rv react-native-fast-crypto.podspec $dest
+cp -rv src/native-crypto.h $dest/src

@@ -22,23 +22,23 @@
   "main": "lib/index.js",
   "files": [
     "/android/build.gradle",
-    "/android/jni/*",
     "/android/src/*",
     "/CHANGELOG.md",
     "/ios/*",
     "/lib/index.js",
     "/package.json",
     "/react-native-fast-crypto.podspec",
+    "/src/native-crypto.h",
     "/README.md"
   ],
   "scripts": {
     "build-js": "sucrase -d lib/ --transforms typescript src/",
-    "build-secp256k1": "./build-secp256k1.sh",
+    "build-native": "ZERO_AR_DATE=1 node -r sucrase/register ./scripts/build-native.ts",
     "fix-android": "(cd android; ./format-java.sh)",
     "fix": "eslint --fix .",
     "lint": "eslint .",
     "precommit": "lint-staged && tsc && npm run build-js",
-    "prepare": "husky && npm run build-js",
+    "prepare": "husky && npm run build-js && npm run build-native",
     "update-tests": "./scripts/update-tests.sh"
   },
   "lint-staged": {

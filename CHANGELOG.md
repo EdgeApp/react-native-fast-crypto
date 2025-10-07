@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- changed: Bump minimum Android to SDK 23 (Android 6)
+- changed: Bump minimum iOS to 13
+- changed: Rewrite the build system in a more modern language.
+- changed: Support 16KiB pages on Android
+
 ## 2.2.1 (2025-07-11)
 
 - fixed: Malloc proper size for secp256k1 keys.

@@ -1,0 +1,6 @@
+{
+  global:
+    Java_co_airbitz_fastcrypto_*;
+  local:
+    *;
+};
