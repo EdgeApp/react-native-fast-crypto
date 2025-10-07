@@ -1,5 +1,6 @@
 # Build output:
 /android/*.jar
+/lib/
 
 # Package managers:
 node_modules/
