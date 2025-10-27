@@ -1,27 +1,49 @@
 {
-  "name": "fastcryptotest",
+  "name": "FastCryptoTest",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "prepare-ios": "(cd ios; pod install)",
+    "lint": "eslint .",
+    "pods": "(cd ios; pod install)",
     "start": "react-native start",
-    "update": "(cd ..; ./update-test.sh)"
+    "test": "jest",
+    "update-tests": "(cd ..; npm run update-tests)"
   },
   "dependencies": {
-    "@types/chai": "^4.3.0",
-    "chai": "^4.3.6",
-    "react": "17.0.2",
-    "react-native": "0.67.3",
-    "react-native-fast-crypto": "^2.0.0"
+    "chai": "^6.0.1",
+    "flow-parser": "^0.285.0",
+    "hermes-parser": "^0.32.1",
+    "jscodeshift": "^17.3.0",
+    "react": "19.1.0",
+    "react-native": "0.81.4",
+    "react-native-fast-crypto": "*",
+    "recast": "^0.23.11",
+    "rfc4648": "^1.5.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/runtime": "^7.16.3",
-    "@types/react": "^17.0.37",
-    "@types/react-native": "^0.67.2",
-    "metro-react-native-babel-preset": "^0.67.0",
-    "typescript": "^4.5.2"
+    "@babel/core": "^7.25.2",
+    "@babel/plugin-transform-class-static-block": "^7.28.3",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "15.0.1",
+    "@react-native-community/cli-platform-android": "15.0.1",
+    "@react-native-community/cli-platform-ios": "15.0.1",
+    "@react-native/babel-preset": "0.81.4",
+    "@react-native/eslint-config": "0.81.4",
+    "@react-native/metro-config": "0.81.4",
+    "@react-native/typescript-config": "0.81.4",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^19.0.0",
+    "@types/react-test-renderer": "^19.0.0",
+    "eslint": "^8.19.0",
+    "jest": "^29.6.3",
+    "prettier": "2.8.8",
+    "react-test-renderer": "19.1.0",
+    "typescript": "5.0.4"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

@@ -19,29 +19,44 @@
     "Paul Puey <paul@edge.app>",
     "William Swanson <william@edge.app>"
   ],
-  "main": "index.js",
+  "main": "lib/index.js",
   "files": [
     "/android/build.gradle",
-    "/android/jni/*",
     "/android/src/*",
     "/CHANGELOG.md",
-    "/index.js",
     "/ios/*",
+    "/lib/index.js",
     "/package.json",
     "/react-native-fast-crypto.podspec",
+    "/src/native-crypto.h",
     "/README.md"
   ],
   "scripts": {
-    "build-secp256k1": "./build-secp256k1.sh",
+    "build-js": "sucrase -d lib/ --transforms typescript src/",
+    "build-native": "ZERO_AR_DATE=1 node -r sucrase/register ./scripts/build-native.ts",
     "fix-android": "(cd android; ./format-java.sh)",
-    "fix": "prettier --write index.js"
+    "fix": "eslint --fix .",
+    "lint": "eslint .",
+    "precommit": "lint-staged && tsc && npm run build-js",
+    "prepare": "husky && npm run build-js && npm run build-native",
+    "update-tests": "./scripts/update-tests.sh"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint"
   },
   "dependencies": {
     "buffer": "^5.0.8",
-    "rfc4648": "^1.0.0"
+    "rfc4648": "^1.5.4"
   },
   "devDependencies": {
-    "prettier": "^2.5.1"
+    "@types/node": "^14.14.7",
+    "eslint": "^9.31.0",
+    "eslint-config-standard-kit": "^1.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.8.8",
+    "sucrase": "^3.16.0",
+    "typescript": "5.0.4"
   },
   "peerDependencies": {
     "react-native": ">=0.47.0 <1.0.0"

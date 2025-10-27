@@ -5,7 +5,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.6.0'
+    classpath 'com.android.tools.build:gradle:7.3.1'
   }
 }
 
@@ -15,38 +15,19 @@ def safeExtGet(prop, fallback) {
   rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
-def DEFAULT_COMPILE_SDK_VERSION = 28
-def DEFAULT_BUILD_TOOLS_VERSION = '28.0.2'
-def DEFAULT_MIN_SDK_VERSION = 19
-def DEFAULT_TARGET_SDK_VERSION = 27
-
 android {
-  compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
-  buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+  namespace = "co.airbitz.fastcrypto"
+  compileSdk = safeExtGet('compileSdkVersion', 28)
+  ndkVersion = safeExtGet('ndkVersion', '28.0.12674087')
 
   defaultConfig {
-    minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
-    targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
-    versionCode 1
-    versionName '1.0'
+    minSdk = safeExtGet('minSdkVersion', 23)
+    targetSdk = safeExtGet('targetSdkVersion', 27)
+    versionCode = 1
+    versionName = '1.0'
   }
   lintOptions {
-    abortOnError false
-  }
-  externalNativeBuild {
-    cmake {
-      path "src/main/cpp/CMakeLists.txt"
-    }
-  }
-
-  // Older vesions of the Android Gradle plugin need us to manually add
-  // the static libraries to the APK:
-  if (com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION < '4.0') {
-    sourceSets {
-      main {
-        jniLibs.srcDirs 'jni/libs/'
-      }
-    }
+    abortOnError = false
   }
 }
 

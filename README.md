@@ -20,22 +20,25 @@ const result: Uint8Array = await crypto.scrypt(data, salt, 16384, 8, 1, 32)
 console.log(result)
 ```
 
-## Build libsecp256k1 from scratch (optional)
+## Developing
 
-The build process requires several pieces of software to be installed on the
-host system:
+This library relies on native C++ code from other repos. To integrate this code, you must run the following script before publishing this library to NPM:
 
-* autoconf
-* automake
-* git
-* libtool
+```sh
+npm run build-native
+```
 
-To install these on the Mac, please use [Homebrew](http://brew.sh/):
+This script does the following tasks:
 
-    brew install autoconf automake git libtool
+- Download third-party source code (libsecp256k1).
+- Compile shared libraries for Android.
+- Compile an iOS universal static library and put it into an XCFramework.
 
-If you are building for iOS, you also need a working installation
-of the XCode command-line tools. In addition, Macs with Apple Silicon
-will also need to do `softwareupdate --install-rosetta`.
+The `build-native` script is also the place to make edits when upgrading any of the third-party dependencies.
 
-Finally, run `./build-secp256k1.sh`
+For this to work, you need:
+
+- A recent Android SDK, installed at `$ANDROID_HOME`
+- Xcode command-line tools
+- `cmake`, provided by `brew install cmake`
+- `llvm-objcopy`, provided by `brew install llvm`

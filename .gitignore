@@ -1,5 +1,10 @@
 # Build output:
 /android/*.jar
+/android/build/
+/android/src/main/jniLibs/
+/ios/RNFastCrypto.xcframework/
+/lib/
+/tmp/
 
 # Package managers:
 node_modules/
