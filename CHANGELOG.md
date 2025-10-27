@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.0.0 (2025-10-27)
+
 - changed: Bump minimum Android to SDK 23 (Android 6)
 - changed: Bump minimum iOS to 13
 - changed: Rewrite the build system in a more modern language.
